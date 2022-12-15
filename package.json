@@ -1,0 +1,14 @@
+{
+  "name": "issue_tracker",
+  "version": "1.0.0",
+  "description": "IT Issue tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hanny Aly",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
