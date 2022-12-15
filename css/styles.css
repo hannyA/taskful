@@ -1,0 +1,63 @@
+body {
+}
+
+.container-fluid {
+  padding: 2% 7%;
+}
+
+.navbar-brand {
+  /* font-family: "Ubuntu"; */
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.main-heading {
+  font-size: 3.5rem;
+}
+
+.section-heading {
+  font-size: 3.5rem;
+  line-height: 1.5;
+}
+
+/* Sections */
+
+.section-container {
+  padding: 10% 5% !important;
+}
+.colored-section {
+  background-color: blueviolet;
+  color: #fff;
+}
+
+.white-section {
+  background-color: #fff;
+}
+
+/* Intro section  */
+
+.subtitle-title {
+  font-size: 2rem;
+}
+.main-subtitle {
+  font-size: 1.5rem;
+  margin-top: 5%;
+}
+
+.intro-img {
+  right: 23%;
+}
+
+/* Features section */
+
+.feature-subtitle {
+  font-size: 1.2rem;
+  color: #bebdbd;
+}
+
+/* AwesomeFont Icon Images */
+.icon {
+  /* font-size: 2rem; */
+  color: #fff; /*#ff4c68; */
+  margin-bottom: 1rem;
+}
