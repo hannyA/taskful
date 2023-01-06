@@ -3,6 +3,14 @@ const path = require("path");
 const mongoose = require("mongoose");
 const Issue = require("./models/issue");
 
+/*
+Dev Start Mongo db: 
+brew services start mongodb-community@6.0
+
+Dev Stop Mongo db: 
+brew services stop mongodb-community@6.0
+
+*/
 mongoose.connect("mongodb://localhost:27017/issue-tracker", {
   // useNewUrlParser: true,
   // useCreateIndex: true,
@@ -22,6 +30,11 @@ app.use(express.static("public"));
 
 app.get("/", function (req, res) {
   res.render("home");
+});
+
+app.get("/dashboard", async (req, res) => {
+  const issues = await Issue.find({});
+  res.render("dashboard/index");
 });
 
 app.get("/makeissue", async (req, res) => {
