@@ -11,6 +11,9 @@
     <p><%= ticket.title %> - <%= ticket.description %></p>
     <p><%= ticket.status %> - <%= ticket.author %></p>
     <footer>
+      <form action="/ticket/<%= ticket._id %>?_method=DELETE " method="POST">
+        <Button>Delete</Button>
+      </form>
       <a href="/ticket/<%= ticket._id %>/edit ">Edit</a>
       <a href="/dashboard">Dashboard</a>
     </footer>

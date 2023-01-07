@@ -9,7 +9,7 @@
   <body>
     <h1>Edit ticket</h1>
 
-    <form action="/ticket" method="post">
+    <form action="/ticket/<%= ticket._id %>?_method=PUT" method="post">
       <div>
         <label for="title">Title</label>
         <input

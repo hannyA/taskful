@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 const Issue = require("./models/issue");
 
 /*
@@ -26,8 +27,10 @@ db.once("open", () => {
 const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 app.get("/", function (req, res) {
   res.render("home");
@@ -58,10 +61,17 @@ app.get("/ticket/:id/edit", async (req, res) => {
   res.render("ticket/edit", { ticket });
 });
 
-app.get("/test", function (req, res) {
-  res.send("test");
+app.put("/ticket/:id", async (req, res) => {
+  const { id } = req.params;
+  const ticket = await Issue.findByIdAndUpdate(id, { ...req.body.ticket });
+  res.redirect(`/ticket/${ticket._id}`);
 });
 
+app.delete("/ticket/:id", async (req, res) => {
+  const { id } = req.params;
+  const ticket = await Issue.findByIdAndDelete(id);
+  res.redirect("/dashboard");
+});
 app.listen(3000, function (req, res) {
   console.log("Server started up");
 });
