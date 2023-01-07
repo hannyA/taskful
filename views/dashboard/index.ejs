@@ -9,14 +9,20 @@
   <body>
     <h1>Dashboard</h1>
 
+    <div>
+      <a href="/ticket/new">Create ticket</a>
+    </div>
     <ul>
       <% for (let issue of issues) { %>
       <li>
-        <p>TICKET ID: <%= issue.id %></p>
+        <p><a href="/ticket/<%= issue._id %> "> <%= issue.title %></a></p>
         <p><%= issue.title %> - <%= issue.description %></p>
         <p><%= issue.status %> - <%= issue.author %></p>
       </li>
       <% }%>
     </ul>
+    <footer>
+      <a href="/dashboard">Dashboard</a>
+    </footer>
   </body>
 </html>

@@ -27,6 +27,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
   res.render("home");
@@ -37,15 +38,19 @@ app.get("/dashboard", async (req, res) => {
   res.render("dashboard/index", { issues });
 });
 
-app.get("/makeissue", async (req, res) => {
-  const issue = new Issue({
-    title: "Server down",
-    description: "Can't connect to the server",
-    author: "John Mcclaine",
-    status: "Opened",
-  });
-  await issue.save();
-  res.send(issue);
+app.get("/ticket/new", async (req, res) => {
+  res.render("ticket/new");
+});
+
+app.post("/ticket", async (req, res) => {
+  const ticket = new Issue(req.body.ticket);
+  await ticket.save();
+  res.redirect(`/ticket/${ticket._id}`);
+});
+
+app.get("/ticket/:id", async (req, res) => {
+  const issue = await Issue.findById(req.params.id);
+  res.render("ticket/index", { issue });
 });
 
 app.get("/test", function (req, res) {
