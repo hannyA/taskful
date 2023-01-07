@@ -8,5 +8,15 @@
   </head>
   <body>
     <h1>Dashboard</h1>
+
+    <ul>
+      <% for (let issue of issues) { %>
+      <li>
+        <p>TICKET ID: <%= issue.id %></p>
+        <p><%= issue.title %> - <%= issue.description %></p>
+        <p><%= issue.status %> - <%= issue.author %></p>
+      </li>
+      <% }%>
+    </ul>
   </body>
 </html>

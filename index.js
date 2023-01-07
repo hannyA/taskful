@@ -34,7 +34,7 @@ app.get("/", function (req, res) {
 
 app.get("/dashboard", async (req, res) => {
   const issues = await Issue.find({});
-  res.render("dashboard/index");
+  res.render("dashboard/index", { issues });
 });
 
 app.get("/makeissue", async (req, res) => {
