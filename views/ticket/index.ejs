@@ -7,10 +7,11 @@
     <title>TICKET</title>
   </head>
   <body>
-    <h1><%= issue.title %></h1>
-    <p><%= issue.title %> - <%= issue.description %></p>
-    <p><%= issue.status %> - <%= issue.author %></p>
+    <h1><%= ticket.title %></h1>
+    <p><%= ticket.title %> - <%= ticket.description %></p>
+    <p><%= ticket.status %> - <%= ticket.author %></p>
     <footer>
+      <a href="/ticket/<%= ticket._id %>/edit ">Edit</a>
       <a href="/dashboard">Dashboard</a>
     </footer>
   </body>

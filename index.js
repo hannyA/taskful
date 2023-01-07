@@ -34,8 +34,8 @@ app.get("/", function (req, res) {
 });
 
 app.get("/dashboard", async (req, res) => {
-  const issues = await Issue.find({});
-  res.render("dashboard/index", { issues });
+  const tickets = await Issue.find({});
+  res.render("dashboard/index", { tickets });
 });
 
 app.get("/ticket/new", async (req, res) => {
@@ -49,8 +49,13 @@ app.post("/ticket", async (req, res) => {
 });
 
 app.get("/ticket/:id", async (req, res) => {
-  const issue = await Issue.findById(req.params.id);
-  res.render("ticket/index", { issue });
+  const ticket = await Issue.findById(req.params.id);
+  res.render("ticket/index", { ticket });
+});
+
+app.get("/ticket/:id/edit", async (req, res) => {
+  const ticket = await Issue.findById(req.params.id);
+  res.render("ticket/edit", { ticket });
 });
 
 app.get("/test", function (req, res) {

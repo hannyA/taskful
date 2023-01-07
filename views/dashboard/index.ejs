@@ -13,16 +13,13 @@
       <a href="/ticket/new">Create ticket</a>
     </div>
     <ul>
-      <% for (let issue of issues) { %>
+      <% for (let ticket of tickets) { %>
       <li>
-        <p><a href="/ticket/<%= issue._id %> "> <%= issue.title %></a></p>
-        <p><%= issue.title %> - <%= issue.description %></p>
-        <p><%= issue.status %> - <%= issue.author %></p>
+        <p><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></p>
+        <p><%= ticket.title %> - <%= ticket.description %></p>
+        <p><%= ticket.status %> - <%= ticket.author %></p>
       </li>
       <% }%>
     </ul>
-    <footer>
-      <a href="/dashboard">Dashboard</a>
-    </footer>
   </body>
 </html>
