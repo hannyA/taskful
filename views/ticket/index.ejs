@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TICKET</title>
-  </head>
-  <body>
-    <h1><%= ticket.title %></h1>
-    <p><%= ticket.title %> - <%= ticket.description %></p>
-    <p><%= ticket.status %> - <%= ticket.author %></p>
-    <footer>
-      <form action="/ticket/<%= ticket._id %>?_method=DELETE " method="POST">
-        <Button>Delete</Button>
-      </form>
-      <a href="/ticket/<%= ticket._id %>/edit ">Edit</a>
-      <a href="/dashboard">Dashboard</a>
-    </footer>
-  </body>
-</html>
+<% layout('layouts/boilerplate') %>
+
+<h1><%= ticket.title %></h1>
+<p><%= ticket.title %> - <%= ticket.description %></p>
+<p><%= ticket.status %> - <%= ticket.author %></p>
+<footer>
+  <form action="/ticket/<%= ticket._id %>?_method=DELETE " method="POST">
+    <Button>Delete</Button>
+  </form>
+  <a href="/ticket/<%= ticket._id %>/edit ">Edit</a>
+  <a href="/dashboard">Dashboard</a>
+</footer>

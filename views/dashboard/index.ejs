@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <h1>Dashboard</h1>
+<% layout('layouts/boilerplate') %>
+<h1>Dashboard</h1>
 
-    <div>
-      <a href="/ticket/new">Create ticket</a>
-    </div>
-    <ul>
-      <% for (let ticket of tickets) { %>
-      <li>
-        <p><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></p>
-        <p><%= ticket.title %> - <%= ticket.description %></p>
-        <p><%= ticket.status %> - <%= ticket.author %></p>
-      </li>
-      <% }%>
-    </ul>
-  </body>
-</html>
+<div>
+  <a href="/ticket/new">Create ticket</a>
+</div>
+<ul>
+  <% for (let ticket of tickets) { %>
+  <li>
+    <p><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></p>
+    <p><%= ticket.title %> - <%= ticket.description %></p>
+    <p><%= ticket.status %> - <%= ticket.author %></p>
+  </li>
+  <% }%>
+</ul>
