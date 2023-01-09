@@ -1,9 +1,12 @@
 <% layout('layouts/boilerplate') %>
-<h1>Dashboard</h1>
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+    <!-- <li class="breadcrumb-item active" aria-current="page">Library</li> -->
+  </ol>
+</nav>
+<!-- <h1>Dashboard</h1> -->
 
-<div>
-  <a href="/ticket/new">Create ticket</a>
-</div>
 <ul>
   <% for (let ticket of tickets) { %>
   <li>

@@ -1,5 +1,12 @@
 <% layout('layouts/boilerplate') %>
 
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Ticket</li>
+  </ol>
+</nav>
+
 <h1>Edit ticket</h1>
 
 <form action="/ticket/<%= ticket._id %>?_method=PUT" method="post">
@@ -26,7 +33,3 @@
   <button>Save</button>
   <button>Cancel</button>
 </form>
-
-<footer>
-  <a href="/ticket/<%= ticket._id %>">Back to ticket</a>
-</footer>
