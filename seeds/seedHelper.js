@@ -13,4 +13,6 @@ module.exports.tickets = [
   },
 ];
 module.exports.users = ["Tom Jones", "Steve Smith", "John Mcclaine"];
-module.exports.status = ["Opened", "Closed", "Assigned"];
+module.exports.status = ["New", "Assigned", "In Progress", "Closed"];
+module.exports.priority = ["Low", "Medium", "High", "Very High"];
+module.exports.type = ["Bug", "Issue", "Feature"];

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Issue = require("../models/issue");
-const { tickets, users, status } = require("./seedHelper");
+const { tickets, users, status, priority, type } = require("./seedHelper");
 /*
 Dev Start Mongo db: 
 brew services start mongodb-community@6.0
@@ -31,6 +31,9 @@ const seedDB = async () => {
       description: tickets[j].description,
       author: users[j],
       status: status[j],
+      priority: priority[j],
+
+      type: type[j],
     });
     await issue.save();
   }
