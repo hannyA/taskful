@@ -39,12 +39,12 @@ app.get("/", function (req, res) {
 });
 
 app.get("/dashboard", async (req, res) => {
-  const tickets = await Issue.find({});
-  res.render("dashboard/index", { tickets });
+  res.render("dashboard/index");
 });
 
-app.get("/credits", async (req, res) => {
-  res.render("other/credits");
+app.get("/ticket", async (req, res) => {
+  const tickets = await Issue.find({});
+  res.render("dashboard/project", { tickets });
 });
 
 app.get("/ticket/new", async (req, res) => {
@@ -77,6 +77,10 @@ app.delete("/ticket/:id", async (req, res) => {
   const { id } = req.params;
   const ticket = await Issue.findByIdAndDelete(id);
   res.redirect("/dashboard");
+});
+
+app.get("/credits", async (req, res) => {
+  res.render("other/credits");
 });
 app.listen(3000, function (req, res) {
   console.log("Server started up");

@@ -1,0 +1,18 @@
+<% layout('layouts/boilerplate') %>
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Project</li>
+    <!-- <li class="breadcrumb-item active" aria-current="page">Library</li> -->
+  </ol>
+</nav>
+<!-- <h1>Dashboard</h1> -->
+
+<ul>
+  <% for (let ticket of tickets) { %>
+  <li>
+    <p><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></p>
+    <p><%= ticket.title %> - <%= ticket.description %></p>
+    <p><%= ticket.status %> - <%= ticket.author %></p>
+  </li>
+  <% }%>
+</ul>
