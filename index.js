@@ -43,6 +43,10 @@ app.get("/dashboard", async (req, res) => {
   res.render("dashboard/index", { tickets });
 });
 
+app.get("/credits", async (req, res) => {
+  res.render("other/credits");
+});
+
 app.get("/ticket/new", async (req, res) => {
   res.render("ticket/new");
 });
