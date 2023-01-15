@@ -9,3 +9,9 @@
   font-size: 1.5rem;
   font-weight: 200;
 }
+
+.sidebar {
+  @media (min-width: 576px) {
+    width: 100px;
+  }
+}

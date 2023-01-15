@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const Issue = require("./models/issue");
+const Project = require("./models/project");
 
 /*
 Dev Start Mongo db: 
@@ -40,6 +41,26 @@ app.get("/", function (req, res) {
 
 app.get("/dashboard", async (req, res) => {
   res.render("dashboard/index");
+});
+
+app.get("/project", async (req, res) => {
+  const projects = await Project.find({});
+  res.render("project/index", { projects });
+});
+
+app.post("/project", async (req, res) => {
+  const project = new Project(req.body.project);
+  await project.save();
+  res.redirect(`/project/${project._id}`);
+});
+
+app.get("/project/new", async (req, res) => {
+  res.render("project/new");
+});
+
+app.get("/project/:id", async (req, res) => {
+  const project = await Project.findById(req.params.id);
+  res.render("project/show", { project });
 });
 
 app.get("/ticket", async (req, res) => {

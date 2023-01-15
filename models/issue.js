@@ -6,6 +6,11 @@ const IssueSchema = new Schema({
   description: String,
   author: String,
   status: String,
+  project: {
+    type: Schema.Types.ObjectId,
+    ref: "Project",
+    require: true,
+  },
 });
 
 module.exports = mongoose.model("Issue", IssueSchema);

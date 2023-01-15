@@ -10,11 +10,11 @@
 <h1>Projects</h1>
 
 <ul>
-  <% for (let ticket of tickets) { %>
+  <% for (let project of projects) { %>
   <li>
-    <p><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></p>
-    <p><%= ticket.title %> - <%= ticket.description %></p>
-    <p><%= ticket.status %> - <%= ticket.author %></p>
+    <p><a href="/project/<%= project._id %> "> <%= project.title %></a></p>
+    <p><%= project.title %> - <%= project.description %></p>
+    <p><%= project.owner %> - <%= project.company %></p>
   </li>
   <% }%>
 </ul>
