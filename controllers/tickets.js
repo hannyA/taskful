@@ -1,13 +1,13 @@
 const Issue = require("../models/issue");
 
 module.exports.index = async (req, res) => {
-  const page = "1";
+  const page = "index";
   const tickets = await Issue.find({});
   res.render("tickets/index", { tickets, page });
 };
 
 module.exports.renderNewForm = async (req, res) => {
-  const page = "2";
+  const page = "new";
 
   res.render("tickets/new", { page });
 };
