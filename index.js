@@ -44,11 +44,11 @@ app.get("/", function (req, res) {
 });
 
 app.get("/dashboard", async (req, res) => {
-  res.render("dashboard/index");
+  res.render("dashboards/index");
 });
 
 app.get("/credits", async (req, res) => {
-  res.render("other/credits");
+  res.render("others/credits");
 });
 app.listen(3000, function (req, res) {
   console.log("Server started up");
