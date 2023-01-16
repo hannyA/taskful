@@ -1,0 +1,16 @@
+#logo {
+  color: white;
+  width: 30px;
+  height: 24px;
+}
+
+.navbar .container-fluid {
+  padding: 1% 5%;
+}
+.navbar-section {
+}
+.navbar-brand {
+  /* font-family: "Ubuntu"; */
+  font-size: 1.5rem;
+  font-weight: bold;
+}
