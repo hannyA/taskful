@@ -65,7 +65,7 @@ app.get("/project/:id", async (req, res) => {
 
 app.get("/ticket", async (req, res) => {
   const tickets = await Issue.find({});
-  res.render("dashboard/project", { tickets });
+  res.render("ticket/index", { tickets });
 });
 
 app.get("/ticket/new", async (req, res) => {
@@ -80,7 +80,7 @@ app.post("/ticket", async (req, res) => {
 
 app.get("/ticket/:id", async (req, res) => {
   const ticket = await Issue.findById(req.params.id);
-  res.render("ticket/index", { ticket });
+  res.render("ticket/show", { ticket });
 });
 
 app.get("/ticket/:id/edit", async (req, res) => {
@@ -97,7 +97,7 @@ app.put("/ticket/:id", async (req, res) => {
 app.delete("/ticket/:id", async (req, res) => {
   const { id } = req.params;
   const ticket = await Issue.findByIdAndDelete(id);
-  res.redirect("/dashboard");
+  res.redirect("/ticket");
 });
 
 app.get("/credits", async (req, res) => {

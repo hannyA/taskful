@@ -2,12 +2,13 @@
 
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">Project</li>
-    <!-- <li class="breadcrumb-item active" aria-current="page">Create Ticket</li> -->
+    <li class="breadcrumb-item"><a href="/project">Project</a></li>
+    <li class="breadcrumb-item active" aria-current="page">
+      <%= project.title %>
+    </li>
   </ol>
 </nav>
 
-<h1><%= project.title %></h1>
 <p><%= project.title %> - <%= project.description %></p>
 <p><%= project.owner %></p>
 <footer>
