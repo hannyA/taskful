@@ -1,25 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Project = require("../models/project");
+const projects = require("../controllers/projects");
 
-router.get("/", async (req, res) => {
-  const projects = await Project.find({});
-  res.render("projects/index", { projects });
-});
+router.get("/", projects.index);
 
-router.post("/", async (req, res) => {
-  const project = new Project(req.body.project);
-  await project.save();
-  res.redirect(`/projects/${project._id}`);
-});
+router.post("/", projects.createProject);
 
-router.get("/new", async (req, res) => {
-  res.render("projects/new");
-});
+router.get("/new", projects.renderNewForm);
 
-router.get("/:id", async (req, res) => {
-  const project = await Project.findById(req.params.id);
-  res.render("projects/show", { project });
-});
+router.get("/:id", projects.showProject);
 
 module.exports = router;
