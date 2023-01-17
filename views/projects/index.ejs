@@ -1,20 +1,29 @@
 <% layout('layouts/project-boilerplate') %>
 
-<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+<!-- <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page">Project</li>
-    <!-- <li class="breadcrumb-item active" aria-current="page">Create Ticket</li> -->
   </ol>
-</nav>
+</nav> -->
 
 <h1>All Projects</h1>
 
-<ul>
+<div>
   <% for (let project of projects) { %>
-  <li>
-    <p><a href="/project/<%= project._id %> "> <%= project.title %></a></p>
-    <p><%= project.title %> - <%= project.description %></p>
-    <p><%= project.owner %> - <%= project.company %></p>
-  </li>
+
+  <div class="card mb-3" style="width: 18rem">
+    <div class="card-body">
+      <h5 class="card-title">
+        <strong>Project: </strong>
+        <a href="/projects/<%= project._id %> "> <%= project.title %></a>
+      </h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        <strong>Owner: </strong><%= project.owner %>
+      </h6>
+      <p class="card-text">
+        <strong>Description: </strong> <%= project.description %>
+      </p>
+    </div>
+  </div>
   <% }%>
-</ul>
+</div>

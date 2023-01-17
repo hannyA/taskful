@@ -2,7 +2,7 @@
 
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/project">Project</a></li>
+    <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
     <li class="breadcrumb-item active" aria-current="page">
       <%= project.title %>
     </li>
@@ -12,9 +12,9 @@
 <p><%= project.title %> - <%= project.description %></p>
 <p><%= project.owner %></p>
 <footer>
-  <form action="/project/<%= project._id %>?_method=DELETE " method="POST">
+  <form action="/projects/<%= project._id %>?_method=DELETE " method="POST">
     <Button>Delete</Button>
   </form>
-  <a href="/project/<%= project._id %>/edit ">Edit</a>
+  <a href="/projects/<%= project._id %>/edit ">Edit</a>
   <!-- <a href="/dashboard">Dashboard</a> -->
 </footer>
