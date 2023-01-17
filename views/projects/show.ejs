@@ -9,8 +9,26 @@
   </ol>
 </nav>
 
-<p><%= project.title %> - <%= project.description %></p>
-<p><%= project.owner %></p>
+<div>
+  <p><strong>Title:</strong> <%= project.title %></p>
+  <p><strong>Description:</strong> <%= project.description %></p>
+  <p><strong>Owner:</strong> <%= project.owner %></p>
+</div>
+
+<div>
+  <h2>Tickets</h2>
+
+  <ul>
+    <% for (let ticket of project.issues) { %>
+    <li>
+      <p><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></p>
+      <p>test</p>
+      <p><%= ticket.title %> - <%= ticket.description %></p>
+      <p><%= ticket.status %> - <%= ticket.author %></p>
+    </li>
+    <% }%>
+  </ul>
+</div>
 <footer>
   <form action="/projects/<%= project._id %>?_method=DELETE " method="POST">
     <Button>Delete</Button>

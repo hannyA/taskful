@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Issue = require("../models/issue");
+const Project = require("../models/project");
 const { tickets, users, status, priority, type } = require("./seedHelper");
 /*
 Dev Start Mongo db: 
@@ -28,33 +29,30 @@ db.once("open", () => {
 
 const seedDB = async () => {
   await Issue.deleteMany({});
+  await Project.deleteMany({});
 
-  for (let i = 0; i < 3; i++) {
-    const j = Math.floor(Math.random() * 3);
-    const issue = new Issue({
-      title: tickets[j].title,
-      description: tickets[j].description,
-      author: users[j],
-      status: status[j],
-      priority: priority[j],
-
-      type: type[j],
+  for (let h = 0; h < 3; h++) {
+    const project = new Project({
+      title: "Project " + h,
+      description: "Some Description " + h,
+      owner: users[h],
     });
-    await issue.save();
-  }
 
-  for (let i = 0; i < 10; i++) {
-    const j = Math.floor(Math.random() * 3);
-    const issue = new Issue({
-      title: tickets[j].title,
-      description: tickets[j].description,
-      author: users[j],
-      status: status[j],
-      priority: priority[j],
-
-      type: type[j],
-    });
-    await issue.save();
+    for (let i = 0; i < 10; i++) {
+      const j = Math.floor(Math.random() * 3);
+      const issue = new Issue({
+        title: tickets[j].title,
+        description: tickets[j].description,
+        author: users[j],
+        status: status[j],
+        priority: priority[j],
+        type: type[j],
+        project,
+      });
+      project.issues.push(issue);
+      await issue.save();
+    }
+    await project.save();
   }
 };
 

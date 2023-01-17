@@ -15,6 +15,9 @@ brew services start mongodb-community@6.0
 Dev Stop Mongo db: 
 brew services stop mongodb-community@6.0
 
+Auto Restart server:
+nodemon index.js
+
 */
 mongoose.connect("mongodb://localhost:27017/issue-tracker", {
   // useNewUrlParser: true,

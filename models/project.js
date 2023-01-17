@@ -5,6 +5,13 @@ const ProjectSchema = new Schema({
   title: String,
   description: String,
   owner: String,
+  issues: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Issue",
+      required: true,
+    },
+  ],
   // {
   //   type: Schema.Types.ObjectId,
   //   ref: "User",
