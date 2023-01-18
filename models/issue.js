@@ -11,6 +11,11 @@ const IssueSchema = new Schema({
     ref: "Project",
     required: true,
   },
+
+  createDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Issue", IssueSchema);

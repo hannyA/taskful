@@ -36,6 +36,7 @@ const seedDB = async () => {
       title: "Project " + h,
       description: "Some Description " + h,
       owner: users[h],
+      date: Date,
     });
 
     for (let i = 0; i < 10; i++) {
@@ -48,6 +49,8 @@ const seedDB = async () => {
         priority: priority[j],
         type: type[j],
         project,
+
+        date: Date,
       });
       project.issues.push(issue);
       await issue.save();
