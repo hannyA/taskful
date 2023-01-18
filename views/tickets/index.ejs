@@ -7,13 +7,22 @@
 </nav>
 <!-- <h1>Dashboard</h1> -->
 
-<ul>
+<div>
   <% for (let ticket of tickets) { %>
-  <li>
-    <p><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></p>
-    <p>test</p>
-    <p><%= ticket.title %> - <%= ticket.description %></p>
-    <p><%= ticket.status %> - <%= ticket.author %></p>
-  </li>
+
+  <div class="card mb-3 ticket-card">
+    <div class="card-body">
+      <h5 class="card-title">
+        <a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a>
+      </h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        <strong>Owner: </strong><%= ticket.author %> - <%= ticket.status %>
+      </h6>
+      <p class="card-text">
+        <strong>Description: </strong><%= ticket.description %>
+      </p>
+    </div>
+  </div>
+
   <% }%>
-</ul>
+</div>
