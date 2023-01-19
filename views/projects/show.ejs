@@ -32,27 +32,42 @@
 </div>
 
 <div>
-  <h2>Tasks</h2>
+  <h2>Issues</h2>
 
   <div>
-    <% for (let ticket of project.issues) { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Ticket ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Status</th>
+          <th scope="col">Owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < 6; i++) { %> <% let ticket = project.issues[i];
+        %>
+        <tr>
+          <td
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="<%=ticket._id%>"
+          >
+            <a href="/ticket/<%= ticket._id %> ">
+              ...<%=`${ticket._id}`.slice(-4)%>
+            </a>
+          </td>
+          <td><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></td>
+          <td><%= ticket.description %></td>
+          <td><%= ticket.status %></td>
+          <td><%= ticket.author.fullname %></td>
+        </tr>
 
-    <div class="card mb-3 ticket-card">
-      <div class="card-body">
-        <h5 class="card-title">
-          <strong>Title: </strong>
-          <a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a>
-        </h5>
-        <h6 class="card-subtitle mb-2 text-muted">
-          <strong>Owner: </strong><%= ticket.author %> - <%= ticket.status %>
-        </h6>
-        <p class="card-text">
-          <strong>Description: </strong><%= ticket.description %>
-        </p>
-      </div>
-    </div>
-    <% }%>
+        <% }%>
+      </tbody>
+    </table>
   </div>
 </div>
 
-<footer></footer>
+<footer class="mt-5"></footer>

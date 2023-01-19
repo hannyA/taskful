@@ -20,11 +20,31 @@ module.exports.renderNewForm = async (req, res) => {
 
 module.exports.showProject = async (req, res) => {
   const project = await Project.findById(req.params.id)
-    .populate("issues")
+    .populate({
+      path: "issues",
+      populate: {
+        path: "author",
+      },
+    })
     .populate("owner");
-
-  // const tickets = await Ticket.find(req.params.id);
-  console.log(project);
   const page = "show";
   res.render("projects/show", { project, page });
+};
+
+module.exports.editProject = async (req, res) => {
+  const project = await Project.findById(req.params.id).populate("owner");
+  const page = "edit";
+  // res.render("projects/edit", { project, page });
+  res.send("404 Need to do");
+};
+
+module.exports.projectIssues = async (req, res) => {
+  const project = await Project.findById(req.params.id).populate({
+    path: "issues",
+    populate: {
+      path: "author",
+    },
+  });
+  const page = "issues";
+  res.render("projects/all-issues", { project, page });
 };

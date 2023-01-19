@@ -1,0 +1,51 @@
+<% layout('layouts/project-boilerplate') %>
+
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+    <li class="breadcrumb-item">
+      <a href="/projects/<%= project._id %> "><%= project.title %></a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Issues</li>
+  </ol>
+</nav>
+
+<div>
+  <div>
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Ticket ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let ticket of project.issues) { %>
+          <tr>
+            <td
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="<%=ticket._id%>"
+            >
+              <a href="/ticket/<%= ticket._id %> ">
+                ...<%=`${ticket._id}`.slice(-4)%></a
+              >
+            </td>
+            <td><%= ticket.title %></td>
+            <td><%= ticket.description %></td>
+            <td><%= ticket.status %></td>
+            <td><%= ticket.author.fullname %></td>
+          </tr>
+
+          <% }%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="mt-5"></footer>
+</div>
