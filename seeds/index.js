@@ -61,6 +61,7 @@ const randomUser = () => {
 const theemail = (first, last) => {
   return `${first}.${last}@gmail.com`;
 };
+
 const seedDB = async () => {
   await Issue.deleteMany({});
   await Project.deleteMany({});
@@ -80,6 +81,7 @@ const seedDB = async () => {
       owner: user,
       createDate: createdate,
       plannedEndDate: enddate,
+      priority: priority[Math.floor(Math.random() * 4)],
     });
 
     await user.save();
