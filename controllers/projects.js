@@ -19,7 +19,10 @@ module.exports.renderNewForm = async (req, res) => {
 };
 
 module.exports.showProject = async (req, res) => {
-  const project = await Project.findById(req.params.id).populate("issues");
+  const project = await Project.findById(req.params.id)
+    .populate("issues")
+    .populate("owner");
+
   // const tickets = await Ticket.find(req.params.id);
   console.log(project);
   const page = "show";

@@ -26,10 +26,16 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  date: {
+  registerDate: {
     type: Date,
     default: Date.now,
   },
+});
+
+// Create a virtual property `fullname`
+UserSchema.virtual("fullname").get(function () {
+  return `${this.first} ${this.last}`;
+  // return this.email.slice(this.email.indexOf('@') + 1);
 });
 
 module.exports = mongoose.model("User", UserSchema);

@@ -10,13 +10,29 @@
 </nav>
 
 <div>
-  <p><strong>Title:</strong> <%= project.title %></p>
-  <p><strong>Description:</strong> <%= project.description %></p>
-  <p><strong>Owner:</strong> <%= project.owner %></p>
+  <div class="row">
+    <div class="col-6">
+      <p><strong>Title:</strong> <%= project.title %></p>
+      <p><strong>Description:</strong> <%= project.description %></p>
+      <p><strong>Lead:</strong> <%= project.owner.fullname %></p>
+    </div>
+    <div class="col-3">
+      <p><strong>Priority:</strong> <%= project.priority %></p>
+      <p><strong>Date Created:</strong> <%= project.createDate %></p>
+      <p><strong>Stage:</strong> <%= project.stage %></p>
+      <p><strong>Planned End date:</strong> <%= project.plannedEndDate %></p>
+    </div>
+  </div>
+
+  <form action="/projects/<%= project._id %>?_method=DELETE " method="POST">
+    <Button>Delete</Button>
+  </form>
+  <a href="/projects/<%= project._id %>/edit ">Edit</a>
+  <!-- <a href="/dashboard">Dashboard</a> -->
 </div>
 
 <div>
-  <h2>Tickets</h2>
+  <h2>Tasks</h2>
 
   <div>
     <% for (let ticket of project.issues) { %>
@@ -35,14 +51,8 @@
         </p>
       </div>
     </div>
-
     <% }%>
   </div>
 </div>
-<footer>
-  <form action="/projects/<%= project._id %>?_method=DELETE " method="POST">
-    <Button>Delete</Button>
-  </form>
-  <a href="/projects/<%= project._id %>/edit ">Edit</a>
-  <!-- <a href="/dashboard">Dashboard</a> -->
-</footer>
+
+<footer></footer>

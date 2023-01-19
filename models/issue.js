@@ -4,15 +4,26 @@ const Schema = mongoose.Schema;
 const IssueSchema = new Schema({
   title: String,
   description: String,
-  author: String,
-  status: String,
-  project: {
+  author: {
     type: Schema.Types.ObjectId,
-    ref: "Project",
+    ref: "User",
     required: true,
   },
-
+  status: String,
+  // project: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Project",
+  //   required: true,
+  // },
+  priority: {
+    type: String,
+    enum: ["Low", "Medium", "High", "Very High"],
+  },
   createDate: {
+    type: Date,
+    default: Date.now,
+  },
+  lastUpdate: {
     type: Date,
     default: Date.now,
   },
