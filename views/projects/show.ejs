@@ -58,7 +58,7 @@
               ...<%=`${ticket._id}`.slice(-4)%>
             </a>
           </td>
-          <td><a href="/ticket/<%= ticket._id %> "> <%= ticket.title %></a></td>
+          <td><%= ticket.title %></td>
           <td><%= ticket.description %></td>
           <td><%= ticket.status %></td>
           <td><%= ticket.author.fullname %></td>
