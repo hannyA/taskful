@@ -1,0 +1,26 @@
+<% layout('layouts/project-boilerplate') %>
+
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+    <li class="breadcrumb-item">
+      <a href="/projects/<%= project._id %> "><%= project.title %></a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="/projects/<%= project._id %>/issues ">Issues</a>
+    </li>
+
+    <li class="breadcrumb-item active" aria-current="page">Issue</li>
+  </ol>
+</nav>
+
+<h1><%= ticket.title %></h1>
+<p><%= ticket.title %> - <%= ticket.description %></p>
+<p><%= ticket.status %> - <%= ticket.author %></p>
+<footer>
+  <form action="/ticket/<%= ticket._id %>?_method=DELETE " method="POST">
+    <Button>Delete</Button>
+  </form>
+  <a href="/ticket/<%= ticket._id %>/edit ">Edit</a>
+  <!-- <a href="/dashboard">Dashboard</a> -->
+</footer>

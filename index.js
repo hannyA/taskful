@@ -56,6 +56,8 @@ app.get("/credits", async (req, res) => {
 });
 
 app.use("*", (req, res) => {
+  console.log(req.path);
+  console.log(req.params);
   res.status(404).send("Not found");
 });
 app.listen(3000, function (req, res) {
