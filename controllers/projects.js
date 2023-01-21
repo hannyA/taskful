@@ -46,7 +46,7 @@ module.exports.projectIssues = async (req, res) => {
       path: "author",
     },
   });
-  const page = "issues";
+  const page = "all-issues";
   res.render("projects/all-issues", { project, page });
 };
 
