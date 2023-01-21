@@ -15,7 +15,6 @@ const ProjectSchema = new Schema({
       required: true,
     },
   ],
-
   company: String,
   priority: {
     type: String,

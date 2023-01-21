@@ -7,8 +7,8 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a
-            class="nav-link ps-3 <%= page === 'new'?'active':'' %>"
-            href="/projects/new"
+            class="nav-link ps-3 <%= page === 'new-issue'?'active':'' %>"
+            href="/projects/<%= project._id %>/issues/new"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -71,8 +71,8 @@
 
         <li class="nav-item">
           <a
-            class="nav-link ps-3 <%= page === 'new'?'active':'' %>"
-            href="/projects/new"
+            class="nav-link ps-3 <%= page === 'manage'?'active':'' %>"
+            href="/projects/manage"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,8 +92,8 @@
 
         <li class="nav-item">
           <a
-            class="nav-link ps-3 <%= page === 'new'?'active':'' %>"
-            href="/projects/new"
+            class="nav-link ps-3 <%= page === 'settings'?'active':'' %>"
+            href="/projects/settings"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

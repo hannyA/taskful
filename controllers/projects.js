@@ -56,3 +56,9 @@ module.exports.renderProjectIssue = async (req, res) => {
   const page = "issue";
   res.render("projects/issue", { ticket, page, project });
 };
+
+module.exports.renderNewProjectIssue = async (req, res) => {
+  const page = "new-issue";
+  const project = await Project.findById(req.params.id);
+  res.render("projects/new-ticket", { page, project });
+};
