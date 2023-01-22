@@ -1,5 +1,6 @@
 const Project = require("../models/project");
 const Issue = require("../models/issue");
+const User = require("../models/user");
 
 module.exports.index = async (req, res) => {
   const projects = await Project.find({});
@@ -59,6 +60,8 @@ module.exports.renderProjectIssue = async (req, res) => {
 
 module.exports.renderNewProjectIssue = async (req, res) => {
   const page = "new-issue";
+  const users = await User.find({});
+  console.log(users);
   const project = await Project.findById(req.params.id);
-  res.render("projects/new-ticket", { page, project });
+  res.render("projects/new-ticket", { page, project, users });
 };
