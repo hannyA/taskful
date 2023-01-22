@@ -9,6 +9,7 @@ router.get("/new", projects.renderNewForm);
 router.get("/:id", projects.showProject);
 router.get("/:id/edit", projects.editProject);
 router.get("/:id/issues", projects.projectIssues);
+router.post("/:id/issues", projects.createNewTicket);
 router.get("/:id/issues/new", projects.renderNewProjectIssue);
 router.get("/:id/issues/:issueId", projects.renderProjectIssue);
 

@@ -12,7 +12,11 @@
 
 <h1>Create new ticket</h1>
 
-<form class="new-issue-form my-3" action="/ticket/" method="post">
+<form
+  class="new-issue-form my-3"
+  action="/projects/<%= project._id%>/issues"
+  method="post"
+>
   <div class="mb-3">
     <label class="form-label" for="title">Title</label>
     <input class="form-control" type="text" name="ticket[title]" id="title" />
@@ -54,11 +58,20 @@
       <option value="Very High">Very High</option>
     </select>
   </div>
-  <!-- <div class="mb-3">
+  <div class="mb-3">
     <label class="form-label" for="owner">Owner</label>
-    <input class="form-control" type="text" name="ticket[owner]" id="owner" />
+    <input
+      class="form-control"
+      type="text"
+      name="ticket[author]"
+      id="owner"
+      value="Tom Tyson"
+    />
   </div>
 
+  <input hidden type="text" name="project[id]" value="<%= project._id%>" />
+
+  <!-- 
   <div class="mb-3">
     <label class="form-label" for="owner">Status</label>
     <select class="form-select" name="ticket[owner]" id="status">
@@ -69,5 +82,5 @@
     </select>
   </div> -->
 
-  <button type="button" class="btn btn-outline-dark btn-lg">Create</button>
+  <button type="submit" class="btn btn-outline-dark btn-lg">Create</button>
 </form>

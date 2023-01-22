@@ -61,7 +61,18 @@ module.exports.renderProjectIssue = async (req, res) => {
 module.exports.renderNewProjectIssue = async (req, res) => {
   const page = "new-issue";
   const users = await User.find({});
-  console.log(users);
   const project = await Project.findById(req.params.id);
   res.render("projects/new-ticket", { page, project, users });
+};
+
+module.exports.createNewTicket = async (req, res) => {
+  const author = await User.findOne({ first: "Tom", last: "Tyson" });
+  req.body.ticket["author"] = author;
+
+  const ticket = new Issue(req.body.ticket);
+  await ticket.save();
+
+  const projectId = req.body.project["id"];
+
+  res.redirect(`/projects/${projectId}/issues/${ticket._id}`);
 };
