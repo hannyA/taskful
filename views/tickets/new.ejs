@@ -7,18 +7,48 @@
   </ol>
 </nav>
 
-<h1>Create new ticket</h1>
-
-<form action="/ticket/" method="post">
-  <div>
-    <label for="title">Title</label>
-    <input type="text" name="ticket[title]" id="title" />
+<div class="card" style="width: 38rem">
+  <div class="card-header p-4">
+    <h1 class="card-title">Create Ticket</h1>
+    <p class="card-text">
+      Create an incident record to report and request with an issue you are
+      having
+    </p>
   </div>
 
-  <div>
-    <label for="description">Description</label>
-    <input type="text" name="ticket[description]" id="description" />
-  </div>
+  <div class="card-body">
+    <form action="/ticket/" method="post">
+      <div class="mb-3">
+        <label class="form-label" for="status">Priority</label>
+        <select class="form-select" name="ticket[status]" id="status">
+          <!-- <option selected>Status</option> -->
+          <option selected value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+          <option value="Very High">Very High</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="title">Subject</label>
+        <input
+          class="form-control"
+          type="text"
+          name="ticket[title]"
+          id="title"
+        />
+      </div>
 
-  <button>Create</button>
-</form>
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          name="ticket[description]"
+          id="description"
+          aria-label="Description"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-outline-dark btn-lg">Create</button>
+    </form>
+  </div>
+</div>
