@@ -10,68 +10,65 @@
   </ol>
 </nav>
 
-<h1>Create new ticket</h1>
-
-<form
-  class="new-issue-form my-3"
-  action="/projects/<%= project._id%>/issues"
-  method="post"
->
-  <div class="mb-3">
-    <label class="form-label" for="title">Title</label>
-    <input class="form-control" type="text" name="ticket[title]" id="title" />
-  </div>
-  <!-- 
-  <div class="mb-3">
-    <label class="form-label" for="description">Description</label>
-    <input
-      class="form-control"
-      type="text"
-      name="ticket[description]"
-      id="description"
-    />
-  </div> -->
-
-  <div class="mb-3">
-    <label class="form-label" for="description">Description</label>
-    <textarea
-      class="form-control"
-      name="ticket[description]"
-      id="description"
-      aria-label="Description"
-    ></textarea>
+<div class="card" style="width: 38rem">
+  <div class="card-header p-4">
+    <h1 class="card-title">Create Ticket</h1>
+    <p class="card-text">
+      Create an incident record to report and request with an issue you are
+      having
+    </p>
   </div>
 
-  <!-- 
-  <div class="mb-3">
-    <label class="form-label" for="status">Status</label>
-    <input class="form-control" type="text" name="ticket[status]" id="status" />
-  </div> -->
+  <div class="card-body">
+    <form
+      class="new-issue-form w-100"
+      action="/projects/<%= project._id%>/issues"
+      method="post"
+    >
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input
+          class="form-control"
+          type="text"
+          name="ticket[title]"
+          id="title"
+        />
+      </div>
 
-  <div class="mb-3">
-    <label class="form-label" for="status">Priority</label>
-    <select class="form-select" name="ticket[status]" id="status">
-      <!-- <option selected>Status</option> -->
-      <option selected value="Low">Low</option>
-      <option value="Medium">Medium</option>
-      <option value="High">High</option>
-      <option value="Very High">Very High</option>
-    </select>
-  </div>
-  <div class="mb-3">
-    <label class="form-label" for="owner">Owner</label>
-    <input
-      class="form-control"
-      type="text"
-      name="ticket[author]"
-      id="owner"
-      value="Tom Tyson"
-    />
-  </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          name="ticket[description]"
+          id="description"
+          aria-label="Description"
+        ></textarea>
+      </div>
 
-  <input hidden type="text" name="project[id]" value="<%= project._id%>" />
+      <div class="mb-3">
+        <label class="form-label" for="status">Priority</label>
+        <select class="form-select" name="ticket[status]" id="status">
+          <!-- <option selected>Status</option> -->
+          <option selected value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+          <option value="Very High">Very High</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="owner">Owner</label>
+        <input
+          class="form-control"
+          type="text"
+          name="ticket[author]"
+          id="owner"
+          value="Tom Tyson"
+        />
+      </div>
 
-  <!-- 
+      <input hidden type="text" name="project[id]" value="<%= project._id%>" />
+
+      <!-- 
   <div class="mb-3">
     <label class="form-label" for="owner">Status</label>
     <select class="form-select" name="ticket[owner]" id="status">
@@ -82,5 +79,7 @@
     </select>
   </div> -->
 
-  <button type="submit" class="btn btn-outline-dark btn-lg">Create</button>
-</form>
+      <button type="submit" class="btn btn-outline-dark btn-lg">Create</button>
+    </form>
+  </div>
+</div>
