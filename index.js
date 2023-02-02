@@ -9,6 +9,7 @@ const Project = require("./models/project");
 
 const projectRoutes = require("./routes/projects");
 const ticketRoutes = require("./routes/tickets");
+const adminRoutes = require("./routes/admin");
 
 mongoose.connect("mongodb://localhost:27017/issue-tracker", {
   // useNewUrlParser: true,
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use("/projects", projectRoutes);
 app.use("/ticket", ticketRoutes);
+app.use("/admin", adminRoutes);
 
 app.get("/", function (req, res) {
   res.render("home");
