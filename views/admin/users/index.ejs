@@ -1,34 +1,52 @@
 <% layout('layouts/admins-boilerplate') %>
 
 <h1>Users</h1>
-<a href="/admin/users/new">Add new User</a>
 <div>
-  <div>
-    <div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Role</th>
-            <th scope="col">Email</th>
-            <th scope="col">DOB</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let user of users) { %>
-          <tr>
-            <td><%= user.first %></td>
-            <td><%= user.last %></td>
-            <td><%= user.role %></td>
-            <td><%= user.email %></td>
-            <td><%= user.dob %></td>
-          </tr>
-
-          <% }%>
-        </tbody>
-      </table>
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/admin/users/new" class="nav-link">New User</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/users/new" class="nav-link disabled">Delete</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
+  </nav>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Role</th>
+          <th scope="col">Email</th>
+          <th scope="col">DOB</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let user of users) { %>
+        <tr>
+          <td><%= user.first %></td>
+          <td><%= user.last %></td>
+          <td><%= user.role %></td>
+          <td><%= user.email %></td>
+          <td><%= user.dob %></td>
+        </tr>
+
+        <% }%>
+      </tbody>
+    </table>
   </div>
 
   <footer class="mt-5"></footer>

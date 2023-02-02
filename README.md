@@ -1,4 +1,4 @@
-# Commands
+Commands
 
 Seed database:
 node seeds/index.js
