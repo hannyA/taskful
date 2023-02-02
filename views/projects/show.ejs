@@ -1,13 +1,101 @@
 <% layout('layouts/project-boilerplate') %>
 
-<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
-    <li class="breadcrumb-item active" aria-current="page">
-      <%= project.title %>
-    </li>
-  </ol>
-</nav>
+<div class="row">
+  <div class="col-10">
+    <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <%= project.title %>
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <!-- Hamburger menu option -- Edit & Delete -->
+  <div class="col-2">
+    <div class="dropdown">
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          fill="currentColor"
+          class="bi bi-list"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+          />
+        </svg>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" href="/projects/<%= project._id %>/edit ">
+            Edit
+          </a>
+        </li>
+
+        <li><hr class="dropdown-divider" /></li>
+
+        <li>
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="dropdown-item"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Delete
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Delete button -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Project?</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this project? It cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+
+        <form
+          action="/projects/<%= project._id %>?_method=DELETE "
+          method="POST"
+        >
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div>
   <div class="row">
@@ -23,12 +111,6 @@
       <p><strong>Planned End date:</strong> <%= project.plannedEndDate %></p>
     </div>
   </div>
-
-  <form action="/projects/<%= project._id %>?_method=DELETE " method="POST">
-    <Button>Delete</Button>
-  </form>
-  <a href="/projects/<%= project._id %>/edit ">Edit</a>
-  <!-- <a href="/dashboard">Dashboard</a> -->
 </div>
 
 <div>
