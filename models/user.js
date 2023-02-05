@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const UserSchema = new Schema({
   last: {
@@ -13,6 +14,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: [true, "Email required"],
+    unique: true,
   },
   dob: {
     type: String,
@@ -31,6 +33,8 @@ const UserSchema = new Schema({
     default: Date.now,
   },
 });
+
+UserSchema.plugin(passportLocalMongoose);
 
 // Create a virtual property `fullname`
 UserSchema.virtual("fullname").get(function () {

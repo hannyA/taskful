@@ -73,7 +73,7 @@
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="#">Log in</a></li>
                   <li>
-                    <a class="dropdown-item" href="/register">Sign up</a>
+                    <a class="dropdown-item" href="#">Sign up</a>
                   </li>
                 </ul>
               </li>
@@ -84,67 +84,75 @@
       <!-- </div> -->
     </section>
 
-    <section class="intro section-container">
-      <div class="row container-fluid text-center align-items-center">
-        <div class="col-lg-6">
-          <h1 class="main-heading">
-            Manage, track, resolve your tickets - together
-          </h1>
-          <p class="main-subtitle">The #1 software tool used by great teams</p>
-          <button class="btn btn-primary btn-lg">Sign up</button>
-        </div>
-        <div class="col-lg-6">
-          <img
-            class="img-fluid"
-            src="images/bug-track.jpg"
-            alt="Bug tracking image"
-          />
+    <section class="container-fluid">
+      <div class="row">
+        <div class="col-6 offset-6">
+          <form action="/register" method="post">
+            <div class="mb-3">
+              <div class="row">
+                <div class="col-6">
+                  <label class="form-label" for="firstname">First Name:</label>
+                  <input
+                    class="form-control"
+                    name="first"
+                    id="firstname"
+                    type="text"
+                  />
+                </div>
+
+                <div class="col-6">
+                  <label class="form-label" for="lastname">Last Name:</label>
+                  <input
+                    class="form-control"
+                    name="last"
+                    id="lastname"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="email">Email:</label>
+              <input
+                class="form-control"
+                name="email"
+                id="email"
+                type="email"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="password">Password:</label>
+              <input
+                class="form-control"
+                name="password"
+                id="password"
+                type="text"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="role">Role</label>
+              <select class="form-select" name="role" id="role">
+                <!-- <option selected>Status</option> -->
+                <option selected value="Admin">Admin</option>
+                <option value="Technician">Technician</option>
+                <option value="User">User</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-outline-dark btn-lg">
+              Sign up
+            </button>
+          </form>
         </div>
       </div>
     </section>
 
-    <section class="features section-container colored-section">
-      <div class="row container-fluid text-center align-items-center">
-        <div class="col-lg-4">
-          <i class="fa-solid fa-shuffle fa-4x icon"></i>
-          <h3 class="subtitle-title">Track</h3>
-          <p class="feature-subtitle">Track your progress</p>
-        </div>
-        <div class="col-lg-4">
-          <i class="fa-solid fa-hammer fa-4x icon"></i>
-          <h3 class="subtitle-title">Build</h3>
-          <p class="feature-subtitle">Build things</p>
-        </div>
-        <div class="col-lg-4">
-          <i class="fa-solid fa-plane-departure fa-4x icon"></i>
-          <h3 class="subtitle-title">Release</h3>
-          <p class="feature-subtitle">Release new updates</p>
-        </div>
-      </div>
-      <div class="row container-fluid text-center align-items-center">
-        <div class="col-lg-4">
-          <i class="fa-regular fa-map fa-4x icon"></i>
-          <h3 class="subtitle-title">Plan</h3>
-          <p class="feature-subtitle">Plan your next steps</p>
-        </div>
-        <div class="col-lg-4">
-          <i class="fa-regular fa-clipboard fa-4x icon"></i>
-          <h3 class="subtitle-title">Reports</h3>
-          <p class="feature-subtitle">Get important reports</p>
-        </div>
-        <div class="col-lg-4">
-          <i class="fa-solid fa-robot fa-4x icon"></i>
-          <h3 class="subtitle-title">Automate</h3>
-          <p class="feature-subtitle">Automate workflows</p>
-        </div>
-      </div>
-    </section>
+    <section class="features section-container colored-section"></section>
 
     <div class="container-fluid text-center">
       <h1>Issue Tracker</h1>
       <p>Testtett steofeowifo</p>
     </div>
-    <%- include('partials/footer') %>
+    <%- include('../partials/footer') %>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
