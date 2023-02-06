@@ -12,7 +12,7 @@ module.exports.registerUser = async (req, res) => {
     // console.log(req.body);
     // const { email, username, } = req.body;
     const user = new User(body);
-    const registeredUser = User.register(user, password);
+    const registeredUser = await User.register(user, password);
 
     req.flash("success", `Welcome ${body.first}!`);
     // req.flash("success", "Welcome");
