@@ -21,7 +21,7 @@ brew services stop mongodb-community@6.0
 
 
 Seed database: 
-node seeds/index.js   
+node seeds/app.js   
 
 */
 

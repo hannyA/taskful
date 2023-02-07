@@ -1,10 +1,10 @@
 Commands
 
 Seed database:
-node seeds/index.js
+node seeds/app.js
 
 Auto Restart server:
-nodemon index.js
+nodemon app.js
 
 Dev Start Mongo db:
 brew services start mongodb-community@6.0
