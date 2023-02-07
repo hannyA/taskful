@@ -21,3 +21,9 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
     res.redirect("/register");
   }
 });
+
+module.exports.renderLoginForm = async (req, res) => {
+  res.render("auth/login");
+};
+
+module.exports.loginUser = wrapAsync(async (req, res) => {});

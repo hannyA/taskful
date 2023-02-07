@@ -39,7 +39,9 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
@@ -72,9 +74,9 @@ passport.deserializeUser(User.deserializeUser());
 app.use("/projects", projectRoutes);
 app.use("/ticket", ticketRoutes);
 app.use("/admin", adminRoutes);
-app.use("/register", authRoutes);
+app.use("/auth", authRoutes);
+// app.use("/login", authRoutes);
 
-// app.use()
 app.get("/", function (req, res) {
   res.render("home");
 });

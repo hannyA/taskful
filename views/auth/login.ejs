@@ -1,0 +1,25 @@
+<% layout('templates/signedout-template') %>
+
+<section class="container-fluid">
+  <div class="row">
+    <div class="col-6 offset-6">
+      <%- include('../partials/flash') %>
+      <form action="/login" method="post">
+        <div class="mb-3">
+          <label class="form-label" for="email">Email:</label>
+          <input class="form-control" name="email" id="email" type="email" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="password">Password:</label>
+          <input
+            class="form-control"
+            name="password"
+            id="password"
+            type="text"
+          />
+        </div>
+        <button type="submit" class="btn btn-outline-dark btn-lg">Login</button>
+      </form>
+    </div>
+  </div>
+</section>
