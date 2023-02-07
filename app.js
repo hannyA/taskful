@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync");
+const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
 
 const session = require("express-session");
@@ -89,19 +91,24 @@ app.get("/", function (req, res) {
 //   res.send(registedUser);
 // });
 
-app.get("/dashboard", async (req, res) => {
+app.get("/dashboard", function (req, res) {
   res.render("dashboards/index");
 });
 
-app.get("/credits", async (req, res) => {
+app.get("/credits", function (req, res) {
   res.render("others/credits");
 });
 
-app.use("*", (req, res) => {
-  console.log(req.path);
-  console.log(req.params);
-  res.status(404).send("Not found");
+app.all("*", (req, res, next) => {
+  console.log("Hit all");
+  next(new ExpressError("Page not found", 404));
 });
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).send(message);
+});
+
 app.listen(3000, function (req, res) {
   console.log("Server started up");
 });
