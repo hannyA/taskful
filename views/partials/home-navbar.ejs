@@ -47,10 +47,16 @@
             Account
           </a>
           <ul class="dropdown-menu">
+            <% if (!currentUser) { %>
             <li><a class="dropdown-item" href="/auth/login">Log in</a></li>
             <li>
               <a class="dropdown-item" href="/auth/register">Sign up</a>
             </li>
+            <% } else { %>
+            <li>
+              <a class="dropdown-item" href="/auth/logout">Logout</a>
+            </li>
+            <%} %>
           </ul>
         </li>
       </ul>
