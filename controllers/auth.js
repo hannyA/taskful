@@ -26,4 +26,7 @@ module.exports.renderLoginForm = async (req, res) => {
   res.render("auth/login");
 };
 
-module.exports.loginUser = wrapAsync(async (req, res) => {});
+module.exports.loginUser = (req, res) => {
+  req.flash("success", "Welcome back!");
+  res.redirect("/dashboard");
+};
