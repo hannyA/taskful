@@ -1,19 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const Issue = require("../models/issue");
-
+const { isLoggedIn } = require("../utils/middleware");
 const tickets = require("../controllers/tickets");
 
-router.route("/").get(tickets.index).post(tickets.createNewTicket);
+router
+  .route("/")
+  .get(isLoggedIn, tickets.index)
+  .post(isLoggedIn, tickets.createNewTicket);
 
-router.get("/new", tickets.renderNewForm);
+router.get("/new", isLoggedIn, tickets.renderNewForm);
 
 router
   .route("/:id")
-  .get(tickets.showTicket)
-  .put(tickets.updateTicket)
-  .delete(tickets.deleteTicket);
+  .get(isLoggedIn, tickets.showTicket)
+  .put(isLoggedIn, tickets.updateTicket)
+  .delete(isLoggedIn, tickets.deleteTicket);
 
-router.get("/:id/edit", tickets.editTicket);
+router.get("/:id/edit", isLoggedIn, tickets.editTicket);
 
 module.exports = router;

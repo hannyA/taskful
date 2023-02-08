@@ -15,14 +15,5 @@ router
     }),
     auth.loginUser
   );
-//   passport.authenticate("local", {
-//     faileureFlash: true,
-//     failureRedirect: "/login",
-//   }),
-//   (req, res) => {
-//     req.flash("success", "Welcome back!");
-//     res.redirect("/dashboard");
-//   }
-// );
 
 module.exports = router;

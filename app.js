@@ -16,6 +16,7 @@ const User = require("./models/user");
 const Issue = require("./models/issue");
 const Project = require("./models/project");
 
+const { isLoggedIn } = require("./utils/middleware");
 const projectRoutes = require("./routes/projects");
 const ticketRoutes = require("./routes/tickets");
 const adminRoutes = require("./routes/admin");
@@ -77,6 +78,7 @@ app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
 // app.use("/login", authRoutes);
 
+// Signed out pages
 app.get("/", function (req, res) {
   res.render("home");
 });
@@ -93,7 +95,7 @@ app.get("/", function (req, res) {
 //   res.send(registedUser);
 // });
 
-app.get("/dashboard", function (req, res) {
+app.get("/dashboard", isLoggedIn, function (req, res) {
   res.render("dashboards/index");
 });
 
