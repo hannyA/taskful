@@ -85,18 +85,6 @@ app.get("/", function (req, res) {
   res.render("home");
 });
 
-// app.get("/fake", async (req, res) => {
-//   const user = new User({
-//     email: "gibi.deebee@gmail.com",
-//     username: "gibi4",
-//     last: "gibi",
-//     first: "deebee",
-//     role: "admin",
-//   });
-//   const registedUser = await User.register(user, "chicken");
-//   res.send(registedUser);
-// });
-
 app.get("/dashboard", isLoggedIn, function (req, res) {
   res.render("dashboards/index");
 });
@@ -112,7 +100,16 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
-  res.status(statusCode).render("error-template", { statusCode, message });
+  if (req.isAuthenticated()) {
+    console.log("==== islogged in");
+    res
+      .status(statusCode)
+      .render("templates/signedin-error-template", { statusCode, message });
+  } else {
+    res
+      .status(statusCode)
+      .render("templates/signedout-error-template", { statusCode, message });
+  }
 });
 
 app.listen(3000, function (req, res) {
