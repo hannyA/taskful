@@ -81,6 +81,7 @@ app.use("/auth", authRoutes);
 
 // Signed out pages
 app.get("/", function (req, res) {
+  console.log("Calling home");
   res.render("home");
 });
 

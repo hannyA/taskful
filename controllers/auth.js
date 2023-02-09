@@ -18,15 +18,25 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
     res.redirect("/dashboard");
   } catch (e) {
     req.flash("error", e.message);
-    res.redirect("/register");
+    res.redirect("/auth/register");
   }
 });
 
-module.exports.renderLoginForm = async (req, res) => {
+module.exports.renderLoginForm = (req, res) => {
   res.render("auth/login");
 };
 
 module.exports.loginUser = (req, res) => {
   req.flash("success", "Welcome back!");
   res.redirect("/dashboard");
+};
+
+module.exports.logout = (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    req.flash("success", "Goodbye");
+    res.redirect("/");
+  });
 };

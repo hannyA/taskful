@@ -3,6 +3,7 @@ const router = express.Router();
 const user = require("../models/user");
 const auth = require("../controllers/auth");
 const passport = require("passport");
+const { isLoggedIn } = require("../utils/middleware");
 
 router.route("/register").get(auth.renderRegisterForm).post(auth.registerUser);
 router
@@ -15,5 +16,7 @@ router
     }),
     auth.loginUser
   );
+
+router.get("/logout", auth.logout);
 
 module.exports = router;
