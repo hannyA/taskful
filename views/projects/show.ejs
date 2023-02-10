@@ -128,8 +128,8 @@
         </tr>
       </thead>
       <tbody>
-        <% for (let i = 0; i < 6; i++) { %> <% let ticket = project.issues[i];
-        %>
+        <% (project.issues).forEach(ticket => { %>
+
         <tr>
           <td
             data-bs-toggle="tooltip"
@@ -146,7 +146,7 @@
           <td><%= ticket.author.fullname %></td>
         </tr>
 
-        <% }%>
+        <% }) %>
       </tbody>
     </table>
   </div>

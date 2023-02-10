@@ -2,6 +2,8 @@ const Project = require("../models/project");
 const Issue = require("../models/issue");
 const User = require("../models/user");
 
+const wrapAsync = require("../utils/wrapAsync");
+
 module.exports.index = async (req, res) => {
   const projects = await Project.find({}).populate({ path: "owner" });
   const page = "index";
@@ -23,7 +25,7 @@ module.exports.createProject = async (req, res) => {
   res.redirect(`/projects/${project._id}`);
 };
 
-module.exports.showProject = async (req, res) => {
+module.exports.showProject = wrapAsync(async (req, res) => {
   const project = await Project.findById(req.params.id)
     .populate({
       path: "issues",
@@ -33,8 +35,10 @@ module.exports.showProject = async (req, res) => {
     })
     .populate("owner");
   const page = "show";
+
+  console.log(project);
   res.render("projects/show", { project, page });
-};
+});
 
 module.exports.editProject = async (req, res) => {
   const project = await Project.findById(req.params.id).populate("owner");

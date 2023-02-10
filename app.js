@@ -99,9 +99,9 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  console.log(err);
   const { statusCode = 500, message = "Something went wrong" } = err;
   if (req.isAuthenticated()) {
-    console.log("==== islogged in");
     res
       .status(statusCode)
       .render("templates/signedin-error-template", { statusCode, message });
