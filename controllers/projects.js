@@ -3,21 +3,24 @@ const Issue = require("../models/issue");
 const User = require("../models/user");
 
 module.exports.index = async (req, res) => {
-  const projects = await Project.find({});
+  const projects = await Project.find({}).populate({ path: "owner" });
   const page = "index";
   res.render("projects/index", { projects, page });
 };
 
+module.exports.renderNewProjectForm = async (req, res) => {
+  const page = "new";
+  const users = await User.find({});
+  res.render("projects/new", { page, users });
+};
+
 module.exports.createProject = async (req, res) => {
+  console.log(req.body);
+  console.log(req.body.project);
   const project = new Project(req.body.project);
   await project.save();
 
   res.redirect(`/projects/${project._id}`);
-};
-
-module.exports.renderNewForm = async (req, res) => {
-  const page = "new";
-  res.render("projects/new", { page });
 };
 
 module.exports.showProject = async (req, res) => {

@@ -9,28 +9,56 @@
   </ol>
 </nav>
 
-<h1>Create new Project</h1>
+<div class="row">
+  <div class="col-6 offset-2">
+    <h1 class="text-center">Create new Project</h1>
 
-<form action="/projects" method="POST">
-  <div>
-    <label for="title">Title</label>
-    <input type="text" name="project[title]" id="title" />
-  </div>
+    <form action="/projects" method="POST">
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input
+          class="form-control"
+          type="text"
+          name="project[title]"
+          id="title"
+          aria-label="Title"
+        />
+      </div>
 
-  <div>
-    <label for="description">Description</label>
-    <input type="text" name="project[description]" id="description" />
-  </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          name="project[description]"
+          id="description"
+          aria-label="Description"
+        ></textarea>
+      </div>
 
-  <div>
-    <label for="owner">Owner Name</label>
-    <input type="text" name="project[owner]" id="owner" />
-  </div>
+      <div class="mb-3">
+        <label class="form-label" for="owner">Owner Name</label>
+        <select
+          class="form-select"
+          name="project[owner]"
+          id="owner"
+          aria-label="Owner"
+        >
+          <% users.forEach(user => { %> <% console.log(user) %> <%
+          console.log(user._id) %>
+          <option value="<%= user._id%>">
+            <%= user.first%> <%=user.last %>
+          </option>
 
-  <!-- <div>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- <div>
     <label for="company">Company</label>
     <input type="text" name="project[company]" id="company" />
   </div> -->
 
-  <button>Create</button>
-</form>
+      <button>Create</button>
+    </form>
+  </div>
+</div>

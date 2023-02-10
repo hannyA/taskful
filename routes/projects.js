@@ -8,7 +8,7 @@ router
   .get(isLoggedIn, projects.index)
   .post(isLoggedIn, projects.createProject);
 
-router.get("/new", isLoggedIn, projects.renderNewForm);
+router.get("/new", isLoggedIn, projects.renderNewProjectForm);
 
 router.get("/:id", isLoggedIn, projects.showProject);
 router.get("/:id/edit", isLoggedIn, projects.editProject);
