@@ -32,7 +32,9 @@ module.exports.renderLoginForm = (req, res) => {
 
 module.exports.loginUser = (req, res) => {
   req.flash("success", "Welcome back!");
-  res.redirect("/dashboard");
+  const redirect = req.session.returnTo || "/dashboard";
+  delete req.session.returnTo;
+  res.redirect(redirect);
 };
 
 module.exports.logout = (req, res, next) => {
