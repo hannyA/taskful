@@ -14,8 +14,12 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
   const user = new User(body);
   try {
     const registeredUser = await User.register(user, password);
-    req.flash("success", `Welcome ${body.first}!`);
-    res.redirect("/dashboard");
+    req.login(registeredUser, (err) => {
+      if (err) return next(err);
+
+      req.flash("success", `Welcome ${body.first}!`);
+      res.redirect("/dashboard");
+    });
   } catch (e) {
     req.flash("error", e.message);
     res.redirect("/auth/register");
