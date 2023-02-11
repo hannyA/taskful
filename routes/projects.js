@@ -10,6 +10,7 @@ router
 
 router.get("/new", isLoggedIn, projects.renderNewProjectForm);
 
+router.get("/owner", isLoggedIn, projects.index);
 router.get("/:id", isLoggedIn, projects.showProject);
 router.get("/:id/edit", isLoggedIn, projects.editProject);
 router.get("/:id/issues", isLoggedIn, projects.projectIssues);

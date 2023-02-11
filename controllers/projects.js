@@ -5,7 +5,13 @@ const User = require("../models/user");
 const wrapAsync = require("../utils/wrapAsync");
 
 module.exports.index = async (req, res) => {
-  const projects = await Project.find({}).populate({ path: "owner" });
+  const { owner } = req.query;
+  console.log("Body: ", req.body);
+  console.log("Query: ", req.query.id);
+  console.log("Params: ", req.params);
+
+  const param = req.query.id ? { owner: req.query.id } : {};
+  const projects = await Project.find(param).populate({ path: "owner" });
   const page = "index";
   res.render("projects/index", { projects, page });
 };

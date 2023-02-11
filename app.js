@@ -81,7 +81,6 @@ app.use("/auth", authRoutes);
 
 // Signed out pages
 app.get("/", function (req, res) {
-  console.log("Calling home");
   res.render("home");
 });
 
@@ -94,7 +93,7 @@ app.get("/credits", function (req, res) {
 });
 
 app.all("*", (req, res, next) => {
-  console.log("Hit all");
+  console.log("Hit all urls");
   next(new ExpressError("Page not found", 404));
 });
 

@@ -50,8 +50,9 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'mine'?'active':'' %>"
-            href="/projects/"
+            href="/projects/owner?id=<%= currentUser._id %>"
           >
+            <% console.log("currentUser", currentUser.id) %>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
