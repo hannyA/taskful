@@ -5,14 +5,19 @@ const User = require("../models/user");
 const wrapAsync = require("../utils/wrapAsync");
 
 module.exports.index = async (req, res) => {
-  const { owner } = req.query;
-  console.log("Body: ", req.body);
-  console.log("Query: ", req.query.id);
-  console.log("Params: ", req.params);
-
-  const param = req.query.id ? { owner: req.query.id } : {};
+  // const { id } = { ...req.query.id };
+  const { id } = req.query || {};
+  // console.log("req.query.id : ", req.query.id);
+  // console.log("Bodyid : ", id);
+  // console.log("Query: ", req.query.id);
+  console.log("req user: ", req.user);
+  const currentUser = req.user;
+  const param = id ? { owner: id } : {};
   const projects = await Project.find(param).populate({ path: "owner" });
-  const page = "index";
+  const page = id === currentUser.id ? "mine" : "index";
+  // console.log("id: ", id);
+  // console.log("currentUser._id: ", currentUser.id);
+  // console.log("page: ", page);
   res.render("projects/index", { projects, page });
 };
 

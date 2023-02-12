@@ -6,9 +6,45 @@
   </ol>
 </nav> -->
 
-<h1>All Projects</h1>
+<div class="row">
+  <div class="col-6">
+    <h1 class="offset-md-6 offset-2">
+      <% if (page === 'mine') { %> My Projects <% } else{ %> Projects <% } %>
+    </h1>
+  </div>
+</div>
 
-<div>
+<table class="table">
+  <thead>
+    <tr>
+      <th class="col-1" scope="col">ID</th>
+      <th class="col-2" scope="col">Title</th>
+      <th class="col-2" scope="col">Owner</th>
+      <th class="col-6" scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (let project of projects) { %>
+    <tr>
+      <td
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="<%=project._id%>"
+      >
+        <a href="/projects/<%= project._id %> ">
+          ...<%=`${project._id}`.slice(-4)%></a
+        >
+      </td>
+      <td><%= project.title %></td>
+      <td><%= project.owner.first %> <%= project.owner.last %></td>
+      <td><%= project.description %></td>
+    </tr>
+
+    <% }%>
+  </tbody>
+</table>
+
+<!-- <div>
   <% for (let project of projects) { %>
   <div class="card mb-3 project-card">
     <div class="card-body">
@@ -26,4 +62,4 @@
     </div>
   </div>
   <% }%>
-</div>
+</div> -->
