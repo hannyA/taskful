@@ -55,15 +55,25 @@
           <option value="Very High">Very High</option>
         </select>
       </div>
+
       <div class="mb-3">
         <label class="form-label" for="owner">Owner</label>
-        <input
-          class="form-control"
-          type="text"
+        <select
+          class="form-select"
           name="ticket[author]"
           id="owner"
-          value="Tom Tyson"
-        />
+          aria-label="Owner"
+        >
+          <option value="<%= currentUser.id%>">
+            <%= currentUser.first %> <%= currentUser.last %>
+          </option>
+          <% users.forEach(user => { %>
+          <option value="<%= user._id%>">
+            <%= user.first%> <%=user.last %>
+          </option>
+
+          <% }) %>
+        </select>
       </div>
 
       <input hidden type="text" name="project[id]" value="<%= project._id%>" />

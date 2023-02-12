@@ -83,17 +83,21 @@ module.exports.renderNewProjectIssue = async (req, res) => {
   res.render("projects/new-ticket", { page, project, users });
 };
 
-module.exports.createNewTicket = async (req, res) => {
-  const author = await User.findOne({ first: "Tom", last: "Tyson" });
-  req.body.ticket["author"] = author;
-
+module.exports.createNewTicket = wrapAsync(async (req, res) => {
+  const id = req.params.id;
+  const project = await Project.findById(id);
   const ticket = new Issue(req.body.ticket);
+
+  project.issues.push(ticket);
+
   await ticket.save();
+  await project.save();
 
-  const projectId = req.body.project["id"];
+  // const projectId = req.body.project["id"];
+  // res.redirect()
 
-  res.redirect(`/projects/${projectId}/issues/${ticket._id}`);
-};
+  res.redirect(`/projects/${project._id}/issues/${ticket._id}`);
+});
 
 module.exports.deleteProject = wrapAsync(async (req, res) => {
   const { id } = req.params;
