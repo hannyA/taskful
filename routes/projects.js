@@ -11,11 +11,18 @@ router
 router.get("/new", isLoggedIn, projects.renderNewProjectForm);
 
 router.get("/owner", isLoggedIn, projects.index);
-router.get("/:id", isLoggedIn, projects.showProject);
+router
+  .route("/:id")
+  .get(isLoggedIn, projects.showProject)
+  .delete(isLoggedIn, projects.deleteProject);
+
 router.get("/:id/edit", isLoggedIn, projects.editProject);
-router.get("/:id/issues", isLoggedIn, projects.projectIssues);
-router.post("/:id/issues", isLoggedIn, projects.createNewTicket);
+router
+  .route("/:id/issues")
+  .get(isLoggedIn, projects.projectIssues)
+  .post(isLoggedIn, projects.createNewTicket);
 router.get("/:id/issues/new", isLoggedIn, projects.renderNewProjectIssue);
 router.get("/:id/issues/:issueId", isLoggedIn, projects.renderProjectIssue);
+// router.delete("/:id", isLoggedIn, projects.deleteProject);
 
 module.exports = router;

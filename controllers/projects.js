@@ -94,3 +94,9 @@ module.exports.createNewTicket = async (req, res) => {
 
   res.redirect(`/projects/${projectId}/issues/${ticket._id}`);
 };
+
+module.exports.deleteProject = wrapAsync(async (req, res) => {
+  const { id } = req.params;
+  await Project.findByIdAndDelete(id);
+  res.redirect("/projects");
+});

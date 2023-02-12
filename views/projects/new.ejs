@@ -43,6 +43,9 @@
           id="owner"
           aria-label="Owner"
         >
+          <option value="<%= currentUser.id%>">
+            <%= currentUser.first %> <%= currentUser.last %>
+          </option>
           <% users.forEach(user => { %>
           <option value="<%= user._id%>">
             <%= user.first%> <%=user.last %>
