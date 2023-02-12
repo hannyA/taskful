@@ -44,6 +44,12 @@
           <% }%>
         </tbody>
       </table>
+
+      <%= console.log("prokect length:" , project.issues )%> <%
+      console.log("prokect length:" , project.issues )%> <% if
+      (project.issues.length === 0 ) { %>
+      <h2 class="mt-5 text-center">No tickets found</h2>
+      <% }%>
     </div>
   </div>
 
