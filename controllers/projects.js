@@ -44,7 +44,6 @@ module.exports.createProject = async (req, res) => {
   console.log(req.body.project);
   const project = new Project(req.body.project);
   await project.save();
-
   res.redirect(`/api/v1/projects/${project._id}`);
 };
 
@@ -100,21 +99,38 @@ module.exports.editProject = async (req, res) => {
 /// Show all issues
 // search by tickets/issues -> author is me or some other user
 module.exports.projectIssues = async (req, res) => {
-  const projId = req.params.id;
-  const { userid } = req.query;
-  const project = await Project.findById(projId);
-  const findObj = { project: projId };
-  let page = "all-issues";
+  const projectID = req.params.id;
+  const project = await Project.findById(projectID);
 
-  if (userid) {
-    findObj.author = userid;
-    page = "mine";
-  }
+  req.query.project = projectID;
 
-  const issues = await Issue.find(findObj).populate({ path: "author" });
-  console.log("tickets: ", issues);
+  let page = req.query.author ? "mine" : "all-issues";
 
-  res.render("projects/all-issues", { project, issues, page });
+  const features = new APIFeatures(Issue.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const issues = await features.query.populate("author");
+
+  // Get number of projects and calculate number of pages
+  const countQuery = new APIFeatures(Issue.find(), req.query).filter();
+  const numIssues = await Issue.countDocuments(countQuery.query);
+
+  // console.log("numProjects: ", numProjects);
+  const totalPages = Math.ceil(numIssues / features.limit);
+
+  res.render("projects/all-issues", {
+    project,
+    issues,
+    page,
+    totalPages,
+    currentPage: features.page,
+    resource: `projects/${projectID}/issues`,
+  });
+
+  // res.render("projects/all-issues", { project, issues, page });
 };
 
 // Show single issue

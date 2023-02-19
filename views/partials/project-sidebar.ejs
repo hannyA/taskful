@@ -51,7 +51,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'mine'?'active':'' %>"
-            href="/api/v1/projects/<%= project._id %>/issues?userid=<%= currentUser._id %>"
+            href="/api/v1/projects/<%= project._id %>/issues?author=<%= currentUser._id %>"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
