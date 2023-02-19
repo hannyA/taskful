@@ -45,7 +45,7 @@ module.exports.createProject = async (req, res) => {
   const project = new Project(req.body.project);
   await project.save();
 
-  res.redirect(`/projects/${project._id}`);
+  res.redirect(`/api/v1/projects/${project._id}`);
 };
 
 // Show project details with first 10 issues
@@ -112,11 +112,11 @@ module.exports.createNewTicket = wrapAsync(async (req, res) => {
   // const projectId = req.body.project["id"];
   // res.redirect()
 
-  res.redirect(`/projects/${project._id}/issues/${ticket._id}`);
+  res.redirect(`/api/v1/projects/${project._id}/issues/${ticket._id}`);
 });
 
 module.exports.deleteProject = wrapAsync(async (req, res) => {
   const { id } = req.params;
   await Project.findByIdAndDelete(id);
-  res.redirect("/projects");
+  res.redirect("/api/v1/projects");
 });
