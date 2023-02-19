@@ -15,7 +15,10 @@ module.exports.index = async (req, res) => {
   const projects = await features.query.populate({ path: "owner" });
 
   // Get number of projects and calculate number of pages
-  const numProjects = await Project.countDocuments();
+  const countQuery = new APIFeatures(Project.find(), req.query).filter();
+  const numProjects = await Project.countDocuments(countQuery.query);
+
+  console.log("numProjects: ", numProjects);
   const totalPages = Math.ceil(numProjects / features.limit);
 
   const { owner } = req.query;
