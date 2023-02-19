@@ -30,8 +30,8 @@
     </main>
 
     <span class="mt-auto">
-      <%- include('../partials/pagination') %> <%- include('../partials/footer')
-      %>
+      <% if (page !== 'new') {%> <%- include('../partials/pagination') %> <% }
+      %><%- include('../partials/footer') %>
     </span>
 
     <script
