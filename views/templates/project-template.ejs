@@ -29,7 +29,10 @@
       </div>
     </main>
 
-    <span class="mt-auto"> <%- include('../partials/footer') %> </span>
+    <span class="mt-auto">
+      <% if (page !== 'new') {%> <%- include('../partials/pagination') %> <% }
+      %><%- include('../partials/footer') %>
+    </span>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

@@ -18,7 +18,7 @@ module.exports.index = async (req, res) => {
   const countQuery = new APIFeatures(Project.find(), req.query).filter();
   const numProjects = await Project.countDocuments(countQuery.query);
 
-  console.log("numProjects: ", numProjects);
+  // console.log("numProjects: ", numProjects);
   const totalPages = Math.ceil(numProjects / features.limit);
 
   const { owner } = req.query;
@@ -50,11 +50,44 @@ module.exports.createProject = async (req, res) => {
 
 // Show project details with first 10 issues
 module.exports.showProject = wrapAsync(async (req, res) => {
-  const { id } = req.params;
-  const project = await Project.findById(id).populate("owner");
-  const issues = await Issue.find({ project: id }).populate("author");
+  const projectID = req.params.id;
+  const project = await Project.findById(projectID).populate("owner");
+
+  // const issues = await Issue.find({ project: projectID }).populate("author");
+
+  req.query.project = projectID;
+  console.log("query: ", req.query);
+  const features = new APIFeatures(Issue.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const issues = await features.query.populate("author");
+
+  console.log("issues: ", issues);
+  // Get number of projects and calculate number of pages
+  const countQuery = new APIFeatures(Issue.find(), req.query).filter();
+  const numIssues = await Issue.countDocuments(countQuery.query);
+
+  // console.log("numProjects: ", numProjects);
+  const totalPages = Math.ceil(numIssues / features.limit);
+
+  // const { owner } = req.query;
+  // const page = owner === req.user.id ? "mine" : "index";
+
   const page = "show";
-  res.render("projects/show", { project, issues, page });
+
+  res.render("projects/show", {
+    project,
+    issues,
+    page,
+    totalPages,
+    currentPage: features.page,
+    resource: `projects/${projectID}`,
+  });
+
+  // res.render("projects/show", { project, issues, totalPages, page });
 });
 
 module.exports.editProject = async (req, res) => {
