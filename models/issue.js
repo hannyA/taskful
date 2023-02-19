@@ -10,11 +10,11 @@ const IssueSchema = new Schema({
     required: true,
   },
   status: String,
-  // project: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "Project",
-  //   required: true,
-  // },
+  project: {
+    type: Schema.Types.ObjectId,
+    ref: "Project",
+    // required: true,
+  },
   priority: {
     type: String,
     enum: ["Low", "Medium", "High", "Very High"],

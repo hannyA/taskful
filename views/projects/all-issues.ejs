@@ -24,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          <% for (let ticket of project.issues) { %>
+          <% for (let ticket of issues) { %>
           <tr>
             <td
               data-bs-toggle="tooltip"
@@ -45,9 +45,7 @@
         </tbody>
       </table>
 
-      <%= console.log("prokect length:" , project.issues )%> <%
-      console.log("prokect length:" , project.issues )%> <% if
-      (project.issues.length === 0 ) { %>
+      <% if (issues.length === 0 ) { %>
       <h2 class="mt-5 text-center">No tickets found</h2>
       <% }%>
     </div>

@@ -7,6 +7,7 @@ const {
   tickets,
   firstname,
   lastname,
+  email,
   role,
   status,
   priority,
@@ -48,18 +49,21 @@ const randomUser = () => {
   const l = Math.floor(Math.random() * lastname.length);
   const r = Math.floor(Math.random() * role.length);
   const cdate = randomDate(new Date(2022, 6, 6), new Date());
+  const e = Math.floor(Math.random() * email.length);
 
+  const _email = theemail(firstname[f], lastname[l], email[e]);
   return new User({
     first: firstname[f],
     last: lastname[l],
-    email: theemail(firstname[f], lastname[l]),
+    username: _email,
+    email: _email,
     role: role[r],
     registerDate: cdate,
   });
 };
 
-const theemail = (first, last) => {
-  return `${first}.${last}@gmail.com`;
+const theemail = (first, last, email) => {
+  return `${first}.${last}@${email}`;
 };
 
 const seedDB = async () => {
@@ -84,6 +88,7 @@ const seedDB = async () => {
       priority: priority[Math.floor(Math.random() * 4)],
     });
 
+    const projId = project.id;
     await user.save();
 
     // Tickets
@@ -99,14 +104,16 @@ const seedDB = async () => {
         status: status[j],
         priority: priority[j],
         type: type[j],
-        // project,
+        project: projId,
         createDate: d,
       });
-      project.issues.push(issue);
+      // project.issues.push(issue);
       await issue.save();
       await ticketUser.save();
     }
     await project.save();
+
+    console.log("Project:", project);
   }
 };
 

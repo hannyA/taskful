@@ -22,6 +22,10 @@ module.exports.firstname = [
   "Mike",
   "Stan",
   "Kyle",
+  "Levine",
+  "Langley",
+  "Ellis",
+  "Hope",
 ];
 module.exports.lastname = [
   "Regal",
@@ -31,6 +35,35 @@ module.exports.lastname = [
   "Jonsey",
   "Smith",
   "Mcclaine",
+  "Thatcher",
+  "Raven",
+  "Hansley",
+  "Ashley",
+  "Monroe",
+];
+module.exports.email = [
+  "gmail.com",
+  "outlook.com",
+  "yahoo.com",
+  "aol.com",
+  "gmail.co",
+  "outlook.co",
+  "yahoo.co",
+  "aol.co",
+  "gmail.ca",
+  "outlook.ca",
+  "yahoo.ca",
+  "aol.ca",
+
+  "gmail.na",
+  "outlook.na",
+  "yahoo.na",
+  "aol.na",
+
+  "gmail.uk",
+  "outlook.uk",
+  "yahoo.uk",
+  "aol.uk",
 ];
 module.exports.role = ["Admin", "Admin", "User"];
 

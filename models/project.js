@@ -12,7 +12,7 @@ const ProjectSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Issue",
-      required: true,
+      // required: true,
     },
   ],
   company: String,
