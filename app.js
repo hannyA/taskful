@@ -67,33 +67,37 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+  res.locals.apiVersion = "v1";
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
 
-app.use("/projects", projectRoutes);
-app.use("/ticket", ticketRoutes);
-app.use("/admin", adminRoutes);
-app.use("/auth", authRoutes);
+const version = "v1";
+app.use(`/api/${version}/projects`, projectRoutes);
+app.use(`/api/${version}/ticket`, ticketRoutes);
+app.use(`/api/${version}/admin`, adminRoutes);
+app.use(`/api/${version}/auth`, authRoutes);
 // app.use("/login", authRoutes);
 
 // Signed out pages
-app.get("/", function (req, res) {
+app.get(`/`, function (req, res) {
   res.render("home");
 });
 
-app.get("/dashboard", isLoggedIn, function (req, res) {
+app.get(`/api/${version}/dashboard`, isLoggedIn, function (req, res) {
   res.render("dashboards/index");
 });
 
-app.get("/credits", function (req, res) {
+app.get(`/api/${version}/credits`, function (req, res) {
   res.render("others/credits");
 });
 
 app.all("*", (req, res, next) => {
   console.log("Hit all urls");
+  console.log("req:", req.path);
+  console.log("req:", req.originalUrl);
   next(new ExpressError("Page not found", 404));
 });
 

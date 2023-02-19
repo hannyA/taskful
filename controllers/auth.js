@@ -18,11 +18,11 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
       if (err) return next(err);
 
       req.flash("success", `Welcome ${body.first}!`);
-      res.redirect("/dashboard");
+      res.redirect("/api/v1/dashboard");
     });
   } catch (e) {
     req.flash("error", e.message);
-    res.redirect("/auth/register");
+    res.redirect("/api/v1/auth/register");
   }
 });
 
@@ -32,7 +32,7 @@ module.exports.renderLoginForm = (req, res) => {
 
 module.exports.loginUser = (req, res) => {
   req.flash("success", "Welcome back!");
-  const redirect = req.session.returnTo || "/dashboard";
+  const redirect = req.session.returnTo || "/api/v1/dashboard";
   delete req.session.returnTo;
   res.redirect(redirect);
 };

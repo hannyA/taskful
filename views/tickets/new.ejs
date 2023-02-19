@@ -2,7 +2,7 @@
 
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/ticket">Tickets</a></li>
+    <li class="breadcrumb-item"><a href="/api/v1/ticket">Tickets</a></li>
     <li class="breadcrumb-item active" aria-current="page">Create Ticket</li>
   </ol>
 </nav>
@@ -17,7 +17,7 @@
   </div>
 
   <div class="card-body">
-    <form action="/ticket/" method="post">
+    <form action="/api/v1/ticket/" method="post">
       <div class="mb-3">
         <label class="form-label" for="status">Priority</label>
         <select class="form-select" name="ticket[status]" id="status">

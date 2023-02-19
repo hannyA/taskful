@@ -72,10 +72,14 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" href="/auth/login">Log in</a>
+                    <a class="dropdown-item" href="/api/v1/auth/login"
+                      >Log in</a
+                    >
                   </li>
                   <li>
-                    <a class="dropdown-item" href="/auth/register">Sign up</a>
+                    <a class="dropdown-item" href="/api/v1/auth/register"
+                      >Sign up</a
+                    >
                   </li>
                 </ul>
               </li>
@@ -90,7 +94,7 @@
       <div class="row">
         <div class="col-6 offset-6">
           <!-- <%- include('../partials/flash') %> -->
-          <form action="/auth/register" method="post">
+          <form action="/api/v1/auth/register" method="post">
             <div class="mb-3">
               <div class="row">
                 <div class="col-6">
@@ -145,7 +149,9 @@
               Sign up
             </button>
           </form>
-          <p>Already have an account? <a href="/auth/login">Sign in</a></p>
+          <p>
+            Already have an account? <a href="/api/v1/auth/login">Sign in</a>
+          </p>
         </div>
       </div>
     </section>

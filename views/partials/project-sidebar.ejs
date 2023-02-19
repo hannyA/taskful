@@ -8,7 +8,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'new-issue'?'active':'' %>"
-            href="/projects/<%= project._id %>/issues/new"
+            href="/api/v1/projects/<%= project._id %>/issues/new"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'all-issues'?'active':'' %>"
-            href="/projects/<%= project._id %>/issues"
+            href="/api/v1/projects/<%= project._id %>/issues"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -51,7 +51,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'mine'?'active':'' %>"
-            href="/projects/<%= project._id %>/issues?userid=<%= currentUser._id %>"
+            href="/api/v1/projects/<%= project._id %>/issues?userid=<%= currentUser._id %>"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'manage'?'active':'' %>"
-            href="/projects/manage"
+            href="/api/v1/projects/manage"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'settings'?'active':'' %>"
-            href="/projects/settings"
+            href="/api/v1/projects/settings"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

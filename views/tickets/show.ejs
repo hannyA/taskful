@@ -2,7 +2,7 @@
 
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/ticket">Tickets</a></li>
+    <li class="breadcrumb-item"><a href="/api/v1/ticket">Tickets</a></li>
     <li class="breadcrumb-item active" aria-current="page">Ticket</li>
   </ol>
 </nav>
@@ -14,6 +14,6 @@
   <form action="/ticket/<%= ticket._id %>?_method=DELETE " method="POST">
     <Button>Delete</Button>
   </form>
-  <a href="/ticket/<%= ticket._id %>/edit ">Edit</a>
+  <a href="/api/v1/ticket/<%= ticket._id %>/edit ">Edit</a>
   <!-- <a href="/dashboard">Dashboard</a> -->
 </footer>

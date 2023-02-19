@@ -2,9 +2,9 @@
 
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+    <li class="breadcrumb-item"><a href="/api/v1/projects">Projects</a></li>
     <li class="breadcrumb-item">
-      <a href="/projects/<%= project._id%>"><%= project.title%></a>
+      <a href="/api/v1/projects/<%= project._id%>"><%= project.title%></a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">Create Ticket</li>
   </ol>
@@ -22,7 +22,7 @@
   <div class="card-body">
     <form
       class="new-issue-form w-100"
-      action="/projects/<%= project._id%>/issues"
+      action="/api/v1/projects/<%= project._id%>/issues"
       method="post"
     >
       <div class="mb-3">

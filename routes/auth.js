@@ -12,7 +12,7 @@ router
   .post(
     passport.authenticate("local", {
       failureFlash: true,
-      failureRedirect: "/auth/login",
+      failureRedirect: "/api/v1/auth/login",
     }),
     auth.loginUser
   );

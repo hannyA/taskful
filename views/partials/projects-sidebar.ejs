@@ -8,7 +8,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'new'?'active':'' %>"
-            href="/projects/new"
+            href="/api/v1/projects/new"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -27,7 +27,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'index'?'active':'' %>"
-            href="/projects"
+            href="/api/v1/projects"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -50,7 +50,7 @@
         <li class="nav-item">
           <a
             class="nav-link ps-3 <%= page === 'mine'?'active':'' %>"
-            href="/projects/owner?id=<%= currentUser._id %>"
+            href="/api/v1/projects/owner?id=<%= currentUser._id %>"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
