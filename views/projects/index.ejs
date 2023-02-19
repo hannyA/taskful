@@ -5,10 +5,12 @@
     <li class="breadcrumb-item active" aria-current="page">Project</li>
   </ol>
 </nav> -->
-
+<!-- <h1 class="text-center">
+  <% if (page === 'mine') { %> My Projects <% } else{ %> Projects <% } %>
+</h1> -->
 <div class="row">
-  <div class="col-6">
-    <h1 class="offset-md-6 offset-2">
+  <div class="offset-4">
+    <h1 class="text-cejnter">
       <% if (page === 'mine') { %> My Projects <% } else{ %> Projects <% } %>
     </h1>
   </div>
@@ -44,14 +46,13 @@
   </tbody>
 </table>
 
-<%- include('../partials/pagination') %> <% if (projects.length ===0 ) { %>
+<% if (projects.length ===0 ) { %>
 <div class="row">
   <div class="col-6">
     <h2 class="mt-5 offset-md-6 offset-2">No projects found</h2>
   </div>
 </div>
 <% }%>
-
 <!-- <div>
   <% for (let project of projects) { %>
   <div class="card mb-3 project-card">
