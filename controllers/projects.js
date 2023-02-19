@@ -26,6 +26,7 @@ module.exports.index = async (req, res) => {
     page,
     totalPages,
     currentPage: features.page,
+    resource: "projects",
   });
 };
 
