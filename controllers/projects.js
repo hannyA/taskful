@@ -1,24 +1,32 @@
 const Project = require("../models/project");
 const Issue = require("../models/issue");
 const User = require("../models/user");
-
+const APIFeatures = require("../utils/apiFeatures");
 const wrapAsync = require("../utils/wrapAsync");
 
+// List all projects or mine projects
 module.exports.index = async (req, res) => {
-  // const { id } = { ...req.query.id };
-  const { id } = req.query || {};
-  // console.log("req.query.id : ", req.query.id);
-  // console.log("Bodyid : ", id);
-  // console.log("Query: ", req.query.id);
-  console.log("req user: ", req.user);
-  const currentUser = req.user;
-  const param = id ? { owner: id } : {};
-  const projects = await Project.find(param).populate({ path: "owner" });
-  const page = id === currentUser.id ? "mine" : "index";
-  // console.log("id: ", id);
-  // console.log("currentUser._id: ", currentUser.id);
-  // console.log("page: ", page);
-  res.render("projects/index", { projects, page });
+  const features = new APIFeatures(Project.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const projects = await features.query.populate({ path: "owner" });
+
+  // Get number of projects and calculate number of pages
+  const numProjects = await Project.countDocuments();
+  const totalPages = Math.ceil(numProjects / features.limit);
+
+  const { owner } = req.query;
+  const page = owner === req.user.id ? "mine" : "index";
+
+  res.render("projects/index", {
+    projects,
+    page,
+    totalPages,
+    currentPage: features.page,
+  });
 };
 
 module.exports.renderNewProjectForm = async (req, res) => {
