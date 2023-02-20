@@ -3,17 +3,18 @@
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/api/v1/projects">Projects</a></li>
-    <li class="breadcrumb-item active" aria-current="page">
-      Create New Project
+    <li class="breadcrumb-item">
+      <a href="/api/v1/projects/<%= project.id %>"><%= project.title %></a>
     </li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Project</li>
   </ol>
 </nav>
 
 <div class="row">
   <div class="col-6 offset-2">
-    <h1 class="text-center">Create new Project</h1>
+    <h1 class="text-center">Edit Project - <%=project.title%></h1>
 
-    <form action="/api/v1/projects" method="POST">
+    <form action="/api/v1/projects/<%= project.id %>?_method=PUT" method="POST">
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -22,6 +23,7 @@
           name="project[title]"
           id="title"
           aria-label="Title"
+          value="<%= project.title%>"
         />
       </div>
 
@@ -32,7 +34,9 @@
           name="project[description]"
           id="description"
           aria-label="Description"
-        ></textarea>
+        >
+<%= project.description%></textarea
+        >
       </div>
 
       <div class="mb-3">
@@ -43,14 +47,25 @@
           id="owner"
           aria-label="Owner"
         >
-          <option selected value="<%= currentUser.id%>">
+          <% if (project.owner.id === currentUser.id) { %>
+          <option selected value="<%= currentUser.id %>">
             <%= currentUser.first %> <%= currentUser.last %>
           </option>
-          <% users.forEach(user => { if (user.id !== currentUser.id) { %>
+          <% } else { %>
+          <option value="<%= currentUser.id %>">
+            <%= currentUser.first %> <%= currentUser.last %>
+          </option>
+          <% }%> <% users.forEach(user => { if(user.id !== currentUser.id) {%>
+          <% if (project.owner.id === user.id) { %>
+          <option selected value="<%= user._id%>">
+            <%= user.first%> <%=user.last %>
+          </option>
+          <% } else { %>
+
           <option value="<%= user._id%>">
             <%= user.first%> <%=user.last %>
           </option>
-          <% } }) %>
+          <%} }}) %>
         </select>
       </div>
 
@@ -59,7 +74,15 @@
     <input type="text" name="project[company]" id="company" />
   </div> -->
 
-      <button type="submit" class="btn btn-outline-dark btn-lg">Create</button>
+      <button type="submit" class="btn btn-outline-dark btn-lg me-2">
+        Save
+      </button>
+      <a
+        class="btn btn-outline-danger btn-lg"
+        href="/api/v1/projects/<%= project.id %>"
+        role="button"
+        >Cancel</a
+      >
     </form>
   </div>
 </div>

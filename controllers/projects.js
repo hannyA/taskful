@@ -99,11 +99,20 @@ module.exports.showProject = wrapAsync(async (req, res) => {
   // res.render("projects/show", { project, issues, totalPages, page });
 });
 
-module.exports.editProject = async (req, res) => {
+module.exports.renderEditProject = async (req, res) => {
   const project = await Project.findById(req.params.id).populate("owner");
+  const users = await User.find({});
   const page = "edit";
-  // res.render("projects/edit", { project, page });
-  res.send("404 Need to do");
+  res.render("projects/edit", { project, users, page });
+  // res.send("404 Need to do");
+};
+
+module.exports.editProject = async (req, res) => {
+  const projectId = req.params.id;
+  const project = await Project.findByIdAndUpdate(projectId, {
+    ...req.body.project,
+  });
+  res.redirect(`/api/v1/projects/${projectId}`);
 };
 
 /// Show all issues
