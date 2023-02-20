@@ -1,5 +1,5 @@
 const MAX_LIMIT = 20;
-const DEFAULT_LIMIT = 1;
+const DEFAULT_LIMIT = 3;
 
 class APIFeatures {
   constructor(query, queryString) {

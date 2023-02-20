@@ -129,8 +129,6 @@ module.exports.projectIssues = async (req, res) => {
     currentPage: features.page,
     resource: `projects/${projectID}/issues`,
   });
-
-  // res.render("projects/all-issues", { project, issues, page });
 };
 
 // Show single issue
@@ -152,16 +150,16 @@ module.exports.renderNewProjectIssue = async (req, res) => {
 module.exports.createNewTicket = wrapAsync(async (req, res) => {
   const id = req.params.id;
   req.body.ticket.project = id;
-  const project = await Project.findById(id);
+  // const project = await Project.findById(id);
   const ticket = new Issue(req.body.ticket);
-  project.issues.push(ticket);
+  // project.issues.push(ticket);
   await ticket.save();
-  await project.save();
+  // await project.save();
 
   // const projectId = req.body.project["id"];
   // res.redirect()
 
-  res.redirect(`/api/v1/projects/${project._id}/issues/${ticket._id}`);
+  res.redirect(`/api/v1/projects/${id}/issues/${ticket._id}`);
 });
 
 module.exports.deleteProject = wrapAsync(async (req, res) => {
