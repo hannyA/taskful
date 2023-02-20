@@ -106,6 +106,21 @@
   </div>
 </div>
 
-<h1><%= ticket.title %></h1>
-<p><%= ticket.title %> - <%= ticket.description %></p>
-<p><%= ticket.status %> - <%= ticket.author.fullname %></p>
+<div class="card mt-5">
+  <div class="card-header">
+    <h1>Project: <%= project.title %></h1>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Issue - <%= ticket.title %></h5>
+
+    <p class="card-text">
+      <strong>Description:</strong> <%= ticket.description %>
+    </p>
+    <p class="card-text"><strong>Status:</strong> <%= ticket.status %></p>
+    <p class="card-text"><strong>Priority:</strong> <%= ticket.priority %></p>
+
+    <p class="card-text">
+      <strong>Assigned to:</strong> <%= ticket.author.fullname %>
+    </p>
+  </div>
+</div>

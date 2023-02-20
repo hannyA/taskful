@@ -18,6 +18,7 @@ const IssueSchema = new Schema({
   priority: {
     type: String,
     enum: ["Low", "Medium", "High", "Very High"],
+    default: "Low",
   },
   createDate: {
     type: Date,
