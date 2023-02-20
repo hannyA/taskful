@@ -73,7 +73,7 @@ module.exports.showProject = wrapAsync(async (req, res) => {
 
   const issues = await features.query.populate("author");
 
-  console.log("issues: ", issues);
+  // console.log("issues: ", issues);
   // Get number of projects and calculate number of pages
   const countQuery = new APIFeatures(Issue.find(), req.query).filter();
   const numIssues = await Issue.countDocuments(countQuery.query);
@@ -107,6 +107,7 @@ module.exports.renderEditProject = async (req, res) => {
   // res.send("404 Need to do");
 };
 
+// Edit project
 module.exports.editProject = async (req, res) => {
   const projectId = req.params.id;
   const project = await Project.findByIdAndUpdate(projectId, {
@@ -160,13 +161,13 @@ module.exports.projectIssues = async (req, res) => {
 
 // Show single issue
 module.exports.renderProjectIssue = async (req, res) => {
-  const project = await Project.findById(req.params.id);
-  const ticket = await Issue.findById(req.params.issueId);
+  const project = await Project.findById(req.params.projectId);
+  const ticket = await Issue.findById(req.params.issueId).populate("author");
   const page = "issue";
   res.render("projects/issue", { ticket, page, project });
 };
 
-// Show new Issue Form
+// Show Create new Issue Form
 module.exports.renderNewProjectIssue = async (req, res) => {
   const page = "new-issue";
   const users = await User.find({});
@@ -174,6 +175,7 @@ module.exports.renderNewProjectIssue = async (req, res) => {
   res.render("projects/new-ticket", { page, project, users });
 };
 
+// Create ticket and redirect
 module.exports.createNewTicket = wrapAsync(async (req, res) => {
   const id = req.params.id;
   req.body.ticket.project = id;
@@ -187,4 +189,38 @@ module.exports.deleteProject = wrapAsync(async (req, res) => {
   const { id } = req.params;
   await Project.findByIdAndDelete(id);
   res.redirect("/api/v1/projects");
+});
+
+module.exports.editProjectIssue = wrapAsync(async (req, res) => {
+  const projectId = req.params.projectId;
+  const issueId = req.params.issueId;
+  const project = await Issue.findByIdAndUpdate(issueId, {
+    ...req.body.ticket,
+  });
+  res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
+});
+
+module.exports.renderEditProjectIssue = wrapAsync(async (req, res) => {
+  const pid = req.params.projectId;
+  const tid = req.params.issueId;
+
+  const project = await Project.findById(pid);
+  const issue = await Issue.findById(tid).populate("author");
+  const page = "5";
+
+  console.log("issue; ", issue);
+
+  const users = await User.find({});
+  res.render("projects/edit-ticket", { project, issue, page, users });
+
+  // res.render("projects/all-issues", {
+  //   pagination: true,
+
+  //   project,
+  //   issues,
+  //   page,
+  //   totalPages,
+  //   currentPage: features.page,
+  //   resource,
+  // });
 });

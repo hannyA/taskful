@@ -1,8 +1,9 @@
 const express = require("express");
-const router = express.Router();
 const Issue = require("../models/issue");
 const { isLoggedIn } = require("../utils/middleware");
 const tickets = require("../controllers/tickets");
+
+const router = express.Router({ mergeParams: true });
 
 router
   .route("/")

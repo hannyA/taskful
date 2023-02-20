@@ -1,0 +1,104 @@
+<% layout('templates/project-template') %>
+
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/api/v1/projects">Projects</a></li>
+
+    <li class="breadcrumb-item">
+      <a href="/api/v1/projects/<%= project._id%>"><%= project.title%></a>
+    </li>
+
+    <li class="breadcrumb-item">
+      <a href="/api/v1/projects/<%= project._id%>/issues/">issues</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="/api/v1/projects/<%= project._id%>/issues/<%= issue._id%>"
+        ><%= issue.id%></a
+      >
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Ticket</li>
+  </ol>
+</nav>
+
+<div class="card" style="width: 38rem">
+  <div class="card-header p-4">
+    <h1 class="card-title">Edit Issue</h1>
+    <p class="card-text">
+      Edit reported incident or request with an issue you are having
+    </p>
+  </div>
+
+  <div class="card-body">
+    <form
+      class="new-issue-form w-100"
+      action="/api/v1/projects/<%= project.id%>/issues/<%= issue.id %>?_method=PUT"
+      method="post"
+    >
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input
+          class="form-control"
+          type="text"
+          name="ticket[title]"
+          id="title"
+          value="<%= issue.title%>"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          name="ticket[description]"
+          id="description"
+          aria-label="Description"
+        >
+<%= issue.description%></textarea
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="status">Priority</label>
+        <select class="form-select" name="ticket[status]" id="status">
+          <!-- <option selected>Status</option> -->
+          <% let options = [ "Low", "Medium", "High", "Very High"]; options.forEach(option => { %>
+            <%= console.log("issue.priority: ", issue.priority ) %>
+            <%= console.log("issue.option: ", option ) %>
+          <option <%= ( issue.status === option ) ? "selected" : ""%> value="<%=option %>"> 
+            <%=option %>
+          </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="owner">Owner</label>
+        <select
+          class="form-select"
+          name="ticket[author]"
+          id="owner"
+          aria-label="Owner"
+        >
+          <option <%= ( issue.author.id === currentUser.id ) ? "selected" : "" %>
+            value="<%= currentUser.id %>"> <%= currentUser.first %> <%=
+            currentUser.last %>
+          </option>
+
+          <% users.forEach(user => { if (user.id !== currentUser.id) {  %>
+          <option <%= ( issue.author.id === user.id ) ? "selected" : "" %>
+            value="<%= user._id%>"> <%= user.first%> <%=user.last %>
+          </option>
+          <% }}) %>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-outline-dark btn-lg">Save</button>
+      <a
+      class="btn btn-outline-danger btn-lg"
+      href="/api/v1/projects/<%= project.id %>/issues/<%= issue._id%>"
+      role="button"
+      >Cancel</a
+    >
+    </form>
+  </div>
+</div>
