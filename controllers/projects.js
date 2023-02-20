@@ -22,14 +22,23 @@ module.exports.index = async (req, res) => {
   const totalPages = Math.ceil(numProjects / features.limit);
 
   const { owner } = req.query;
-  const page = owner === req.user.id ? "mine" : "index";
+  // const page = owner === req.user.id ? "mine" : "index";
+
+  let page = "index";
+  let resource = "projects?";
+
+  if (req.query.owner) {
+    page = "mine";
+    resource = `${resource}owner=${req.query.owner}&`;
+  }
 
   res.render("projects/index", {
+    pagination: true,
     projects,
     page,
     totalPages,
     currentPage: features.page,
-    resource: "projects",
+    resource,
   });
 };
 
@@ -78,12 +87,13 @@ module.exports.showProject = wrapAsync(async (req, res) => {
   const page = "show";
 
   res.render("projects/show", {
+    // pagination: true,
     project,
     issues,
     page,
     totalPages,
     currentPage: features.page,
-    resource: `projects/${projectID}`,
+    resource: `projects/${projectID}?`,
   });
 
   // res.render("projects/show", { project, issues, totalPages, page });
@@ -104,7 +114,13 @@ module.exports.projectIssues = async (req, res) => {
 
   req.query.project = projectID;
 
-  let page = req.query.author ? "mine" : "all-issues";
+  let page = "all-issues";
+  let resource = `projects/${projectID}/issues?`;
+
+  if (req.query.author) {
+    page = "mine";
+    resource = `${resource}author=${req.query.author}&`;
+  }
 
   const features = new APIFeatures(Issue.find(), req.query)
     .filter()
@@ -122,12 +138,14 @@ module.exports.projectIssues = async (req, res) => {
   const totalPages = Math.ceil(numIssues / features.limit);
 
   res.render("projects/all-issues", {
+    pagination: true,
+
     project,
     issues,
     page,
     totalPages,
     currentPage: features.page,
-    resource: `projects/${projectID}/issues`,
+    resource,
   });
 };
 
@@ -150,14 +168,8 @@ module.exports.renderNewProjectIssue = async (req, res) => {
 module.exports.createNewTicket = wrapAsync(async (req, res) => {
   const id = req.params.id;
   req.body.ticket.project = id;
-  // const project = await Project.findById(id);
   const ticket = new Issue(req.body.ticket);
-  // project.issues.push(ticket);
   await ticket.save();
-  // await project.save();
-
-  // const projectId = req.body.project["id"];
-  // res.redirect()
 
   res.redirect(`/api/v1/projects/${id}/issues/${ticket._id}`);
 });
