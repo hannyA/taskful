@@ -20,6 +20,7 @@
             <th scope="col">Title</th>
             <th scope="col">Description</th>
             <th scope="col">Status</th>
+            <th scope="col">Last Update</th>
             <th scope="col">Owner</th>
           </tr>
         </thead>
@@ -40,6 +41,12 @@
             <td><%= ticket.title %></td>
             <td><%= ticket.description %></td>
             <td><%= ticket.status %></td>
+
+            <!-- <% let d = ticket.lastUpdate.getDate(); let m =
+            ticket.lastUpdate.getMonth() + 1; let y =
+            ticket.lastUpdate.getFullYear() %> -->
+
+            <td><%=ticket.lastUpdateFormat %></td>
             <td><%= ticket.author.fullname %></td>
           </tr>
 

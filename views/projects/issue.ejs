@@ -120,6 +120,13 @@
     <p class="card-text"><strong>Priority:</strong> <%= ticket.priority %></p>
 
     <p class="card-text">
+      <strong>Date Created:</strong> <%= ticket.createDateFormat %>
+    </p>
+    <p class="card-text">
+      <strong>Last Update:</strong> <%= ticket.lastUpdateFormat %>
+    </p>
+
+    <p class="card-text">
       <strong>Assigned to:</strong> <%= ticket.author.fullname %>
     </p>
   </div>

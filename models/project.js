@@ -22,7 +22,7 @@ const ProjectSchema = new Schema({
   },
   stage: {
     type: String,
-    enum: ["New", "Complete", "Canceled", "On Hold", "Processing"],
+    enum: ["New", "Complete", "Canceled", "On Hold", "In Progress"],
     default: "New",
   },
   createDate: {
