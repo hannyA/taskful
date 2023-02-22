@@ -147,7 +147,7 @@ module.exports.projectIssues = async (req, res) => {
   // console.log("numProjects: ", numProjects);
   const totalPages = Math.ceil(numIssues / features.limit);
 
-  res.render("projects/all-issues", {
+  res.render("projects/issues/all-issues", {
     pagination: true,
 
     project,
@@ -164,7 +164,7 @@ module.exports.renderProjectIssue = async (req, res) => {
   const project = await Project.findById(req.params.projectId);
   const ticket = await Issue.findById(req.params.issueId).populate("author");
   const page = "issue";
-  res.render("projects/issue", { ticket, page, project });
+  res.render("projects/issues/show", { ticket, page, project });
 };
 
 // Show Create new Issue Form
@@ -172,7 +172,7 @@ module.exports.renderNewProjectIssue = async (req, res) => {
   const page = "new-issue";
   const users = await User.find({});
   const project = await Project.findById(req.params.id);
-  res.render("projects/new-ticket", { page, project, users });
+  res.render("projects/issues/new-issue", { page, project, users });
 };
 
 // Create ticket and redirect
@@ -211,7 +211,7 @@ module.exports.renderEditProjectIssue = wrapAsync(async (req, res) => {
   console.log("issue; ", issue);
 
   const users = await User.find({});
-  res.render("projects/edit-ticket", { project, issue, page, users });
+  res.render("projects/issues/edit-issue", { project, issue, page, users });
 
   // res.render("projects/all-issues", {
   //   pagination: true,
