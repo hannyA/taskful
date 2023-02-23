@@ -1,0 +1,29 @@
+<% layout('templates/issue-template') %>
+
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/api/v1/projects">Projects</a></li>
+    <li class="breadcrumb-item">
+      <a href="/api/v1/projects/<%= project._id %> "><%= project.title %></a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Issues</li>
+  </ol>
+</nav>
+
+<div>
+  <div class="card" style="width: 38rem">
+    <div class="card-header p-4">
+      <h1 class="card-title">Create Issue</h1>
+      <p class="card-text">
+        Create an incident record to report and request with an issue you are
+        having
+      </p>
+    </div>
+
+    <% if (issues.length === 0 ) { %>
+    <h2 class="mt-5 text-center">No tickets found</h2>
+    <% }%>
+  </div>
+
+  <footer class="mt-5"></footer>
+</div>

@@ -24,7 +24,7 @@ router.get("/:id/edit", isLoggedIn, projects.renderEditProject);
 router
   .route("/:id/issues")
   .get(isLoggedIn, projects.projectIssues) // get all project issues
-  .post(isLoggedIn, projects.createNewTicket); // create new ticket
+  .post(isLoggedIn, projects.createNewIssue); // create new ticket
 
 router.get("/:id/issues/new", isLoggedIn, projects.renderNewProjectIssue); // new issue form
 
@@ -39,7 +39,28 @@ router.get(
   isLoggedIn,
   projects.renderEditProjectIssue
 );
-// .put(isLoggedIn, projects.editProjectIssue);
+
+// get all tasks
+router
+  .route("/:projectId/issues/:issueId/tasks")
+  .get(isLoggedIn, projects.renderTasks)
+  .post(isLoggedIn, projects.createNewTask);
+
+router.get(
+  "/:projectId/issues/:issueId/tasks/new",
+  isLoggedIn,
+  projects.renderNewTaskForm
+);
+
+router
+  .route("/:projectId/issues/:issueId/tasks/:taskId")
+  .delete(isLoggedIn, projects.deleteTask);
+
+router.get(
+  "/:projectId/issues/:issueId/tasks/:taskId/edit",
+  isLoggedIn,
+  projects.renderEditTaskForm
+);
 
 // router.delete("/:id", isLoggedIn, projects.deleteProject);
 

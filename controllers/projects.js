@@ -1,6 +1,7 @@
 const Project = require("../models/project");
 const Issue = require("../models/issue");
 const User = require("../models/user");
+const Task = require("../models/task");
 const APIFeatures = require("../utils/apiFeatures");
 const wrapAsync = require("../utils/wrapAsync");
 
@@ -162,9 +163,12 @@ module.exports.projectIssues = async (req, res) => {
 // Show single issue
 module.exports.renderProjectIssue = async (req, res) => {
   const project = await Project.findById(req.params.projectId);
-  const ticket = await Issue.findById(req.params.issueId).populate("author");
+  const issue = await Issue.findById(req.params.issueId).populate("author");
+  const tasks = await Task.find({ issue }).populate("author");
+
+  console.log("tasks: ", tasks);
   const page = "issue";
-  res.render("projects/issues/show", { ticket, page, project });
+  res.render("projects/issues/show", { issue, page, project, tasks });
 };
 
 // Show Create new Issue Form
@@ -176,7 +180,7 @@ module.exports.renderNewProjectIssue = async (req, res) => {
 };
 
 // Create ticket and redirect
-module.exports.createNewTicket = wrapAsync(async (req, res) => {
+module.exports.createNewIssue = wrapAsync(async (req, res) => {
   const id = req.params.id;
   req.body.ticket.project = id;
   const ticket = new Issue(req.body.ticket);
@@ -212,15 +216,73 @@ module.exports.renderEditProjectIssue = wrapAsync(async (req, res) => {
 
   const users = await User.find({});
   res.render("projects/issues/edit-issue", { project, issue, page, users });
+});
 
-  // res.render("projects/all-issues", {
-  //   pagination: true,
+module.exports.renderTasks = wrapAsync(async (req, res) => {
+  const projectId = req.params.projectId;
+  const issuId = req.params.projectId;
 
-  //   project,
-  //   issues,
-  //   page,
-  //   totalPages,
-  //   currentPage: features.page,
-  //   resource,
-  // });
+  // const tasks = await Task.find({ issue });
+
+  res.send("renderTasks", {});
+});
+
+module.exports.createNewTask = wrapAsync(async (req, res) => {
+  const projectId = req.params.projectId;
+  const issueId = req.params.issueId;
+  req.body.task.issue = issueId;
+  console.log("req.body.task: ", req.body.task);
+  const task = new Task(req.body.task);
+  await task.save();
+  res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
+});
+
+module.exports.renderNewTaskForm = wrapAsync(async (req, res) => {
+  const projectId = req.params.projectId;
+  const issueId = req.params.issueId;
+  const project = await Project.findById(projectId);
+
+  const issue = await Issue.findById(issueId).populate("author");
+  const users = await User.find({});
+  const page = "new-task";
+
+  res.render("projects/tasks/new", { project, issue, page, users });
+
+  // res.send("renderNewTaskForm");
+});
+
+module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
+  const projectId = req.params.projectId;
+  const issueId = req.params.issueId;
+  const project = await Project.findById(projectId);
+
+  const issue = await Issue.findById(issueId).populate("author");
+  const users = await User.find({});
+  const page = "edit-task";
+
+  res.render("projects/tasks/new", { project, issue, page, users });
+
+  // res.send("renderNewTaskForm");
+});
+
+module.exports.deleteTask = wrapAsync(async (req, res) => {
+  const projectId = req.params.projectId;
+  const issueId = req.params.issueId;
+  const taskId = req.params.taskId;
+  // const project = await Project.findById(projectId);
+
+  const task = await Task.findByIdAndDelete(taskId);
+
+  const page = "delete-task";
+  res.redirect("/api/v1/projects/${projectId}/issues/${issueId}/tasks");
+
+  // res.render("projects/tasks/new", { project, issue, page, users });
+
+  // res.send("renderNewTaskForm");
+});
+
+module.exports.deleteProject = wrapAsync(async (req, res) => {
+  const { id } = req.params;
+  await Project.findByIdAndDelete(id);
+  res.redirect("/api/v1/projects");
 });

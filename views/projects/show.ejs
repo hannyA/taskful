@@ -124,10 +124,14 @@
       <thead>
         <tr>
           <th scope="col">Ticket ID</th>
+          <th scope="col">Opened</th>
+
           <th scope="col">Title</th>
           <th scope="col">Description</th>
           <th scope="col">Status</th>
-          <th scope="col">Owner</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Assigned to</th>
+          <th scope="col">Last update</th>
         </tr>
       </thead>
       <tbody>
@@ -145,10 +149,13 @@
               ...<%=`${ticket._id}`.slice(-4)%>
             </a>
           </td>
+          <td><%= ticket.createDateFormat %></td>
           <td><%= ticket.title %></td>
           <td><%= ticket.description %></td>
           <td><%= ticket.status %></td>
+          <td><%= ticket.priority %></td>
           <td><%= ticket.author.fullname %></td>
+          <td><%= ticket.lastUpdateFormat %></td>
         </tr>
 
         <% }) %>
