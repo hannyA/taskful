@@ -272,7 +272,6 @@ module.exports.deleteTask = wrapAsync(async (req, res) => {
   const projectId = req.params.projectId;
   const issueId = req.params.issueId;
   const taskId = req.params.taskId;
-  // const project = await Project.findById(projectId);
 
   const task = await Task.findByIdAndDelete(taskId);
 

@@ -98,7 +98,7 @@
           id="owner"
           aria-label="Owner"
         >
-        
+
           <option <%= ( task.author._id === currentUser.id ) ? "selected" : "" %>
             value="<%= currentUser.id %>"> <%= currentUser.first %> <%=
             currentUser.last %>
@@ -109,7 +109,6 @@
             value="<%= user._id%>"> <%= user.first%> <%=user.last %>
           </option>
           <% }}) %>
-
 
         </select>
       </div>
