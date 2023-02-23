@@ -254,13 +254,16 @@ module.exports.renderNewTaskForm = wrapAsync(async (req, res) => {
 module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
   const projectId = req.params.projectId;
   const issueId = req.params.issueId;
-  const project = await Project.findById(projectId);
+  const taskId = req.params.taskId;
 
+  const project = await Project.findById(projectId);
   const issue = await Issue.findById(issueId).populate("author");
+  const task = await Task.findById(taskId).populate("author");
+
   const users = await User.find({});
   const page = "edit-task";
 
-  res.render("projects/tasks/new", { project, issue, page, users });
+  res.render("projects/tasks/edit", { project, issue, task, page, users });
 
   // res.send("renderNewTaskForm");
 });
