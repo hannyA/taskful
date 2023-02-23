@@ -276,7 +276,7 @@ module.exports.deleteTask = wrapAsync(async (req, res) => {
   const task = await Task.findByIdAndDelete(taskId);
 
   const page = "delete-task";
-  res.redirect("/api/v1/projects/${projectId}/issues/${issueId}/tasks");
+  res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
 
   // res.render("projects/tasks/new", { project, issue, page, users });
 
