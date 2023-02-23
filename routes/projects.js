@@ -54,6 +54,7 @@ router.get(
 
 router
   .route("/:projectId/issues/:issueId/tasks/:taskId")
+  .put(isLoggedIn, projects.updateTaskForm)
   .delete(isLoggedIn, projects.deleteTask);
 
 router.get(

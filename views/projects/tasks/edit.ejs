@@ -27,7 +27,7 @@
   <div class="card-body">
     <form
       class="new-issue-form w-100"
-      action="/api/v1/projects/<%= project._id%>/issues/<%= issue._id%>/tasks"
+      action="/api/v1/projects/<%= project._id%>/issues/<%= issue._id%>/tasks/<%=task.id%>?_method=PUT"
       method="post"
     >
       <div class="mb-3">

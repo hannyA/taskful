@@ -268,6 +268,17 @@ module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
   // res.send("renderNewTaskForm");
 });
 
+module.exports.updateTaskForm = wrapAsync(async (req, res) => {
+  const projectId = req.params.projectId;
+  const issueId = req.params.issueId;
+  const taskId = req.params.taskId;
+
+  const task = await Task.findByIdAndUpdate(taskId, {
+    ...req.body.task,
+  });
+  res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
+});
+
 module.exports.deleteTask = wrapAsync(async (req, res) => {
   const projectId = req.params.projectId;
   const issueId = req.params.issueId;
@@ -277,10 +288,6 @@ module.exports.deleteTask = wrapAsync(async (req, res) => {
 
   const page = "delete-task";
   res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
-
-  // res.render("projects/tasks/new", { project, issue, page, users });
-
-  // res.send("renderNewTaskForm");
 });
 
 module.exports.deleteProject = wrapAsync(async (req, res) => {
