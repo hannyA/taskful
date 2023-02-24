@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
@@ -36,6 +37,9 @@ db.once("open", () => {
 });
 
 const app = express();
+app.use(morgan("dev"));
+app.use(express.json());
+
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -115,6 +119,4 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(3000, function (req, res) {
-  console.log("Server started up");
-});
+module.exports = app;
