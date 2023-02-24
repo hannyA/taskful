@@ -4,13 +4,17 @@
   "description": "IT Issue tracker",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start dev": "nodemon server.js",
+    "start prod": "NODE_ENV=production nodemon server.js",
+    "dev": "nodemon server.js",
+    "prod": "NODE_ENV=production nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hanny Aly",
   "license": "ISC",
   "dependencies": {
     "connect-flash": "^0.1.1",
+    "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "ejs-mate": "^4.0.0",
     "express": "^4.18.2",
