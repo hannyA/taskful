@@ -1,7 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
-const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
@@ -24,19 +23,21 @@ const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
 // const { session } = require("passport");
 
-mongoose.connect("mongodb://localhost:27017/issue-tracker", {
-  // useNewUrlParser: true,
-  // useCreateIndex: true,
-  // useUnifiedTopology: true,
-});
+// mongoose.connect("mongodb://localhost:27017/issue-tracker", {
+//   // useNewUrlParser: true,
+//   // useCreateIndex: true,
+//   // useUnifiedTopology: true,
+// });
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-  console.log("Database connected");
-});
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", () => {
+//   console.log("Database connected");
+// });
 
 const app = express();
+console.log("process.env.NODE_ENV: ", process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
