@@ -57,14 +57,30 @@
         >
       </div>
 
+
       <div class="mb-3">
-        <label class="form-label" for="status">Priority</label>
+        <label class="form-label" for="status">Status</label>
         <select class="form-select" name="ticket[status]" id="status">
           <!-- <option selected>Status</option> -->
+          <% let priorityOptions = ["New", "Assigned", "In Progress", "Solved", "Closed"]; priorityOptions.forEach(option => { %>
+            <%= console.log("issue.status: ", issue.status ) %>
+            <%= console.log("issue.option: ", option ) %>
+          <option <%= ( issue.status === option ) ? "selected" : ""%> value="<%=option %>"> 
+            <%=option %>
+          </option>
+          <% }) %>
+        </select>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label" for="priority">Priority</label>
+        <select class="form-select" name="ticket[priority]" id="priority">
+          <!-- <option selected>priority</option> -->
           <% let options = [ "Low", "Medium", "High", "Very High"]; options.forEach(option => { %>
             <%= console.log("issue.priority: ", issue.priority ) %>
             <%= console.log("issue.option: ", option ) %>
-          <option <%= ( issue.status === option ) ? "selected" : ""%> value="<%=option %>"> 
+          <option <%= ( issue.priority === option ) ? "selected" : ""%> value="<%=option %>"> 
             <%=option %>
           </option>
           <% }) %>

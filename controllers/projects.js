@@ -160,14 +160,15 @@ module.exports.projectIssues = async (req, res) => {
   });
 };
 
-// Show single issue
+// Show single issue with tasks
 module.exports.renderProjectIssue = async (req, res) => {
   const project = await Project.findById(req.params.projectId);
   const issue = await Issue.findById(req.params.issueId).populate("author");
   // const tasks = await Task.find({ issue }).populate("author");
 
-  const features = new APIFeatures(Task.find(), req.query)
-    .filter({ issue })
+  console.log("req.query: ", req.query);
+  const features = new APIFeatures(Task.find(), { issue: req.params.issueId })
+    .filter()
     .sort()
     .limitFields()
     .paginate();
@@ -190,9 +191,13 @@ module.exports.renderNewProjectIssue = async (req, res) => {
 // Create ticket and redirect
 module.exports.createNewIssue = wrapAsync(async (req, res) => {
   const id = req.params.id;
+  console.log("body before:", req.body.ticket);
   req.body.ticket.project = id;
+  console.log("body after:", req.body.ticket);
   const ticket = new Issue(req.body.ticket);
   await ticket.save();
+  console.log("ticket id :", ticket.id);
+  console.log("ticket _id :", ticket._id);
 
   res.redirect(`/api/v1/projects/${id}/issues/${ticket._id}`);
 });

@@ -56,10 +56,6 @@
             aria-label="Hours"
           >
 
-          
-
-
-
           <%let hours = [... Array(24).keys()] ; hours.forEach(hour => { %>
               <option <%= ( task.duration.hours === hour ) ? "selected" : "" %>
                 value="<%= hour %>"> <%= hour %> 
@@ -80,12 +76,9 @@
           >
             <%let minutes = [0, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]%> <%
             minutes.forEach(minute => { %>
-            
             <option <%= ( task.duration.minutes === minute ) ? "selected" : "" %>
               value="<%=minute%>"><%=minute%></option>
-              
             <% }) %>
-
           </select>
         </div>
       </div>
@@ -98,7 +91,6 @@
           id="owner"
           aria-label="Owner"
         >
-
           <option <%= ( task.author._id === currentUser.id ) ? "selected" : "" %>
             value="<%= currentUser.id %>"> <%= currentUser.first %> <%=
             currentUser.last %>
