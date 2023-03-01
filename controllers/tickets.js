@@ -16,7 +16,7 @@ module.exports.createNewTicket = async (req, res) => {
   const ticket = new Issue(req.body.ticket);
   await ticket.save();
   const page = "3";
-  res.redirect(`/tickets/${ticket._id}`, { page });
+  res.redirect(`/api/v1/tickets/${ticket._id}`, { page });
 };
 
 module.exports.showTicket = async (req, res) => {
@@ -34,12 +34,12 @@ module.exports.updateTicket = async (req, res) => {
   const { id } = req.params;
   const ticket = await Issue.findByIdAndUpdate(id, { ...req.body.ticket });
   const page = "6";
-  res.redirect(`/tickets/${ticket._id}`, { page });
+  res.redirect(`/api/v1/tickets/${ticket._id}`, { page });
 };
 
 module.exports.deleteTicket = async (req, res) => {
   const { id } = req.params;
   const ticket = await Issue.findByIdAndDelete(id);
   const page = "7";
-  res.redirect("/tickets", { page });
+  res.redirect("/api/v1/tickets", { page });
 };
