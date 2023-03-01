@@ -164,7 +164,15 @@ module.exports.projectIssues = async (req, res) => {
 module.exports.renderProjectIssue = async (req, res) => {
   const project = await Project.findById(req.params.projectId);
   const issue = await Issue.findById(req.params.issueId).populate("author");
-  const tasks = await Task.find({ issue }).populate("author");
+  // const tasks = await Task.find({ issue }).populate("author");
+
+  const features = new APIFeatures(Task.find(), req.query)
+    .filter({ issue })
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const tasks = await features.query.populate("author");
 
   console.log("tasks: ", tasks);
   const page = "issue";
