@@ -162,12 +162,13 @@ module.exports.projectIssues = async (req, res) => {
 
 // Show single issue with tasks
 module.exports.renderProjectIssue = async (req, res) => {
-  const project = await Project.findById(req.params.projectId);
-  const issue = await Issue.findById(req.params.issueId).populate("author");
-  // const tasks = await Task.find({ issue }).populate("author");
+  const { issueId, projectId } = req.params;
+  const project = await Project.findById(projectId);
+  const issue = await Issue.findById(issueId).populate("author");
 
-  console.log("req.query: ", req.query);
-  const features = new APIFeatures(Task.find(), { issue: req.params.issueId })
+  req.query.issue = issueId;
+
+  const features = new APIFeatures(Task.find(), req.query)
     .filter()
     .sort()
     .limitFields()
@@ -175,9 +176,28 @@ module.exports.renderProjectIssue = async (req, res) => {
 
   const tasks = await features.query.populate("author");
 
-  console.log("tasks: ", tasks);
+  // Get number of projects and calculate number of pages
+  const countQuery = new APIFeatures(Task.find(), req.query).filter();
+  const numberofTasks = await Task.countDocuments(countQuery.query);
+
+  const pagination = numberofTasks == 0 ? false : true;
+  // console.log("numProjects: ", numProjects);
+  const totalPages = Math.ceil(numberofTasks / features.limit);
+
   const page = "issue";
-  res.render("projects/issues/show", { issue, page, project, tasks });
+  let resource = `projects/${req.params.projectId}/issues/${issueId}?`;
+
+  res.render("projects/issues/show", {
+    issue,
+    page,
+    project,
+    tasks,
+    pagination: pagination,
+    resource,
+
+    totalPages,
+    currentPage: features.page,
+  });
 };
 
 // Show Create new Issue Form
