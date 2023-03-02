@@ -11,6 +11,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
 const flash = require("connect-flash");
+const MongoStore = require("connect-mongo");
 
 const User = require("./models/user");
 const Issue = require("./models/issue");
@@ -47,14 +48,38 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+// Get dev/prod url
+let localDB = process.env.DATABASE_LOCAL;
+let remoteDB = process.env.DATABASE.replace(
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD
+).replace("<USERNAME>", process.env.DATABASE_USERNAME);
+
+let mongoDB = process.env.NODE_ENV === "development" ? localDB : remoteDB;
+
+// Set url for use in server.js
+app.set("_mongoDB", mongoDB);
+
+const store = MongoStore.create({
+  mongoUrl: mongoDB,
+  touchAfter: 24 * 3600,
+  crypto: {
+    secret: process.env.MONOGODB_STORE_SECRET,
+  },
+});
+
+store.on("error", function (e) {
+  console.log("SESSION STORE ERROR: ", e);
+});
+
 const sessionConfig = {
-  secret: "TODO_Change this secret",
+  store,
+  secret: process.env.SESSION_CONFIG_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {

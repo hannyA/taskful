@@ -1,23 +1,15 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
+
 const app = require("./app");
-
 mongoose.set("strictQuery", false);
-
-let localDB = process.env.DATABASE_LOCAL;
-let remoteDB = process.env.DATABASE.replace(
-  "<PASSWORD>",
-  process.env.DATABASE_PASSWORD
-).replace("<USERNAME>", process.env.DATABASE_USERNAME);
-
-let mongoDB = process.env.NODE_ENV === "development" ? localDB : remoteDB;
 
 console.log("process.env.NODE_ENV: ", process.env.NODE_ENV);
 
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(mongoDB);
+  await mongoose.connect(app.get("_mongoDB"));
   console.log("MongoDB connection successful!");
 }
 
