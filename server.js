@@ -5,17 +5,14 @@ const app = require("./app");
 
 mongoose.set("strictQuery", false);
 
-let mongoDB;
-if (process.env.NODE_ENV === "development") {
-  mongoDB = process.env.DATABASE_LOCAL;
-} else {
-  mongoDB = process.env.DATABASE.replace(
-    "<PASSWORD>",
-    process.env.DATABASE_PASSWORD
-  ).replace("<USERNAME>", process.env.DATABASE_USERNAME);
-}
+let localDB = process.env.DATABASE_LOCAL;
+let remoteDB = process.env.DATABASE.replace(
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD
+).replace("<USERNAME>", process.env.DATABASE_USERNAME);
 
-console.log("mongoDB: ", mongoDB);
+let mongoDB = process.env.NODE_ENV === "development" ? localDB : remoteDB;
+
 console.log("process.env.NODE_ENV: ", process.env.NODE_ENV);
 
 main().catch((err) => console.log(err));
