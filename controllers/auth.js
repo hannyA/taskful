@@ -53,7 +53,12 @@ module.exports.isAuthorized = wrapAsync(async (req, res, next) => {
     req.flash("error", "You are not authorized to view this page");
     return res.redirect("templates/signedin-error-template");
   }
-  console.log(user.company);
+  if (req.body.company && req.body.company.equals(user.company)) {
+    req.flash("error", "You are not authorized to view this page");
+    return res.redirect("templates/signedin-error-template");
+  }
+
+  req.body.company = user.company;
   req.query.company = user.company;
   next();
 });

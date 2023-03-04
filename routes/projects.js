@@ -9,7 +9,7 @@ const auth = require("../controllers/auth");
 router
   .route("/")
   .get(isLoggedIn, auth.isAuthorized, projects.index)
-  .post(isLoggedIn, projects.createProject);
+  .post(isLoggedIn, auth.isAuthorized, projects.createProject);
 
 router.get("/new", isLoggedIn, projects.renderNewProjectForm);
 

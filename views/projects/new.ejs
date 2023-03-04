@@ -19,7 +19,7 @@
         <input
           class="form-control"
           type="text"
-          name="project[title]"
+          name="title"
           id="title"
           aria-label="Title"
         />
@@ -29,7 +29,7 @@
         <label class="form-label" for="description">Description</label>
         <textarea
           class="form-control"
-          name="project[description]"
+          name="description"
           id="description"
           aria-label="Description"
         ></textarea>
@@ -37,12 +37,7 @@
 
       <div class="mb-3">
         <label class="form-label" for="owner">Owner Name</label>
-        <select
-          class="form-select"
-          name="project[owner]"
-          id="owner"
-          aria-label="Owner"
-        >
+        <select class="form-select" name="owner" id="owner" aria-label="Owner">
           <option selected value="<%= currentUser.id%>">
             <%= currentUser.first %> <%= currentUser.last %>
           </option>

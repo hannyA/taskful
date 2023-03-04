@@ -62,7 +62,8 @@ module.exports.renderNewProjectForm = async (req, res) => {
 module.exports.createProject = async (req, res) => {
   console.log(req.body);
   console.log(req.body.project);
-  const project = new Project(req.body.project);
+
+  const project = new Project(req.body);
   await project.save();
   res.redirect(`/api/v1/projects/${project._id}`);
 };
