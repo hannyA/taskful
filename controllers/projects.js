@@ -70,7 +70,7 @@ module.exports.createProject = async (req, res) => {
 
 // Show project details with first 10 issues
 module.exports.showProject = wrapAsync(async (req, res) => {
-  const projectID = req.params.id;
+  const projectID = req.params.projectId;
   const project = await Project.findById(projectID).populate("owner");
 
   // const issues = await Issue.find({ project: projectID }).populate("author");
@@ -111,6 +111,10 @@ module.exports.showProject = wrapAsync(async (req, res) => {
   // res.render("projects/show", { project, issues, totalPages, page });
 });
 
+module.exports.error = async (req, res) => {
+  res.render("templates/signedin-error-template");
+};
+
 module.exports.renderEditProject = async (req, res) => {
   const project = await Project.findById(req.params.id).populate("owner");
   const users = await User.find({});
@@ -121,7 +125,7 @@ module.exports.renderEditProject = async (req, res) => {
 
 // Edit project
 module.exports.editProject = async (req, res) => {
-  const projectId = req.params.id;
+  const projectId = req.params.projectId;
   const project = await Project.findByIdAndUpdate(projectId, {
     ...req.body.project,
   });
@@ -234,8 +238,8 @@ module.exports.createNewIssue = wrapAsync(async (req, res) => {
 });
 
 module.exports.deleteProject = wrapAsync(async (req, res) => {
-  const { id } = req.params;
-  await Project.findByIdAndDelete(id);
+  const { projectId } = req.params;
+  await Project.findByIdAndDelete(projectId);
   res.redirect("/api/v1/projects");
 });
 

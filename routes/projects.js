@@ -9,16 +9,18 @@ const auth = require("../controllers/auth");
 router
   .route("/")
   .get(isLoggedIn, auth.isAuthorized, projects.index)
-  .post(isLoggedIn, auth.isAuthorized, projects.createProject);
+  .post(isLoggedIn, auth.addCompany, projects.createProject);
 
 router.get("/new", isLoggedIn, projects.renderNewProjectForm);
 
 router.get("/owner", isLoggedIn, projects.index);
 router
-  .route("/:id")
-  .get(isLoggedIn, projects.showProject)
-  .put(isLoggedIn, projects.editProject)
-  .delete(isLoggedIn, projects.deleteProject);
+  .route("/:projectId")
+  .get(isLoggedIn, auth.canViewProject, projects.showProject)
+  .put(isLoggedIn, auth.isAuthorized, projects.editProject)
+  .delete(isLoggedIn, auth.isAuthorized, projects.deleteProject);
+
+router.route("/:projectId/error").get(isLoggedIn, projects.error);
 
 router.get("/:id/edit", isLoggedIn, projects.renderEditProject);
 

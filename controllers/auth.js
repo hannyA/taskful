@@ -1,5 +1,6 @@
 const wrapAsync = require("../utils/wrapAsync");
 const User = require("../models/user");
+const Project = require("../models/project");
 
 module.exports.renderRegisterForm = async (req, res) => {
   res.render("auth/register");
@@ -47,18 +48,69 @@ module.exports.logout = (req, res, next) => {
   });
 };
 
-module.exports.isAuthorized = wrapAsync(async (req, res, next) => {
+/**
+ * req.query  => url query string
+ * req.body   => http body
+ * req.params => url path
+ */
+
+module.exports.canViewProjects = wrapAsync(async (req, res, next) => {
   const user = await User.findById(req.user._id);
-  if (req.query.company && req.query.company.equals(user.company)) {
+
+  if (req.query.company && !req.query.company.equals(user.company)) {
     req.flash("error", "You are not authorized to view this page");
-    return res.redirect("templates/signedin-error-template");
-  }
-  if (req.body.company && req.body.company.equals(user.company)) {
+    return res.render("templates/signedin-error-template");
+  } else if (req.params.company && !req.params.company.equals(user.company)) {
     req.flash("error", "You are not authorized to view this page");
-    return res.redirect("templates/signedin-error-template");
+    return res.render("templates/signedin-error-template");
   }
 
-  req.body.company = user.company;
+  // req.body.company = user.company;
   req.query.company = user.company;
+  req.params.company = user.company;
+  next();
+});
+
+// 64038a76601f262f2f00f08f
+
+module.exports.addCompany = wrapAsync(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  req.body.company = user.company;
+
+  next();
+});
+
+module.exports.canViewProject = wrapAsync(async (req, res, next) => {
+  const { projectId } = req.params;
+
+  const user = await User.findById(req.user._id);
+  const project = await Project.findById(projectId);
+
+  if (project.company !== user.company) {
+    req.flash("error", "You are not authorized to view this page");
+    // const statusCode = 403;
+    // const message = "Page not found";
+    // console.log("message: ", message);
+    return res.redirect(`/api/v1/projects/${projectId}/error`);
+  } else {
+    next();
+  }
+});
+
+module.exports.isAuthorized = wrapAsync(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+
+  if (req.query.company && !req.query.company.equals(user.company)) {
+    req.flash("error", "You are not authorized to view this page");
+    return res.render("templates/signedin-error-template");
+  }
+  //  if (req.params.company && !req.params.company.equals(user.company)) {
+  //   req.flash("error", "You are not authorized to view this page");
+  //   return res.redirect("templates/signedin-error-template");
+  // }
+
+  // req.body.company = user.company;
+  req.query.company = user.company;
+  // req.params.company = user.company;
   next();
 });
