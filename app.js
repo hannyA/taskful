@@ -155,11 +155,17 @@ app.use((err, req, res, next) => {
   if (req.isAuthenticated()) {
     res
       .status(statusCode)
-      .render("templates/signedin-error-template", { statusCode, message });
+      .render("templates/error/signedin-error-template", {
+        statusCode,
+        message,
+      });
   } else {
     res
       .status(statusCode)
-      .render("templates/signedout-error-template", { statusCode, message });
+      .render("templates/error/signedout-error-template", {
+        statusCode,
+        message,
+      });
   }
 });
 

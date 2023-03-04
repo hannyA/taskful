@@ -59,10 +59,10 @@ module.exports.canViewProjects = wrapAsync(async (req, res, next) => {
 
   if (req.query.company && !req.query.company.equals(user.company)) {
     req.flash("error", "You are not authorized to view this page");
-    return res.render("templates/signedin-error-template");
+    return res.render("templates/error/signedin-error-template");
   } else if (req.params.company && !req.params.company.equals(user.company)) {
     req.flash("error", "You are not authorized to view this page");
-    return res.render("templates/signedin-error-template");
+    return res.render("templates/error/signedin-error-template");
   }
 
   // req.body.company = user.company;
@@ -102,7 +102,7 @@ module.exports.isAuthorized = wrapAsync(async (req, res, next) => {
 
   if (req.query.company && !req.query.company.equals(user.company)) {
     req.flash("error", "You are not authorized to view this page");
-    return res.render("templates/signedin-error-template");
+    return res.render("templates/error/signedin-error-template");
   }
   //  if (req.params.company && !req.params.company.equals(user.company)) {
   //   req.flash("error", "You are not authorized to view this page");

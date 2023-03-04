@@ -112,7 +112,7 @@ module.exports.showProject = wrapAsync(async (req, res) => {
 });
 
 module.exports.error = async (req, res) => {
-  res.render("templates/signedin-error-template");
+  res.render("templates/error/signedin-error-template");
 };
 
 module.exports.renderEditProject = async (req, res) => {
