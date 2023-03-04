@@ -122,14 +122,30 @@ app.get(`/api/${version}/dashboard`, isLoggedIn, function (req, res) {
   res.render("dashboards/index");
 });
 
-app.get(`/api/${version}/credits`, function (req, res) {
+app.get(`/credits`, function (req, res) {
   res.render("others/credits");
 });
 
 app.all("*", (req, res, next) => {
   console.log("Hit all urls");
-  console.log("req:", req.path);
-  console.log("req:", req.originalUrl);
+  console.log("req:", req.path); /// path, no query
+  console.log("req:", req.originalUrl); // path including query
+
+  const legitPages = ["/features", "/teams", "/pricing", "/support"];
+  if (legitPages.includes(req.path)) {
+    var n = req.path.lastIndexOf("/");
+
+    let result = req.path.substring(n + 1);
+    console.log(result);
+    const page = result.charAt(0).toUpperCase() + result.slice(1);
+    console.log(page);
+
+    return next(new ExpressError(`${page} page is under construction`, 503));
+  }
+
+  // var str = "GeeksforGeeks";
+  // var result = str.slice(1);
+
   next(new ExpressError("Page not found", 404));
 });
 
