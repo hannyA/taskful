@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 const projects = require("../controllers/projects");
 const { isLoggedIn } = require("../utils/middleware");
+const auth = require("../controllers/auth");
 
 // router.use('/:id/issues')
 
 router
   .route("/")
-  .get(isLoggedIn, projects.index)
+  .get(isLoggedIn, auth.isAuthorized, projects.index)
   .post(isLoggedIn, projects.createProject);
 
 router.get("/new", isLoggedIn, projects.renderNewProjectForm);

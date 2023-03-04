@@ -22,7 +22,7 @@ const UserSchema = new Schema({
   },
   company: {
     type: String,
-    required: false,
+    required: true,
   },
   role: {
     type: String,

@@ -28,7 +28,8 @@ module.exports.index = async (req, res) => {
   let page = "index";
   let resource = "projects?";
 
-  if (req.query.owner) {
+  const ownerId = req.query.owner;
+  if (ownerId && ownerId === req.user.id) {
     page = "mine";
     resource = `${resource}owner=${req.query.owner}&`;
   }
@@ -44,6 +45,9 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.renderNewProjectForm = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  req.query.company = user.company;
+
   const page = "new";
   const users = await User.find({});
   res.render("projects/new", { page, users });

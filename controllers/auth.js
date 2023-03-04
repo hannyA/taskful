@@ -46,3 +46,14 @@ module.exports.logout = (req, res, next) => {
     res.redirect("/");
   });
 };
+
+module.exports.isAuthorized = wrapAsync(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  if (req.query.company && req.query.company.equals(user.company)) {
+    req.flash("error", "You are not authorized to view this page");
+    return res.redirect("templates/signedin-error-template");
+  }
+  console.log(user.company);
+  req.query.company = user.company;
+  next();
+});

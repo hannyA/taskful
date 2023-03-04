@@ -2,10 +2,17 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ProjectSchema = new Schema({
-  title: String,
+  title: {
+    type: String,
+    required: true,
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
+  },
+  company: {
+    type: String,
+    required: true,
   },
   description: String,
   issues: [
@@ -15,7 +22,6 @@ const ProjectSchema = new Schema({
       // required: true,
     },
   ],
-  company: String,
   priority: {
     type: String,
     enum: ["Low", "Medium", "High", "Very High"],
