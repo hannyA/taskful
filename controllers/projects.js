@@ -48,8 +48,14 @@ module.exports.renderNewProjectForm = async (req, res) => {
   const user = await User.findById(req.user._id);
   req.query.company = user.company;
 
+  // Get users from company
+  const features = new APIFeatures(User.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields();
+
+  const users = await features.query;
   const page = "new";
-  const users = await User.find({});
   res.render("projects/new", { page, users });
 };
 
