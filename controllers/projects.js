@@ -251,11 +251,10 @@ module.exports.editProjectIssue = wrapAsync(async (req, res) => {
 });
 
 module.exports.renderEditProjectIssue = wrapAsync(async (req, res) => {
-  const pid = req.params.projectId;
-  const tid = req.params.issueId;
+  const { projectId, issueId } = req.params;
 
-  const project = await Project.findById(pid);
-  const issue = await Issue.findById(tid).populate("author");
+  const project = await Project.findById(projectId);
+  const issue = await Issue.findById(issueId).populate("author");
   const page = "5";
 
   console.log("issue; ", issue);
@@ -274,8 +273,8 @@ module.exports.renderTasks = wrapAsync(async (req, res) => {
 });
 
 module.exports.createNewTask = wrapAsync(async (req, res) => {
-  const projectId = req.params.projectId;
-  const issueId = req.params.issueId;
+  const { projectId, issueId } = req.params;
+
   req.body.task.issue = issueId;
   console.log("req.body.task: ", req.body.task);
   const task = new Task(req.body.task);
@@ -292,8 +291,6 @@ module.exports.renderNewTaskForm = wrapAsync(async (req, res) => {
   const page = "new-task";
 
   res.render("projects/tasks/new", { project, issue, page, users });
-
-  // res.send("renderNewTaskForm");
 });
 
 module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
@@ -312,9 +309,7 @@ module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
 });
 
 module.exports.updateTaskForm = wrapAsync(async (req, res) => {
-  const projectId = req.params.projectId;
-  const issueId = req.params.issueId;
-  const taskId = req.params.taskId;
+  const { projectId, issueId, taskId } = req.params;
 
   const task = await Task.findByIdAndUpdate(taskId, {
     ...req.body.task,
@@ -323,18 +318,9 @@ module.exports.updateTaskForm = wrapAsync(async (req, res) => {
 });
 
 module.exports.deleteTask = wrapAsync(async (req, res) => {
-  const projectId = req.params.projectId;
-  const issueId = req.params.issueId;
-  const taskId = req.params.taskId;
-
+  const { projectId, issueId, taskId } = req.params;
   const task = await Task.findByIdAndDelete(taskId);
 
   const page = "delete-task";
   res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
-});
-
-module.exports.deleteProject = wrapAsync(async (req, res) => {
-  const { id } = req.params;
-  await Project.findByIdAndDelete(id);
-  res.redirect("/api/v1/projects");
 });
