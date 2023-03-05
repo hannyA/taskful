@@ -15,7 +15,7 @@ module.exports.renderNewUserForm = async (req, res) => {
 };
 
 module.exports.newUser = async (req, res) => {
-  const user = new User(req.body.ticket);
+  const user = new User(req.body);
   await user.save();
   res.redirect("/api/v1/admin/users");
 

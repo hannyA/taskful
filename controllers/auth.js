@@ -73,13 +73,6 @@ module.exports.logout = (req, res, next) => {
 
 // 64038a76601f262f2f00f08f
 
-module.exports.addCompany = wrapAsync(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
-  req.body.company = user.company;
-
-  next();
-});
-
 module.exports.canViewProject = wrapAsync(async (req, res, next) => {
   const { projectId } = req.params;
 

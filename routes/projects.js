@@ -3,13 +3,14 @@ const router = express.Router({ mergeParams: true });
 const projects = require("../controllers/projects");
 const { isLoggedIn } = require("../utils/middleware");
 const auth = require("../controllers/auth");
+const { addCompany } = require("../middleware/forms");
 
 // router.use('/:id/issues')
 
 router
   .route("/")
   .get(isLoggedIn, auth.isAuthorized, projects.index)
-  .post(isLoggedIn, auth.addCompany, projects.createProject);
+  .post(isLoggedIn, addCompany, projects.createProject);
 
 router.get("/new", isLoggedIn, projects.renderNewProjectForm);
 
@@ -17,7 +18,7 @@ router.get("/owner", isLoggedIn, projects.index);
 router
   .route("/:projectId")
   .get(isLoggedIn, auth.canViewProject, projects.showProject)
-  .put(isLoggedIn, auth.canEditProject, auth.addCompany, projects.editProject)
+  .put(isLoggedIn, auth.canEditProject, addCompany, projects.editProject)
   .delete(isLoggedIn, auth.canEditProject, projects.deleteProject);
 
 router.route("/:projectId/error").get(isLoggedIn, projects.error);
@@ -60,18 +61,19 @@ router
   .get(isLoggedIn, auth.canViewProject, projects.renderTasks)
   .post(isLoggedIn, auth.canEditProject, projects.createNewTask);
 
+// Get new task form
 router.get(
   "/:projectId/issues/:issueId/tasks/new",
   isLoggedIn,
   auth.canEditProject,
   projects.renderNewTaskForm
 );
-
+//
 router
   .route("/:projectId/issues/:issueId/tasks/:taskId")
-  .put(isLoggedIn, auth.canEditProject, projects.updateTaskForm)
-  .delete(isLoggedIn, auth.canEditProject, projects.deleteTask);
-
+  .put(isLoggedIn, auth.canEditProject, projects.updateTaskForm) // Submit edit new task
+  .delete(isLoggedIn, auth.canEditProject, projects.deleteTask); // Delete task
+//
 router.get(
   "/:projectId/issues/:issueId/tasks/:taskId/edit",
   isLoggedIn,
