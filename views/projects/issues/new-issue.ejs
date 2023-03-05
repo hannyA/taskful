@@ -64,15 +64,14 @@
           id="owner"
           aria-label="Owner"
         >
-          <option value="<%= currentUser.id%>">
+          <option selected value="<%= currentUser.id%>">
             <%= currentUser.first %> <%= currentUser.last %>
           </option>
-          <% users.forEach(user => { %>
+          <% users.forEach(user => { if (user.id !== currentUser.id) { %>
           <option value="<%= user._id%>">
             <%= user.first%> <%=user.last %>
           </option>
-
-          <% }) %>
+          <% } }) %>
         </select>
       </div>
 
