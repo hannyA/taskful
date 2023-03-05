@@ -101,6 +101,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
   res.locals.apiVersion = "v1";
   res.locals.currentUser = req.user;
+  console.log("USER IS: ", req.user);
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();

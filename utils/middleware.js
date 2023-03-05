@@ -1,3 +1,5 @@
+const wrapAsync = require("../utils/wrapAsync");
+
 module.exports.isLoggedIn = (req, res, next) => {
   console.log("Islogged in currrent user:", req.user);
   if (!req.isAuthenticated()) {
@@ -7,3 +9,14 @@ module.exports.isLoggedIn = (req, res, next) => {
   }
   next();
 };
+
+module.exports.isAdmin = wrapAsync(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+
+  if (user.role !== "Admin") {
+    req.flash("error", "You are not authorized to view this page");
+
+    return res.redirect(`/api/v1/projects/${projectId}/error`);
+  }
+  next();
+});
