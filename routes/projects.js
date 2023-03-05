@@ -30,44 +30,52 @@ router.get(
 );
 
 router
-  .route("/:id/issues")
-  .get(isLoggedIn, projects.projectIssues) // get all project issues
-  .post(isLoggedIn, projects.createNewIssue); // create new ticket
+  .route("/:projectId/issues")
+  .get(isLoggedIn, auth.canViewProject, projects.projectIssues) // get all project issues
+  .post(isLoggedIn, auth.canEditProject, projects.createNewIssue); // create new ticket
 
-router.get("/:id/issues/new", isLoggedIn, projects.renderNewProjectIssue); // new issue form
+router.get(
+  "/:projectId/issues/new",
+  isLoggedIn,
+  auth.canEditProject,
+  projects.renderNewProjectIssue
+); // new issue form
 
 // router.get("/:id/issues/:issueId", isLoggedIn, projects.renderProjectIssue);
 router
   .route("/:projectId/issues/:issueId")
-  .get(isLoggedIn, projects.renderProjectIssue)
-  .put(isLoggedIn, projects.editProjectIssue);
+  .get(isLoggedIn, auth.canViewProject, projects.renderProjectIssue) // show issue with tasks
+  .put(isLoggedIn, auth.canEditProject, projects.editProjectIssue); // edit project issue
 
 router.get(
   "/:projectId/issues/:issueId/edit",
   isLoggedIn,
+  auth.canEditProject,
   projects.renderEditProjectIssue
 );
 
 // get all tasks
 router
   .route("/:projectId/issues/:issueId/tasks")
-  .get(isLoggedIn, projects.renderTasks)
-  .post(isLoggedIn, projects.createNewTask);
+  .get(isLoggedIn, auth.canViewProject, projects.renderTasks)
+  .post(isLoggedIn, auth.canEditProject, projects.createNewTask);
 
 router.get(
   "/:projectId/issues/:issueId/tasks/new",
   isLoggedIn,
+  auth.canEditProject,
   projects.renderNewTaskForm
 );
 
 router
   .route("/:projectId/issues/:issueId/tasks/:taskId")
-  .put(isLoggedIn, projects.updateTaskForm)
-  .delete(isLoggedIn, projects.deleteTask);
+  .put(isLoggedIn, auth.canEditProject, projects.updateTaskForm)
+  .delete(isLoggedIn, auth.canEditProject, projects.deleteTask);
 
 router.get(
   "/:projectId/issues/:issueId/tasks/:taskId/edit",
   isLoggedIn,
+  auth.canEditProject,
   projects.renderEditTaskForm
 );
 

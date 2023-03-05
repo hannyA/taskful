@@ -134,13 +134,13 @@ module.exports.editProject = async (req, res) => {
 /// Show all issues
 // search by tickets/issues -> author is me or some other user
 module.exports.projectIssues = async (req, res) => {
-  const projectID = req.params.id;
-  const project = await Project.findById(projectID);
+  const { projectId } = req.params;
+  const project = await Project.findById(projectId);
 
-  req.query.project = projectID;
+  req.query.project = projectId;
 
   let page = "all-issues";
-  let resource = `projects/${projectID}/issues?`;
+  let resource = `projects/${projectId}/issues?`;
 
   if (req.query.author) {
     page = "mine";
@@ -221,22 +221,18 @@ module.exports.renderNewProjectIssue = async (req, res) => {
   const users = await getCompanyUsers(req, res);
   console.log("renderNewProjectIssue users");
 
-  const project = await Project.findById(req.params.id);
+  const project = await Project.findById(req.params.projectId);
   res.render("projects/issues/new-issue", { page, project, users });
 };
 
 // Create ticket and redirect
 module.exports.createNewIssue = wrapAsync(async (req, res) => {
-  const id = req.params.id;
-  console.log("body before:", req.body.ticket);
-  req.body.ticket.project = id;
-  console.log("body after:", req.body.ticket);
+  const { projectId } = req.params;
+  req.body.ticket.project = projectId;
   const ticket = new Issue(req.body.ticket);
   await ticket.save();
-  console.log("ticket id :", ticket.id);
-  console.log("ticket _id :", ticket._id);
 
-  res.redirect(`/api/v1/projects/${id}/issues/${ticket._id}`);
+  res.redirect(`/api/v1/projects/${projectId}/issues/${ticket._id}`);
 });
 
 module.exports.deleteProject = wrapAsync(async (req, res) => {
