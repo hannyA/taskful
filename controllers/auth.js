@@ -102,8 +102,6 @@ module.exports.canEditProject = wrapAsync(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   const project = await Project.findById(projectId);
 
-  console.log("");
-
   if (
     project.company !== user.company ||
     (user.role !== "Admin" &&

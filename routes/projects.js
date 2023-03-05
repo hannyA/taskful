@@ -17,7 +17,7 @@ router.get("/owner", isLoggedIn, projects.index);
 router
   .route("/:projectId")
   .get(isLoggedIn, auth.canViewProject, projects.showProject)
-  .put(isLoggedIn, auth.canEditProject, projects.editProject)
+  .put(isLoggedIn, auth.canEditProject, auth.addCompany, projects.editProject)
   .delete(isLoggedIn, auth.canEditProject, projects.deleteProject);
 
 router.route("/:projectId/error").get(isLoggedIn, projects.error);

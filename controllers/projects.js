@@ -5,6 +5,8 @@ const Task = require("../models/task");
 const APIFeatures = require("../utils/apiFeatures");
 const wrapAsync = require("../utils/wrapAsync");
 
+const { getCompanyUsers } = require("./util");
+
 // List all projects or mine projects
 module.exports.index = async (req, res) => {
   const features = new APIFeatures(Project.find(), req.query)
@@ -45,16 +47,7 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.renderNewProjectForm = async (req, res) => {
-  const user = await User.findById(req.user._id);
-  req.query.company = user.company;
-
-  // Get users from company
-  const features = new APIFeatures(User.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields();
-
-  const users = await features.query;
+  const users = await getCompanyUsers(req, res);
   const page = "new";
   res.render("projects/new", { page, users });
 };
@@ -115,10 +108,15 @@ module.exports.error = async (req, res) => {
   res.render("templates/errors/signedin-error-template");
 };
 
+// Show edit project form
 module.exports.renderEditProject = async (req, res) => {
+  console.log("renderEditProject");
   const { projectId } = req.params;
   const project = await Project.findById(projectId).populate("owner");
-  const users = await User.find({});
+  console.log("renderEditProject 2");
+
+  const users = await getCompanyUsers(req, res);
+
   const page = "edit";
   res.render("projects/edit", { project, users, page });
   // res.send("404 Need to do");
@@ -218,8 +216,11 @@ module.exports.renderProjectIssue = async (req, res) => {
 
 // Show Create new Issue Form
 module.exports.renderNewProjectIssue = async (req, res) => {
+  console.log("renderNewProjectIssue");
   const page = "new-issue";
-  const users = await User.find({});
+  const users = await getCompanyUsers(req, res);
+  console.log("renderNewProjectIssue users");
+
   const project = await Project.findById(req.params.id);
   res.render("projects/issues/new-issue", { page, project, users });
 };
@@ -263,7 +264,7 @@ module.exports.renderEditProjectIssue = wrapAsync(async (req, res) => {
 
   console.log("issue; ", issue);
 
-  const users = await User.find({});
+  const users = await getCompanyUsers(req, res);
   res.render("projects/issues/edit-issue", { project, issue, page, users });
 });
 
@@ -292,7 +293,7 @@ module.exports.renderNewTaskForm = wrapAsync(async (req, res) => {
   const project = await Project.findById(projectId);
 
   const issue = await Issue.findById(issueId).populate("author");
-  const users = await User.find({});
+  const users = getCompanyUsers(req, res);
   const page = "new-task";
 
   res.render("projects/tasks/new", { project, issue, page, users });
@@ -301,15 +302,13 @@ module.exports.renderNewTaskForm = wrapAsync(async (req, res) => {
 });
 
 module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
-  const projectId = req.params.projectId;
-  const issueId = req.params.issueId;
-  const taskId = req.params.taskId;
+  const { projectId, issueId, taskId } = req.params;
 
   const project = await Project.findById(projectId);
   const issue = await Issue.findById(issueId).populate("author");
   const task = await Task.findById(taskId).populate("author");
 
-  const users = await User.find({});
+  const users = getCompanyUsers(req, res);
   const page = "edit-task";
 
   res.render("projects/tasks/edit", { project, issue, task, page, users });
