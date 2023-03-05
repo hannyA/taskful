@@ -3,7 +3,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const APIFeatures = require("../utils/apiFeatures");
 
 module.exports.getCompanyUsers = async (req, res) => {
-  console.log("getCompanyUsers 1 called: ", req);
+  console.log("getCompanyUsers 1 called: ");
   const user = await User.findById(req.user._id);
   req.query.company = user.company;
 

@@ -288,12 +288,11 @@ module.exports.createNewTask = wrapAsync(async (req, res) => {
 });
 
 module.exports.renderNewTaskForm = wrapAsync(async (req, res) => {
-  const projectId = req.params.projectId;
-  const issueId = req.params.issueId;
+  const { projectId, issueId } = req.params;
   const project = await Project.findById(projectId);
 
   const issue = await Issue.findById(issueId).populate("author");
-  const users = getCompanyUsers(req, res);
+  const users = await getCompanyUsers(req, res);
   const page = "new-task";
 
   res.render("projects/tasks/new", { project, issue, page, users });
@@ -308,7 +307,7 @@ module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
   const issue = await Issue.findById(issueId).populate("author");
   const task = await Task.findById(taskId).populate("author");
 
-  const users = getCompanyUsers(req, res);
+  const users = await getCompanyUsers(req, res);
   const page = "edit-task";
 
   res.render("projects/tasks/edit", { project, issue, task, page, users });
