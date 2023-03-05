@@ -18,11 +18,11 @@
   <body class="d-flex flex-column vh-100">
     <%- include('../partials/navbar/signedin-navbar') %>
 
-    <div class="container-fluid">
-      <%- include('../partials/flash') %> <%- body %>
-    </div>
-    <span class="mt-auto"> <%- include('../partials/footer') %> </span>
+    <main class="container-fluid my-4 d-flex justify-content-center">
+      <div class=""><%- include('../partials/flash') %> <%- body %></div>
+    </main>
 
+    <span class="mt-auto"><%- include('../partials/footer') %> </span>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
