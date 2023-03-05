@@ -17,12 +17,17 @@ router.get("/owner", isLoggedIn, projects.index);
 router
   .route("/:projectId")
   .get(isLoggedIn, auth.canViewProject, projects.showProject)
-  .put(isLoggedIn, auth.isAuthorized, projects.editProject)
-  .delete(isLoggedIn, auth.isAuthorized, projects.deleteProject);
+  .put(isLoggedIn, auth.canEditProject, projects.editProject)
+  .delete(isLoggedIn, auth.canEditProject, projects.deleteProject);
 
 router.route("/:projectId/error").get(isLoggedIn, projects.error);
 
-router.get("/:id/edit", isLoggedIn, projects.renderEditProject);
+router.get(
+  "/:projectId/edit",
+  isLoggedIn,
+  auth.canEditProject,
+  projects.renderEditProject
+);
 
 router
   .route("/:id/issues")

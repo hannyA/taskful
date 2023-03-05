@@ -112,11 +112,12 @@ module.exports.showProject = wrapAsync(async (req, res) => {
 });
 
 module.exports.error = async (req, res) => {
-  res.render("templates/error/signedin-error-template");
+  res.render("templates/errors/signedin-error-template");
 };
 
 module.exports.renderEditProject = async (req, res) => {
-  const project = await Project.findById(req.params.id).populate("owner");
+  const { projectId } = req.params;
+  const project = await Project.findById(projectId).populate("owner");
   const users = await User.find({});
   const page = "edit";
   res.render("projects/edit", { project, users, page });
@@ -125,7 +126,7 @@ module.exports.renderEditProject = async (req, res) => {
 
 // Edit project
 module.exports.editProject = async (req, res) => {
-  const projectId = req.params.projectId;
+  const { projectId } = req.params;
   const project = await Project.findByIdAndUpdate(projectId, {
     ...req.body.project,
   });

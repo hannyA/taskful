@@ -131,20 +131,33 @@ app.all("*", (req, res, next) => {
   console.log("req:", req.path); /// path, no query
   console.log("req:", req.originalUrl); // path including query
 
-  const legitPages = ["/features", "/teams", "/pricing", "/support"];
-  if (legitPages.includes(req.path)) {
+  const signedoutPages = ["/features", "/teams", "/pricing", "/support"];
+  const signedinPages = [
+    "/api/v1/assets",
+    "/api/v1/tools",
+    "/api/v1/ticket",
+    "/api/v1/support",
+  ];
+
+  if (signedoutPages.includes(req.path)) {
     var n = req.path.lastIndexOf("/");
 
     let result = req.path.substring(n + 1);
-    console.log(result);
+    console.log("result: ", result);
     const page = result.charAt(0).toUpperCase() + result.slice(1);
-    console.log(page);
+    console.log("page:", page);
+
+    return next(new ExpressError(`${page} page is under construction`, 503));
+  } else if (signedinPages.includes(req.path)) {
+    var n = req.path.lastIndexOf("/");
+
+    let result = req.path.substring(n + 1);
+    console.log("result: ", result);
+    const page = result.charAt(0).toUpperCase() + result.slice(1);
+    console.log("page:", page);
 
     return next(new ExpressError(`${page} page is under construction`, 503));
   }
-
-  // var str = "GeeksforGeeks";
-  // var result = str.slice(1);
 
   next(new ExpressError("Page not found", 404));
 });
@@ -153,19 +166,23 @@ app.use((err, req, res, next) => {
   console.log(err);
   const { statusCode = 500, message = "Something went wrong" } = err;
   if (req.isAuthenticated()) {
-    res
-      .status(statusCode)
-      .render("templates/error/signedin-error-template", {
-        statusCode,
-        message,
-      });
+    if (statusCode === 503) {
+      return res
+        .status(statusCode)
+        .render("templates/errors/signedin-notfound-template", {
+          statusCode,
+          message,
+        });
+    }
+    res.status(statusCode).render("templates/errors/signedin-error-template", {
+      statusCode,
+      message,
+    });
   } else {
-    res
-      .status(statusCode)
-      .render("templates/error/signedout-error-template", {
-        statusCode,
-        message,
-      });
+    res.status(statusCode).render("templates/errors/signedout-error-template", {
+      statusCode,
+      message,
+    });
   }
 });
 
