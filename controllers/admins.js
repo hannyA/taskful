@@ -21,3 +21,39 @@ module.exports.newUser = async (req, res) => {
 
   // res.render("admin/users", { user, page });
 };
+
+module.exports.deleteUsers = async (req, res) => {
+  try {
+    console.log("deleteUsers");
+    const { users } = req.body;
+    console.log("users: ", users);
+    console.log("users: ", req.body);
+
+    for (let user in users) {
+      await User.findOneAndDelete({
+        id: user.id,
+        company: req.user.company,
+      });
+    }
+
+    // company !== user.company ||
+    // await User.deleteMany({ _id: { $in: users } });
+
+    // res.send({ data: "done" });
+
+    res.status(200).json({
+      message: "Users deleted!",
+    });
+  } catch (e) {
+    return res
+      .status(403)
+      .json({ message: "You are not authorized to view this page" });
+  }
+
+  // await User.findByIdAndDelete(userId);
+  // res.redirect("/api/v1/admin/users");
+};
+
+//   // req.body.company = user.company;
+//   req.query.company = user.company;
+//   req.params.company = user.company;

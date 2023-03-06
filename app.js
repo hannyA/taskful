@@ -164,7 +164,7 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
+  console.log("app.js: ", err);
   const { statusCode = 500, message = "Something went wrong" } = err;
   if (req.isAuthenticated()) {
     if (statusCode === 503) {

@@ -1,4 +1,100 @@
 <% layout('templates/admins-template') %>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+<script>
+  // const axios = require("axios");
+
+  let dUsers = [];
+
+  function checkedBox() {
+    console.log("checkedBox: ", dUsers);
+
+    dUsers = [];
+    const deleteElement = document.getElementById("delete-user");
+    deleteElement.classList.add("disabled");
+
+    let inputs = document.getElementsByClassName("form-check-input");
+    for (let i = 0; i < inputs.length; i++) {
+      let parentNode = inputs[i].parentNode.parentNode.parentNode; //tr
+
+      if (inputs[i].type === "checkbox") {
+        console.log("inputs[i]: ", i, inputs[i]);
+        let input = inputs[i];
+
+        console.log("input: ", input.checked);
+        console.log("inputs[i]: ", i, inputs[i].checked);
+        if (inputs[i].checked === true) {
+          console.log("checked here");
+          let id = parentNode.getElementsByTagName("td")[5].innerHTML;
+          dUsers.push(id);
+          deleteElement.classList.remove("disabled");
+        } else {
+          inputs[i].checked = false;
+        }
+      }
+    }
+    // console.log("dUsers: ", dUsers);
+  }
+  const deleteUsers = async () => {
+    console.log("dUsers: ", dUsers);
+    try {
+      const res = await axios.delete("/api/v1/admin/users", {
+        data: {
+          users: dUsers,
+        },
+      });
+
+      console.log("mesage: ", res.data.message);
+      removeRows();
+
+      let messageAlertElement = document.getElementById(
+        "alert-message-container"
+      );
+      let messageAlert = document.getElementById("alert-message");
+      messageAlert.innerText = res.data.message;
+
+      messageAlertElement.classList.add("d-block");
+      messageAlertElement.classList.remove("d-none");
+    } catch (e) {
+      console.log("errpr: ", e.response.data.message);
+
+      let messageAlertElement = document.getElementById(
+        "alert-message-container"
+      );
+
+      let messageAlert = document.getElementById("alert-message");
+      messageAlert.innerText = e.response.data.message;
+
+      messageAlertElement.classList.add("d-block");
+      messageAlertElement.classList.remove("d-none");
+    }
+  };
+
+  const removeRows = () => {
+    let inputs = document.getElementsByClassName("form-check-input");
+    for (let i = 0; i < inputs.length; i++) {
+      let parentNode = inputs[i].parentNode.parentNode.parentNode; //tr
+
+      if (dUsers.includes(parentNode.getElementsByTagName("td")[5].innerHTML)) {
+        parentNode.remove();
+      }
+    }
+  };
+</script>
+
+<div
+  id="alert-message-container"
+  class="alert alert-danger alert-dismissible d-none show fade"
+  role="alert"
+>
+  <div id="alert-message"></div>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
 
 <h1>Users</h1>
 <div>
@@ -9,7 +105,18 @@
           <a href="/api/v1/admin/users/new" class="nav-link">New User</a>
         </li>
         <li class="nav-item">
-          <a href="/api/v1/admin/users/new" class="nav-link disabled">Delete</a>
+          <button
+            id="delete-user"
+            class="btn nav-link disabled"
+            type="button"
+            onclick="deleteUsers()"
+          >
+            Delete
+          </button>
+          <!-- 
+          <form action="/api/v1/admin/users?_method=DELETE " method="POST">
+            <a href="" class="nav-link disabled">Delete</a>
+          </form> -->
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -27,21 +134,33 @@
     <table class="table">
       <thead>
         <tr>
+          <th scope="col"></th>
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Role</th>
           <th scope="col">Email</th>
-          <th scope="col">DOB</th>
+          <th scope="col" hidden>User ID</th>
         </tr>
       </thead>
       <tbody>
         <% for (let user of users) { %>
-        <tr>
+        <tr class="user-row">
+          <td class="">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckChecked"
+                onclick="checkedBox()"
+              />
+            </div>
+          </td>
           <td><%= user.first %></td>
           <td><%= user.last %></td>
           <td><%= user.role %></td>
           <td><%= user.email %></td>
-          <td><%= user.dob %></td>
+          <td hidden><%= user.id %></td>
         </tr>
 
         <% }%>
@@ -51,3 +170,7 @@
 
   <footer class="mt-5"></footer>
 </div>
+
+<script>
+  checkedBox();
+</script>
