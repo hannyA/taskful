@@ -6,6 +6,7 @@ module.exports.getCompanyUsers = async (req, res) => {
   console.log("getCompanyUsers 1 called: ");
   const user = await User.findById(req.user._id);
   req.query.company = user.company;
+  req.query.deleted = false;
 
   console.log("getCompanyUsers called: ", user);
 

@@ -29,10 +29,13 @@ module.exports.deleteUsers = async (req, res) => {
     console.log("users: ", req.body);
 
     for (let user in users) {
-      await User.findOneAndDelete({
-        id: user.id,
-        company: req.user.company,
-      });
+      await User.findOneAndUpdate(
+        {
+          id: user.id,
+          company: req.user.company,
+        },
+        { delete: true }
+      );
     }
 
     // company !== user.company ||

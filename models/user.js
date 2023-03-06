@@ -33,6 +33,10 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 UserSchema.plugin(passportLocalMongoose);
@@ -42,5 +46,10 @@ UserSchema.virtual("fullname").get(function () {
   return `${this.first} ${this.last}`;
   // return this.email.slice(this.email.indexOf('@') + 1);
 });
+
+// UserSchema.pre("/^find/", function (next) {
+//   this.find({ deleted: { $ne: true } });
+//   next();
+// });
 
 module.exports = mongoose.model("User", UserSchema);
