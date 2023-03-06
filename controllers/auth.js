@@ -90,6 +90,7 @@ module.exports.canViewProject = wrapAsync(async (req, res, next) => {
 });
 
 module.exports.canEditProject = wrapAsync(async (req, res, next) => {
+  console.log("canEditProject:", req.params);
   const { projectId } = req.params;
 
   const user = await User.findById(req.user._id);

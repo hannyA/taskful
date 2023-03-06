@@ -131,6 +131,15 @@ module.exports.editProject = async (req, res) => {
   res.redirect(`/api/v1/projects/${projectId}`);
 };
 
+module.exports.manageTeam = async (req, res) => {
+  const { projectId } = req.params;
+
+  // TEam members
+  // assign roles
+
+  res.redirect(`/api/v1/projects/${projectId}`);
+};
+
 /// Show all issues
 // search by tickets/issues -> author is me or some other user
 module.exports.projectIssues = async (req, res) => {

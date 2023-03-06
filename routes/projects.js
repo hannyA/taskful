@@ -21,6 +21,10 @@ router
   .put(isLoggedIn, auth.canEditProject, addCompany, projects.editProject)
   .delete(isLoggedIn, auth.canEditProject, projects.deleteProject);
 
+router
+  .route("/:projectId/manage")
+  .get(isLoggedIn, auth.canEditProject, projects.manageTeam);
+
 router.route("/:projectId/error").get(isLoggedIn, projects.error);
 
 router.get(
