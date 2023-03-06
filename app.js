@@ -22,6 +22,7 @@ const projectRoutes = require("./routes/projects");
 const ticketRoutes = require("./routes/tickets");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
+const dashRoutes = require("./routes/dashboard");
 // const { session } = require("passport");
 
 // mongoose.connect("mongodb://localhost:27017/issue-tracker", {
@@ -112,15 +113,12 @@ app.use(`/api/${version}/projects`, projectRoutes);
 app.use(`/api/${version}/ticket`, ticketRoutes);
 app.use(`/api/${version}/admin`, adminRoutes);
 app.use(`/api/${version}/auth`, authRoutes);
+app.use(`/api/${version}/dashboard`, dashRoutes);
 // app.use("/login", authRoutes);
 
 // Signed out pages
 app.get(`/`, function (req, res) {
   res.render("home");
-});
-
-app.get(`/api/${version}/dashboard`, isLoggedIn, function (req, res) {
-  res.render("dashboards/index");
 });
 
 app.get(`/credits`, function (req, res) {
