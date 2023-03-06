@@ -18,7 +18,6 @@ module.exports.newUser = async (req, res) => {
   const user = new User(req.body);
   await user.save();
   res.redirect("/api/v1/admin/users");
-
   // res.render("admin/users", { user, page });
 };
 

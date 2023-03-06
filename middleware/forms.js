@@ -6,3 +6,8 @@ module.exports.addCompany = wrapAsync(async (req, res, next) => {
   req.body.company = user.company;
   next();
 });
+
+module.exports.addUsername = wrapAsync(async (req, res, next) => {
+  req.body.username = req.body.email;
+  next();
+});

@@ -77,6 +77,7 @@
 
       if (dUsers.includes(parentNode.getElementsByTagName("td")[5].innerHTML)) {
         parentNode.remove();
+        i--;
       }
     }
   };
@@ -143,7 +144,8 @@
         </tr>
       </thead>
       <tbody>
-        <% for (let user of users) { %>
+        <%= console.log("User count: ", users.length )%> <% for (let user of
+        users) { %>
         <tr class="user-row">
           <td class="">
             <div class="form-check">
