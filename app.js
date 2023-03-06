@@ -118,7 +118,9 @@ app.use(`/api/${version}/dashboard`, dashRoutes);
 
 // Signed out pages
 app.get(`/`, function (req, res) {
-  res.render("home");
+  if (res.locals.currentUser) {
+    return res.redirect(`/api/${version}/dashboard`);
+  }
 });
 
 app.get(`/credits`, function (req, res) {
