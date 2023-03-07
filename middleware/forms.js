@@ -11,3 +11,10 @@ module.exports.addUsername = wrapAsync(async (req, res, next) => {
   req.body.username = req.body.email;
   next();
 });
+
+module.exports.convertDuration = wrapAsync(async (req, res, next) => {
+  const minutes = req.body.hours * 60;
+  const extraMinutes = req.body.minutes * 1;
+  req.body.duration = minutes + extraMinutes;
+  next();
+});

@@ -31,14 +31,16 @@ const TaskSchema = new Schema({
     default: Date.now,
   },
   duration: {
-    hours: {
-      type: Number,
-      default: 0,
-    },
-    minutes: {
-      type: Number,
-      default: 0,
-    },
+    type: Number,
+    default: 0,
+    // hours: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // minutes: {
+    //   type: Number,
+    //   default: 0,
+    // },
   },
 });
 
@@ -73,6 +75,18 @@ TaskSchema.virtual("createDateTimeFormat").get(function () {
   let d = formatDate(this.createDate);
   let t = formatTime(this.createDate);
   return `${d} - ${t}`;
+});
+
+// Create a virtual property `hours`
+TaskSchema.virtual("hours").get(function () {
+  console.log(" TaskSchema.virtual(hours):", this.duration);
+  console.log(" TaskSchema.virtual(hours):", this.duration / 60);
+  return Math.floor(this.duration / 60);
+});
+
+// Create a virtual property `minutes`
+TaskSchema.virtual("minutes").get(function () {
+  return this.duration % 60;
 });
 
 module.exports = mongoose.model("Task", TaskSchema);

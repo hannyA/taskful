@@ -265,8 +265,7 @@
       <div class="card-footer text-muted">
         Done by <strong><%= task.author.fullname %></strong> at <%=
         task.createDateTimeFormat %> <br />
-        Took: <%= task.duration.hours%> hours: <%= task.duration.minutes%>
-        minutes
+        Took: <%= task.hours%> hours: <%= task.minutes%> minutes
       </div>
     </div>
     <% }) %> <% if (tasks.length === 0 ) { %>

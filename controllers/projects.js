@@ -277,16 +277,15 @@ module.exports.renderTasks = wrapAsync(async (req, res) => {
   const issuId = req.params.projectId;
 
   // const tasks = await Task.find({ issue });
-
   res.send("renderTasks", {});
 });
 
 module.exports.createNewTask = wrapAsync(async (req, res) => {
   const { projectId, issueId } = req.params;
 
-  req.body.task.issue = issueId;
-  console.log("req.body.task: ", req.body.task);
-  const task = new Task(req.body.task);
+  req.body.issue = issueId;
+  console.log("req.body: ", req.body);
+  const task = new Task(req.body);
   await task.save();
   res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
 });
@@ -321,7 +320,7 @@ module.exports.updateTaskForm = wrapAsync(async (req, res) => {
   const { projectId, issueId, taskId } = req.params;
 
   const task = await Task.findByIdAndUpdate(taskId, {
-    ...req.body.task,
+    ...req.body,
   });
   res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
 });

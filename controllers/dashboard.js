@@ -4,6 +4,7 @@ const Issue = require("../models/issue");
 const Project = require("../models/project");
 const Task = require("../models/task");
 
+//
 module.exports.renderDashbaord = async (req, res) => {
   console.log("render dashRoutes");
 
@@ -12,16 +13,7 @@ module.exports.renderDashbaord = async (req, res) => {
   const user = req.user;
   console.log("user: ", user);
 
-  // Get for this month, past 3 months, past year, ytd
-
-  /**
-   *
-   * 2 medium
-   * 1 very high
-   *
-   *
-   * 2 issues 15 and 25 min
-   */
+  //TODO: Get for this month, past 3 months, past year, ytd
   try {
     const companyPriorityProjects = await Project.aggregate([
       {
@@ -120,6 +112,41 @@ module.exports.renderDashboardIssues = async (req, res) => {
       issueStatus,
       issuePriority,
     };
+    console.log("stats: ", stats);
+    res.render("dashboards/index", {
+      stats,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// Return minutes worked each day
+module.exports.renderDashboardTasks = async (req, res) => {
+  const company = req.body.company;
+  const user = req.user;
+  try {
+    const timeOnTasks = await Task.aggregate([
+      {
+        $match: { author: { $eq: user._id } },
+      },
+      {
+        $group: {
+          // _id: { $toDate: "$createDate" },
+          _id: {
+            $dateToString: {
+              format: "%m-%d-%Y",
+              date: "$createDate",
+              timezone: "America/New_York",
+            },
+          },
+          minutes: { $sum: "$duration" },
+        },
+      },
+    ]);
+
+    const stats = { timeOnTasks };
+
     console.log("stats: ", stats);
     res.render("dashboards/index", {
       stats,

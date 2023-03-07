@@ -3,7 +3,7 @@ const router = express.Router({ mergeParams: true });
 const projects = require("../controllers/projects");
 const { isLoggedIn } = require("../utils/middleware");
 const auth = require("../controllers/auth");
-const { addCompany } = require("../middleware/forms");
+const { addCompany, convertDuration } = require("../middleware/forms");
 
 // router.use('/:id/issues')
 
@@ -63,7 +63,12 @@ router.get(
 router
   .route("/:projectId/issues/:issueId/tasks")
   .get(isLoggedIn, auth.canViewProject, projects.renderTasks)
-  .post(isLoggedIn, auth.canEditProject, projects.createNewTask);
+  .post(
+    isLoggedIn,
+    auth.canEditProject,
+    convertDuration,
+    projects.createNewTask
+  );
 
 // Get new task form
 router.get(
@@ -75,7 +80,12 @@ router.get(
 //
 router
   .route("/:projectId/issues/:issueId/tasks/:taskId")
-  .put(isLoggedIn, auth.canEditProject, projects.updateTaskForm) // Submit edit new task
+  .put(
+    isLoggedIn,
+    auth.canEditProject,
+    convertDuration,
+    projects.updateTaskForm
+  ) // Submit edit new task
   .delete(isLoggedIn, auth.canEditProject, projects.deleteTask); // Delete task
 //
 router.get(

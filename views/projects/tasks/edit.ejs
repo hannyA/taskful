@@ -34,7 +34,7 @@
         <label class="form-label" for="description">Description</label>
         <textarea
           class="form-control"
-          name="task[description]"
+          name="description"
           id="description"
           aria-label="Description"
         >
@@ -51,13 +51,13 @@
         <div class="col-auto">
           <select
             class="form-select"
-            name="task[duration][hours]"
+            name="hours"
             id="hours"
             aria-label="Hours"
           >
 
           <%let hours = [... Array(24).keys()] ; hours.forEach(hour => { %>
-              <option <%= ( task.duration.hours === hour ) ? "selected" : "" %>
+              <option <%= ( task.hours === hour ) ? "selected" : "" %>
                 value="<%= hour %>"> <%= hour %> 
               </option>
             <% }) %>
@@ -70,13 +70,13 @@
         <div class="col-auto">
           <select
             class="form-select"
-            name="task[duration][minutes]"
+            name="minutes"
             id="minutes"
             aria-label="Minutes"
           >
-            <%let minutes = [0, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]%> <%
+            <%let minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]%> <%
             minutes.forEach(minute => { %>
-            <option <%= ( task.duration.minutes === minute ) ? "selected" : "" %>
+            <option <%= ( task.minutes === minute ) ? "selected" : "" %>
               value="<%=minute%>"><%=minute%></option>
             <% }) %>
           </select>
@@ -87,7 +87,7 @@
         <label class="form-label" for="owner">Owner</label>
         <select
           class="form-select"
-          name="task[author]"
+          name="author"
           id="owner"
           aria-label="Owner"
         >
