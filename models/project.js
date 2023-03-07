@@ -25,6 +25,7 @@ const ProjectSchema = new Schema({
   priority: {
     type: String,
     enum: ["Low", "Medium", "High", "Very High"],
+    default: "Low",
   },
   stage: {
     type: String,
