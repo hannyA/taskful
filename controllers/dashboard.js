@@ -2,6 +2,7 @@
 // const User = require("../models/user");
 const Issue = require("../models/issue");
 const Project = require("../models/project");
+const Task = require("../models/task");
 
 module.exports.renderDashbaord = async (req, res) => {
   console.log("render dashRoutes");
@@ -73,6 +74,51 @@ module.exports.renderDashbaord = async (req, res) => {
       companyProgressProjects,
       userPriorityProjects,
       userProgressProjects,
+    };
+    console.log("stats: ", stats);
+    res.render("dashboards/index", {
+      stats,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+module.exports.renderDashboardIssues = async (req, res) => {
+  console.log("render dashRoutes");
+
+  console.log("render dashRoutes");
+  const company = req.body.company;
+  const user = req.user;
+  console.log("user: ", user);
+  try {
+    const issueStatus = await Issue.aggregate([
+      {
+        $match: { author: { $eq: user._id } },
+      },
+      {
+        $group: {
+          _id: "$status",
+          numIssues: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const issuePriority = await Issue.aggregate([
+      {
+        $match: { author: { $eq: user._id } },
+      },
+      {
+        $group: {
+          _id: "$priority",
+          numIssues: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const stats = {
+      issueStatus,
+      issuePriority,
     };
     console.log("stats: ", stats);
     res.render("dashboards/index", {

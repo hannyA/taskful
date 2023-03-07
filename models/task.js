@@ -8,20 +8,20 @@ const TaskSchema = new Schema({
     ref: "User",
     required: true,
   },
-  status: {
-    type: String,
-    enum: ["New", "Assigned", "In Progress", "Solved", "Closed"],
-    default: "New",
-  },
+  // status: {
+  //   type: String,
+  //   enum: ["New", "Assigned", "In Progress", "Solved", "Closed"],
+  //   default: "New",
+  // },
   issue: {
     type: Schema.Types.ObjectId,
     ref: "Issue",
   },
-  priority: {
-    type: String,
-    enum: ["Low", "Medium", "High", "Very High"],
-    default: "Low",
-  },
+  // priority: {
+  //   type: String,
+  //   enum: ["Low", "Medium", "High", "Very High"],
+  //   default: "Low",
+  // },
   createDate: {
     type: Date,
     default: Date.now,
