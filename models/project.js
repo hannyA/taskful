@@ -27,7 +27,7 @@ const ProjectSchema = new Schema({
     enum: ["Low", "Medium", "High", "Very High"],
     default: "Low",
   },
-  stage: {
+  status: {
     type: String,
     enum: ["New", "Complete", "Canceled", "On Hold", "In Progress"],
     default: "New",

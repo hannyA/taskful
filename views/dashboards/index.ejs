@@ -1,49 +1,75 @@
 <% layout('templates/dashboard-template') %>
-<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+<!-- <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-    <!-- <li class="breadcrumb-item active" aria-current="page">Library</li> -->
   </ol>
-</nav>
-<!-- <h1>Dashboard</h1> -->
+</nav> -->
+<div class="row mb-5">
+  <div class="col-3 offset-4"><h1 class="">Company Dashboard</h1></div>
+</div>
+
+<!-- <h1 class="text-center">Dashboard</h1> -->
 <%= success %>
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-6 mx-auto">
-      <div class="dashboard-chart mx-auto">
+    <div class="col-6 dashboard-chart-div d-flex justify-content-center">
+      <div class="dashboard-chart">
         <canvas id="myChart" class=""></canvas>
-        <p class="text-center dashboard-title">Task Priority</p>
+        <p class="text-center dashboard-title">Total Projects Priority</p>
       </div>
     </div>
 
-    <div class="col-6">
-      <div class="dashboard-chart mx-auto">
+    <div class="col-6 dashboard-chart-div d-flex justify-content-center">
+      <div class="dashboard-chart">
         <canvas id="myChart2"></canvas>
-        <p class="text-center dashboard-title">Task Progress</p>
+        <p class="text-center dashboard-title">Total Projects Progress</p>
       </div>
     </div>
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<% let low = stats.companyPriorityProjects.low; let med =
+stats.companyPriorityProjects.medium; let high =
+stats.companyPriorityProjects.high; let vhigh =
+stats.companyPriorityProjects.vhigh; let _new =
+stats.companyProgressProjects.new; let complete =
+stats.companyProgressProjects.complete; let cancel =
+stats.companyProgressProjects.cancel; let hold =
+stats.companyProgressProjects.hold; let progress =
+stats.companyProgressProjects.progress %>
+
 <script>
+  let low = <%= low %>;
+  let med = <%= med %>;
+  let high = <%= high %>;
+  let vhigh = <%= vhigh %>;
+
+  let _new = <%= _new %>;
+  let complete = <%= complete %>;
+  let cancel = <%= cancel %>;
+  let hold = <%= hold %>;
+  let progress = <%= progress %>;
+
+
+
   const ctx = document.getElementById("myChart");
   const data = {
-    labels: ["Low", "Medium", "High"],
+    labels: ["Low", "Medium", "High", "Very High"],
     datasets: [
       {
         label: "Priority",
-        data: [300, 50, 100],
+        data: [low, med, high, vhigh],
         backgroundColor: [
           "rgb(54, 162, 235)",
           "rgb(255, 205, 86)",
           "rgb(255, 99, 132)",
+          "rgb(155, 155, 132)",
         ],
-        hoverOffset: 4,
+        // hoverOffset: 4,
       },
     ],
   };
-
   new Chart(ctx, {
     type: "pie",
     data: data,
@@ -66,25 +92,26 @@
     // },
   });
 
-  const ctx2 = document.getElementById("myChart2");
 
+
+  const ctx2 = document.getElementById("myChart2");
   const data2 = {
-    labels: ["New", "Assigned", "In Progress", "Closed"],
+    labels: ["New", "Complete", "Canceled", "Held", "In Progress"],
     datasets: [
       {
         label: "Tasks",
-        data: [150, 150, 50, 100],
+        data: [_new, complete, cancel, hold, progress],
         backgroundColor: [
           "rgb(54, 162, 235)",
           "rgb(255, 205, 86)",
           "rgb(255, 99, 132)",
           "rgb(150, 44, 180)",
+          "rgb(50, 50, 50)",
         ],
-        hoverOffset: 4,
+        // hoverOffset: 4,
       },
     ],
   };
-
   new Chart(ctx2, {
     type: "pie",
     data: data2,

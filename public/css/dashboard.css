@@ -1,7 +1,15 @@
 .dashboard-chart {
   width: 20rem;
-  height: 20rem;
+  height: 100%;
   /* background-color: black; */
+  margin: 0;
+}
+
+div {
+  overflow: hidden;
+}
+.row {
+  margin: 0;
 }
 
 .dashboard-title {
@@ -9,6 +17,7 @@
   font-size: 1.5rem;
   font-weight: 200;
 }
+
 /* 
 @media (min-width: 500px) {
   .sidebar {
