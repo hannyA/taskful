@@ -30,7 +30,7 @@ module.exports.randomUser = (company, role) => {
   const _last = randomItem(lastname);
   const _role = role || randomItem(roles);
   const regDate = randomDate(new Date(2022, 6, 1), new Date());
-  const _email = makeEmail(_first, _last);
+  const _email = makeEmail(_first, _last, company);
 
   return new User({
     first: _first,

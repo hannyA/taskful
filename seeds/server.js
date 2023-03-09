@@ -41,3 +41,5 @@ runSeed(() => {
   console.log("CLosing database");
   mongoose.connection.close();
 });
+
+module.exports.runSeed = runSeed;
