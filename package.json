@@ -9,6 +9,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "dev": "nodemon server.js",
     "prod": "NODE_ENV=production nodemon server.js",
+    "seed": "node seeds/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hanny Aly",

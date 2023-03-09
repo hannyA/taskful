@@ -2,6 +2,8 @@ const wrapAsync = require("../utils/wrapAsync");
 const User = require("../models/user");
 const Project = require("../models/project");
 
+const { seedDB } = require("../seeds/app");
+
 module.exports.renderRegisterForm = async (req, res) => {
   res.render("auth/register");
 };
@@ -17,6 +19,13 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
     const registeredUser = await User.register(user, password);
     req.login(registeredUser, (err) => {
       if (err) return next(err);
+
+      seedDB(() => {
+        console.log("Seeding database");
+      }).then(() => {
+        console.log("CLosing database");
+        mongoose.connection.close();
+      });
 
       req.flash("success", `Welcome ${body.first}!`);
       res.redirect("/api/v1/dashboard");
