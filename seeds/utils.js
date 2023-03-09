@@ -14,7 +14,8 @@ const {
 } = require("./seedHelper");
 
 const randomItem = (items) => {
-  return items[Math.floor(Math.random() * items.length)];
+  const a = Math.floor(Math.random() * items.length);
+  return items[a];
 };
 
 const getEmail = (first, last, email) => {
@@ -25,12 +26,19 @@ const makeEmail = (first, last, company) => {
   return `${first}.${last}@${company}.com`;
 };
 
-module.exports.randomUser = (company, role) => {
+module.exports.randomUser = async (company, role) => {
   const _first = randomItem(firstname);
   const _last = randomItem(lastname);
   const _role = role || randomItem(roles);
   const regDate = randomDate(new Date(2022, 6, 1), new Date());
   const _email = makeEmail(_first, _last, company);
+
+  // Find unique email so we don't dupslicate
+  const dupslicateUsers = await User.find({
+    email: _email,
+  });
+
+  if (dupslicateUsers.length > 0) return randomUser(company, role);
 
   return new User({
     first: _first,
@@ -83,8 +91,6 @@ module.exports.newIssue = async (company, projectId, nextDate, _issue) => {
     project: projectId,
     createDate: dateWithinDays(nextDate, 3),
   });
-
-  console.log(issue);
 
   return issue;
 };

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { seedDB } = require("./app");
+const { seedDB, deleteDB } = require("./app");
 const { companies } = require("./seedHelper");
 mongoose.set("strictQuery", false);
 
@@ -30,6 +30,8 @@ db.once("open", () => {
 // });
 
 const runSeed = async () => {
+  deleteDB();
+
   for (let company of companies) {
     await seedDB(company);
   }

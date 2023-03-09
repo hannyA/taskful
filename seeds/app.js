@@ -7,24 +7,29 @@ const { randomUser, randomDate, newProject, newIssue } = require("./utils");
 
 const { issues, type } = require("./seedHelper");
 
-module.exports.seedDB = async (company) => {
+module.exports.deleteDB = async () => {
   await Issue.deleteMany({});
   await Project.deleteMany({});
   await User.deleteMany({});
   await Task.deleteMany({});
+};
 
-  const defaultAdmin = randomUser(company);
+module.exports.seedDB = async (company) => {
+  console.log("Adding Admin");
+  const defaultAdmin = await randomUser(company, "Technician");
   await defaultAdmin.save();
 
   for (let h = 0; h < 3; h++) {
     // Users
-    const user = randomUser(company);
+    console.log("Adding new user");
+    const user = await randomUser(company);
+    console.log("Adding new project");
     const project = newProject(user, h);
 
-    // const projId = project.id;
     await user.save();
 
     let issueDate = project.createDate;
+    console.log("Adding new issues");
     for (let i = 0; i < 10; i++) {
       const issue = await newIssue(company, project.id, issueDate, issues[i]);
       issueDate = issue.createDate;
@@ -34,7 +39,5 @@ module.exports.seedDB = async (company) => {
     }
 
     await project.save();
-
-    console.log("Project:", project);
   }
 };
