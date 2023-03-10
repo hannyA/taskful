@@ -3,8 +3,8 @@ const Project = require("../models/project");
 const Issue = require("../models/issue");
 
 const {
-  firstname,
-  lastname,
+  firstnames,
+  lastnames,
   roles,
   projectTitles,
   projectStatus,
@@ -13,25 +13,19 @@ const {
   issueType,
 } = require("./seedHelper");
 
-const randomItem = (items) => {
-  const a = Math.floor(Math.random() * items.length);
-  return items[a];
-};
-
-const getEmail = (first, last, email) => {
-  return `${first}.${last}@${email}`;
-};
-
-const makeEmail = (first, last, company) => {
-  return `${first}.${last}@${company}.com`;
-};
-
-module.exports.randomUser = async (company, role) => {
-  const _first = randomItem(firstname);
-  const _last = randomItem(lastname);
+module.exports.randomUser = async (
+  company,
+  role,
+  firstname,
+  lastname,
+  registerDate,
+  password
+) => {
+  const _firstname = firstname || randomItem(firstnames);
+  const _lastname = lastname || randomItem(lastnames);
   const _role = role || randomItem(roles);
-  const regDate = randomDate(new Date(2022, 6, 1), new Date());
-  const _email = makeEmail(_first, _last, company);
+  const regDate = registerDate || randomDate(new Date(2022, 6, 1), new Date());
+  const _email = makeEmail(_firstname, _lastname, company);
 
   // Find unique email so we don't dupslicate
   const dupslicateUsers = await User.find({
@@ -40,25 +34,36 @@ module.exports.randomUser = async (company, role) => {
 
   if (dupslicateUsers.length > 0) return randomUser(company, role);
 
-  return new User({
-    first: _first,
-    last: _last,
+  const newUser = new User({
+    first: _firstname,
+    last: _lastname,
     username: _email,
     email: _email,
     role: _role,
     registerDate: regDate,
     company: company,
   });
+
+  return await this.registerUser(newUser, password);
+};
+
+module.exports.registerUser = async (user, password) => {
+  const _password = password || generatePassword();
+  try {
+    const registeredUser = await User.register(user, _password);
+    console.log("registeredUser: ", registeredUser);
+    return user;
+  } catch (e) {
+    return null;
+  }
 };
 
 module.exports.newProject = (user, h) => {
   const startDate = randomDate(user.registerDate, new Date());
-
   let endDate = new Date();
   endDate.setDate(startDate.getDate() + 7 + Math.random() * 120); // b
 
   // const enddate = new Date(createdate.getTime() + 72 * 60 * 60 * 1000);
-
   // const endDate = randomDate(createDate, new Date());
   const project = new Project({
     title: projectTitles[h].title,
@@ -89,17 +94,47 @@ module.exports.newIssue = async (company, projectId, nextDate, _issue) => {
     priority: randomItem(priorities),
     type: randomItem(issueType),
     project: projectId,
-    createDate: dateWithinDays(nextDate, 3),
+    createDate: daysAfterDate(nextDate, 3),
   });
 
   return issue;
 };
 
+const randomItem = (items) => {
+  const a = Math.floor(Math.random() * items.length);
+  return items[a];
+};
+
+const getEmail = (first, last, email) => {
+  return `${first}.${last}@${email}`;
+};
+
+const makeEmail = (first, last, company) => {
+  return `${first}.${last}@${company}.com`;
+};
 // Return date after date but before date + n days
-const dateWithinDays = (date, days) => {
+const daysAfterDate = (date, days) => {
   let endDate = new Date(date);
   endDate.setDate(date.getDate() + Math.random() * days);
 };
+const daysBeforeDate = () => {
+  let today = new Date();
+  let before = new Date();
+  before.setDate(today.getDate() - 30);
+};
+
+module.exports.daysBeforeDate = daysBeforeDate;
+
+function generatePassword() {
+  var length = 8,
+    charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+    retVal = "";
+  for (var i = 0, n = charset.length; i < length; ++i) {
+    retVal += charset.charAt(Math.floor(Math.random() * n));
+  }
+  return retVal;
+}
+
 // Get date from somewhere between start and end
 const randomDate = (start, end) => {
   return new Date(

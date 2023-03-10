@@ -3,7 +3,13 @@ const Project = require("../models/project");
 const Issue = require("../models/issue");
 const Task = require("../models/task");
 
-const { randomUser, randomDate, newProject, newIssue } = require("./utils");
+const {
+  randomUser,
+  // randomDate,
+  newProject,
+  newIssue,
+  daysBeforeDate,
+} = require("./utils");
 
 const { issues, type } = require("./seedHelper");
 
@@ -16,17 +22,27 @@ module.exports.deleteDB = async () => {
 
 module.exports.seedDB = async (company) => {
   console.log("Adding Admin");
-  const defaultAdmin = await randomUser(company, "Technician");
+  console.log("company: ", company);
+  const defaultAdmin = await randomUser(
+    company,
+    "Admin",
+    "John",
+    "Doe",
+    daysBeforeDate(),
+    "a"
+  );
   await defaultAdmin.save();
 
   for (let h = 0; h < 3; h++) {
     // Users
     console.log("Adding new user");
     const user = await randomUser(company);
+
     console.log("Adding new project");
     const project = newProject(user, h);
+    await project.save();
 
-    await user.save();
+    // await user.save();
 
     let issueDate = project.createDate;
     console.log("Adding new issues");
@@ -37,7 +53,5 @@ module.exports.seedDB = async (company) => {
       await issue.save();
       // await ticketUser.save();
     }
-
-    await project.save();
   }
 };

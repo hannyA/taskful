@@ -87,7 +87,7 @@ module.exports.issues = [
   },
 ];
 
-module.exports.firstname = [
+module.exports.firstnames = [
   "Stephanie",
   "Karen",
   "Michele",
@@ -102,7 +102,7 @@ module.exports.firstname = [
   "Ellis",
   "Hope",
 ];
-module.exports.lastname = [
+module.exports.lastnames = [
   "Regal",
   "Tyson",
   "Jones",

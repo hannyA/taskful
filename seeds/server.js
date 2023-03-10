@@ -33,6 +33,8 @@ const runSeed = async () => {
   deleteDB();
 
   for (let company of companies) {
+    console.log("company: ", company);
+
     await seedDB(company);
   }
 };
