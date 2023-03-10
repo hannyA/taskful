@@ -49,134 +49,166 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<% let low = stats.userPriorityProjects.low; let med =
-stats.userPriorityProjects.medium; let high = stats.userPriorityProjects.high;
-let vhigh = stats.userPriorityProjects.vhigh; let _new =
-stats.userProgressProjects.new; let complete =
-stats.userProgressProjects.complete; let cancel =
-stats.userProgressProjects.cancel; let hold = stats.userProgressProjects.hold;
-let progress = stats.userProgressProjects.progress %>
-
 <script>
 
-  let low = <%= low %>;
-  let med = <%= med %>;
-  let high = <%= high %>;
-  let vhigh = <%= vhigh %>;
-
-  let _new = <%= _new %>;
-  let complete = <%= complete %>;
-  let cancel = <%= cancel %>;
-  let hold = <%= hold %>;
-  let progress = <%= progress %>;
+  let low = <%= stats.userPriorityProjects.low %>
+  let med = <%= stats.userPriorityProjects.medium %>
+  let high = <%= stats.userPriorityProjects.high %>
+  let vhigh = <%= stats.userPriorityProjects.vhigh %>
 
   const ctx1 = document.getElementById("projects-pri");
-  const data1 = {
-    labels: ["Low", "Medium", "High", "Very High"],
-    datasets: [
-      {
+  let data;
+  if (low + med + high + vhigh === 0 ) {
+    data = {
+      labels: ["None"],
+      datasets: [{
         label: "Priority",
-        data: [low, med, high, vhigh],
-        backgroundColor: [
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 99, 132)",
-          "rgb(155, 155, 132)",
-        ],
-        // hoverOffset: 4,
-      },
-    ],
-  };
+        data: [1],
+        backgroundColor: ["rgb(54, 162, 235)"],
+      }],
+    };
+  } else {
+    data = {
+      labels: ["Low", "Medium", "High", "Very High"],
+      datasets: [
+        {
+          label: "Priority",
+          data: [low, med, high, vhigh],
+          backgroundColor: [
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(155, 155, 132)",
+          ],
+        },
+      ],
+    };
+  }
   new Chart(ctx1, {
     type: "pie",
-    data: data1,
+    data: data,
   });
 
 
+  let _new = <%= stats.userProgressProjects.new %>
+  let complete = <%= stats.userProgressProjects.complete %>
+  let cancel = <%= stats.userProgressProjects.cancel %>
+  let hold = <%= stats.userProgressProjects.hold %>
+  let progress = <%= stats.userProgressProjects.progress %>
+
   const ctx2 = document.getElementById("projects-prog");
-  const data2 = {
-    labels: ["New", "Complete", "Canceled", "Held", "In Progress"],
-    datasets: [
-      {
-        label: "Tasks",
-        data: [_new, complete, cancel, hold, progress],
-        backgroundColor: [
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 99, 132)",
-          "rgb(150, 44, 180)",
-          "rgb(50, 50, 50)",
-        ],
-        // hoverOffset: 4,
-      },
-    ],
-  };
+  let data2;
+  if ( _new + complete + cancel + hold + hold === 0 ) {
+    data2 = {
+      labels: ["None"],
+      datasets: [
+        {
+          label: "Tasks",
+          data: [1],
+          backgroundColor: [ "rgb(54, 162, 235)"]
+        },
+      ],
+    };
+  } else {
+      data2 = {
+        labels: ["New", "Complete", "Canceled", "Held", "In Progress"],
+        datasets: [
+        {
+          label: "Tasks",
+          data: [_new, complete, cancel, hold, progress],
+          backgroundColor: [
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(150, 44, 180)",
+            "rgb(50, 50, 50)",
+          ],
+        },
+      ],
+    };
+  }
   new Chart(ctx2, {
     type: "pie",
     data: data2,
   });
-</script>
 
-<% low = stats.issuePriority.low; med = stats.issuePriority.medium; high =
-stats.issuePriority.high; vhigh = stats.issuePriority.vhigh; _new =
-stats.issueStatus.new; assign = stats.issueStatus.assign; close =
-stats.issueStatus.close; solve = stats.issueStatus.solve; progress =
-stats.issueStatus.progress %>
 
-<script>
-
-  low = <%= low %>;
-  med = <%= med %>;
-  high = <%= high %>;
-  vhigh = <%= vhigh %>;
-
-  _new = <%= _new %>;
-  assign = <%= assign %>;
-  close = <%= close %>;
-  solve = <%= solve %>;
-  progress = <%= progress %>;
+  low = <%= stats.issuePriority.low %>
+  med = <%= stats.issuePriority.medium %>
+  high = <%= stats.issuePriority.high %>
+  vhigh = <%= stats.issuePriority.vhigh %>
 
   const ctx3 = document.getElementById("issues-pri");
-  const data3 = {
-    labels: ["Low", "Medium", "High", "Very High"],
-    datasets: [
-      {
+  let data3;
+  if (low + med + high + vhigh === 0 ) {
+    data3 = {
+      labels: ["None"],
+      datasets: [{
         label: "Priority",
-        data: [low, med, high, vhigh],
-        backgroundColor: [
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 99, 132)",
-          "rgb(155, 155, 132)",
-        ],
-        // hoverOffset: 4,
-      },
-    ],
-  };
+        data: [1],
+        backgroundColor: ["rgb(54, 162, 235)"],
+      }],
+    };
+  } else {
+    data3 = {
+      labels: ["Low", "Medium", "High", "Very High"],
+      datasets: [
+        {
+          label: "Priority",
+          data: [low, med, high, vhigh],
+          backgroundColor: [
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(155, 155, 132)",
+          ],
+        },
+      ],
+    };
+  }
   new Chart(ctx3, {
     type: "pie",
     data: data3,
   });
 
+  _new = <%= stats.issueStatus.new %>
+  assign = <%= stats.issueStatus.assign %>
+  progress = <%= stats.issueStatus.progress %>
+  solve = <%= stats.issueStatus.solve %>
+  close = <%= stats.issueStatus.close %>
 
   const ctx4 = document.getElementById("issues-prog");
-  const data4 = {
-    labels: ["New", "Assigned", "In Progress", "Solved", "Closed"],
-    datasets: [
-      {
-        label: "Tasks",
-        data: [_new, assign, progress, solve, close],
-        backgroundColor: [
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 99, 132)",
-          "rgb(150, 44, 180)",
-          "rgb(50, 50, 50)",
-        ],
-        // hoverOffset: 4,
-      },
-    ],
-  };
+  let data4;
+  if ( _new + assign + progress + solve + close === 0 ) {
+    data4 = {
+      labels: ["None"],
+      datasets: [
+        {
+          label: "Tasks",
+          data: [1],
+          backgroundColor: ["rgb(54, 162, 235)"],
+        },
+      ],
+    };
+  } else {
+    data4 = {
+      labels: ["New", "Assigned", "In Progress", "Solved", "Closed"],
+      datasets: [
+        {
+          label: "Tasks",
+          data: [_new, assign, progress, solve, close],
+          backgroundColor: [
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(150, 44, 180)",
+            "rgb(50, 50, 50)",
+          ],
+          // hoverOffset: 4,
+        },
+      ],
+    };
+  }
   new Chart(ctx4, {
     type: "pie",
     data: data4,

@@ -29,91 +29,102 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<% let low = stats.companyPriorityProjects.low; let med =
-stats.companyPriorityProjects.medium; let high =
-stats.companyPriorityProjects.high; let vhigh =
-stats.companyPriorityProjects.vhigh; let _new =
-stats.companyProgressProjects.new; let complete =
-stats.companyProgressProjects.complete; let cancel =
-stats.companyProgressProjects.cancel; let hold =
-stats.companyProgressProjects.hold; let progress =
-stats.companyProgressProjects.progress %>
-
 <script>
-  let low = <%= low %>;
-  let med = <%= med %>;
-  let high = <%= high %>;
-  let vhigh = <%= vhigh %>;
+  let low = <%= stats.companyPriorityProjects.low %>
+  let med = <%= stats.companyPriorityProjects.medium %>
+  let high = <%= stats.companyPriorityProjects.high %>
+  let vhigh = <%= stats.companyPriorityProjects.vhigh %>
 
-  let _new = <%= _new %>;
-  let complete = <%= complete %>;
-  let cancel = <%= cancel %>;
-  let hold = <%= hold %>;
-  let progress = <%= progress %>;
+  const total = low + med + high + vhigh;
 
+  if (total === 0 ) {
+    const ctx = document.getElementById("myChart");
+    const data = {
+      labels: ["None"],
+      datasets: [
+        {
+          label: "Priority",
+          data: [1],
+          backgroundColor: ["rgb(54, 162, 235)"],
+          // hoverOffset: 4,
+        },
+      ],
+    };
+    new Chart(ctx, {
+      type: "pie",
+      data: data,
+    });
+  } else {
 
-
-  const ctx = document.getElementById("myChart");
-  const data = {
-    labels: ["Low", "Medium", "High", "Very High"],
-    datasets: [
-      {
-        label: "Priority",
-        data: [low, med, high, vhigh],
-        backgroundColor: [
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 99, 132)",
-          "rgb(155, 155, 132)",
-        ],
-        // hoverOffset: 4,
-      },
-    ],
-  };
-  new Chart(ctx, {
-    type: "pie",
-    data: data,
-    // {
-    //   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    //   datasets: [
-    //     {
-    //       label: "# of Votes",
-    //       data: [12, 19, 3, 5, 2, 3],
-    //       borderWidth: 1,
-    //     },
-    //   ],
-    // },
-    // options: {
-    //   scales: {
-    //     y: {
-    //       beginAtZero: true,
-    //     },
-    //   },
-    // },
-  });
+    const ctx = document.getElementById("myChart");
+    const data = {
+      labels: ["Low", "Medium", "High", "Very High"],
+      datasets: [
+        {
+          label: "Priority",
+          data: [low, med, high, vhigh],
+          backgroundColor: [
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(155, 155, 132)",
+          ],
+        },
+      ],
+    };
+    new Chart(ctx, {
+      type: "pie",
+      data: data,
+    });
+  }
 
 
+  let _new = <%= stats.companyProgressProjects.new %>;
+  let complete = <%= stats.companyProgressProjects.complete %>;
+  let cancel = <%= stats.companyProgressProjects.cancel %> ;
+  let hold = <%= stats.companyProgressProjects.hold %>;
+  let progress = <%= stats.companyProgressProjects.progress %>;
 
-  const ctx2 = document.getElementById("myChart2");
-  const data2 = {
-    labels: ["New", "Complete", "Canceled", "Held", "In Progress"],
-    datasets: [
-      {
-        label: "Tasks",
-        data: [_new, complete, cancel, hold, progress],
-        backgroundColor: [
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 99, 132)",
-          "rgb(150, 44, 180)",
-          "rgb(50, 50, 50)",
-        ],
-        // hoverOffset: 4,
-      },
-    ],
-  };
-  new Chart(ctx2, {
-    type: "pie",
-    data: data2,
-  });
+  let t = _new + complete + cancel + hold + progress;
+
+  if (t === 0) {
+    const ctx2 = document.getElementById("myChart2");
+    const data2 = {
+      labels: ["None"],
+      datasets: [
+        {
+          label: "Tasks",
+          data: [1],
+          backgroundColor: ["rgb(54, 162, 235)"],
+        },
+      ],
+    };
+    new Chart(ctx2, {
+      type: "pie",
+      data: data2,
+    });
+  } else {
+    const ctx2 = document.getElementById("myChart2");
+    const data2 = {
+      labels: ["New", "Complete", "Canceled", "Held", "In Progress"],
+      datasets: [
+        {
+          label: "Tasks",
+          data: [_new, complete, cancel, hold, progress],
+          backgroundColor: [
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(150, 44, 180)",
+            "rgb(50, 50, 50)",
+          ],
+          // hoverOffset: 4,
+        },
+      ],
+    };
+    new Chart(ctx2, {
+      type: "pie",
+      data: data2,
+    });
+  }
 </script>

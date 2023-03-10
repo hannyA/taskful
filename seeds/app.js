@@ -20,23 +20,34 @@ module.exports.deleteDB = async () => {
   await Task.deleteMany({});
 };
 
-module.exports.seedDB = async (company) => {
+module.exports.seedDB = async (
+  company,
+  role,
+  firstname,
+  lastname,
+  password,
+  email
+) => {
   console.log("Adding Admin");
   console.log("company: ", company);
-  const defaultAdmin = await randomUser(
+  const adminUser = await randomUser(
     company,
-    "Admin",
-    "John",
-    "Doe",
+    role || "Admin",
+    firstname || "John",
+    lastname || "Doe",
     daysBeforeDate(),
-    "a"
+    password || "a",
+    email
   );
-  await defaultAdmin.save();
+
+  const defaultAdmin = adminUser.registeredUser;
+
+  //TODO: create projects, issues and tasks assigned to defaultAdmin
 
   for (let h = 0; h < 3; h++) {
     // Users
     console.log("Adding new user");
-    const user = await randomUser(company);
+    const { user } = await randomUser(company);
 
     console.log("Adding new project");
     const project = newProject(user, h);
@@ -54,4 +65,5 @@ module.exports.seedDB = async (company) => {
       // await ticketUser.save();
     }
   }
+  return defaultAdmin;
 };

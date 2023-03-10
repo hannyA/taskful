@@ -19,20 +19,21 @@ module.exports.randomUser = async (
   firstname,
   lastname,
   registerDate,
-  password
+  password,
+  email
 ) => {
   const _firstname = firstname || randomItem(firstnames);
   const _lastname = lastname || randomItem(lastnames);
   const _role = role || randomItem(roles);
   const regDate = registerDate || randomDate(new Date(2022, 6, 1), new Date());
-  const _email = makeEmail(_firstname, _lastname, company);
+  const _email = email || makeEmail(_firstname, _lastname, company);
 
   // Find unique email so we don't dupslicate
   const dupslicateUsers = await User.find({
     email: _email,
   });
 
-  if (dupslicateUsers.length > 0) return randomUser(company, role);
+  if (dupslicateUsers.length > 0) return this.randomUser(company, role);
 
   const newUser = new User({
     first: _firstname,
@@ -52,7 +53,7 @@ module.exports.registerUser = async (user, password) => {
   try {
     const registeredUser = await User.register(user, _password);
     console.log("registeredUser: ", registeredUser);
-    return user;
+    return { registeredUser, user };
   } catch (e) {
     return null;
   }

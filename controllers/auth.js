@@ -2,8 +2,6 @@ const wrapAsync = require("../utils/wrapAsync");
 const User = require("../models/user");
 const Project = require("../models/project");
 
-const { seedDB } = require("../seeds/app");
-
 module.exports.renderRegisterForm = async (req, res) => {
   res.render("auth/register");
 };
@@ -20,13 +18,6 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
     req.login(registeredUser, (err) => {
       if (err) return next(err);
 
-      seedDB(() => {
-        console.log("Seeding database");
-      }).then(() => {
-        console.log("CLosing database");
-        mongoose.connection.close();
-      });
-
       req.flash("success", `Welcome ${body.first}!`);
       res.redirect("/api/v1/dashboard");
     });
@@ -35,6 +26,27 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
     res.redirect("/api/v1/auth/register");
   }
 });
+
+// module.exports.loginThroughRegister = wrapAsync(async (req, res) => {
+//   const { password } = req.body;
+//   delete req.body.password;
+//   const body = { ...req.body, username: req.body.email };
+//   // console.log(req.body);
+//   // const { email, username, } = req.body;
+//   const user = new User(body);
+//   try {
+//     const registeredUser = await User.register(user, password);
+//     req.login(registeredUser, (err) => {
+//       if (err) return next(err);
+
+//       req.flash("success", `Welcome ${body.first}!`);
+//       res.redirect("/api/v1/dashboard");
+//     });
+//   } catch (e) {
+//     req.flash("error", e.message);
+//     res.redirect("/api/v1/auth/register");
+//   }
+// });
 
 module.exports.renderLoginForm = (req, res) => {
   res.render("auth/login");

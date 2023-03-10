@@ -1,6 +1,31 @@
 const User = require("../models/user");
 const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
+const { seedDB } = require("../seeds/app");
+
+module.exports.isDemo = async (req, res, next) => {
+  const { isDemo } = req.body;
+
+  console.log("demo:", isDemo);
+  console.log("demo:", req.body);
+
+  if (isDemo) {
+    const { company, first, last, role, email, password } = req.body;
+    const adminUser = await seedDB(company, role, first, last, password, email);
+    try {
+      req.login(adminUser, (err) => {
+        if (err) return next(err);
+
+        req.flash("success", `Welcome ${body.first}!`);
+        return res.redirect("/api/v1/dashboard");
+      });
+    } catch (e) {
+      req.flash("error", e.message);
+      return res.redirect("/api/v1/auth/register");
+    }
+  }
+  next();
+};
 
 module.exports.isCompanyAdmin = async (req, res, next) => {
   const user = await User.findById(req.user._id);

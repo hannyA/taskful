@@ -39,6 +39,7 @@ const UserSchema = new Schema({
   },
 });
 
+// Adds username and password
 UserSchema.plugin(passportLocalMongoose);
 
 // Create a virtual property `fullname`

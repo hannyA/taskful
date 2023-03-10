@@ -30,7 +30,7 @@ db.once("open", () => {
 // });
 
 const runSeed = async () => {
-  deleteDB();
+  await deleteDB();
 
   for (let company of companies) {
     console.log("company: ", company);

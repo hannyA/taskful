@@ -10,6 +10,7 @@
     "dev": "nodemon server.js",
     "prod": "NODE_ENV=production nodemon server.js",
     "seed": "node seeds/server.js",
+    "clear:db": "node seeds/delete.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hanny Aly",
