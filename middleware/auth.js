@@ -4,12 +4,9 @@ const ExpressError = require("../utils/ExpressError");
 const { seedDB } = require("../seeds/app");
 
 module.exports.isDemo = async (req, res, next) => {
-  const { isDemo } = req.body;
+  const { demo } = req.body;
 
-  console.log("demo:", isDemo);
-  console.log("demo:", req.body);
-
-  if (isDemo) {
+  if (demo) {
     const { company, first, last, role, email, password } = req.body;
     const adminUser = await seedDB(company, role, first, last, password, email);
     try {
