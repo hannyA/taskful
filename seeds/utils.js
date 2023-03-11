@@ -13,7 +13,7 @@ const {
   issueType,
 } = require("./seedHelper");
 
-module.exports.generateUser = async (
+module.exports.createUser = async (
   company,
   role,
   firstname,
@@ -28,6 +28,8 @@ module.exports.generateUser = async (
   const regDate = registerDate || randomDate(new Date(2022, 6, 1), new Date());
   const _email = email || makeEmail(_firstname, _lastname, company);
 
+  // TODO: Test to remove this function. Maybe redundant
+  // since Use.register may throw duplcate error?
   // Find unique email so we don't dupslicate
   const dupslicateUsers = await User.find({
     email: _email,
@@ -45,23 +47,21 @@ module.exports.generateUser = async (
     company: company,
   });
 
-  const b = await this.registerUser(newUser, password);
-  return b;
+  const user = await this.registerUser(newUser, password);
+  return user;
 };
 
 module.exports.registerUser = async (user, password) => {
   const _password = password || generatePassword();
   try {
     const registeredUser = await User.register(user, _password);
-    const a = { registeredUser: registeredUser, user: user };
-    return a;
+    return registeredUser;
   } catch (e) {
     return null;
   }
 };
 
-module.exports.newProject = (user, h) => {
-  console.log("newproj date ob: ", user);
+module.exports.newProject = (user, projectTitles) => {
   const startDate = randomDate(user.registerDate, new Date());
   let endDate = new Date();
   endDate.setDate(startDate.getDate() + 7 + Math.random() * 120); // b
@@ -69,8 +69,8 @@ module.exports.newProject = (user, h) => {
   // const enddate = new Date(createdate.getTime() + 72 * 60 * 60 * 1000);
   // const endDate = randomDate(createDate, new Date());
   const project = new Project({
-    title: projectTitles[h].title,
-    description: projectTitles[h].description,
+    title: projectTitles.title,
+    description: projectTitles.description,
     owner: user,
     createDate: startDate,
     plannedEndDate: endDate,
@@ -81,18 +81,17 @@ module.exports.newProject = (user, h) => {
   return project;
 };
 
-module.exports.newIssue = async (company, projectId, nextDate, _issue) => {
-  const allAdmins = await User.find({
-    company,
-    $or: [{ role: "Admin" }, { role: "Technician" }],
-  });
-
-  const techSupport = randomItem(allAdmins);
-
+module.exports.newIssue = async (
+  company,
+  user,
+  projectId,
+  nextDate,
+  _issue
+) => {
   const issue = new Issue({
     title: _issue.title,
     description: _issue.description,
-    author: techSupport,
+    author: user,
     status: randomItem(issueStatus),
     priority: randomItem(priorities),
     type: randomItem(issueType),
@@ -103,10 +102,33 @@ module.exports.newIssue = async (company, projectId, nextDate, _issue) => {
   return issue;
 };
 
+// module.exports.newIssue = async (company, projectId, nextDate, _issue) => {
+//   const allAdmins = await User.find({
+//     company,
+//     $or: [{ role: "Admin" }, { role: "Technician" }],
+//   });
+
+//   const techSupport = randomItem(allAdmins);
+
+//   const issue = new Issue({
+//     title: _issue.title,
+//     description: _issue.description,
+//     author: techSupport,
+//     status: randomItem(issueStatus),
+//     priority: randomItem(priorities),
+//     type: randomItem(issueType),
+//     project: projectId,
+//     createDate: daysAfterDate(nextDate, 3),
+//   });
+
+//   return issue;
+// };
+
 const randomItem = (items) => {
   const a = Math.floor(Math.random() * items.length);
   return items[a];
 };
+module.exports.randomItem = randomItem;
 
 const getEmail = (first, last, email) => {
   return `${first}.${last}@${email}`;
@@ -138,18 +160,18 @@ function generatePassword() {
   return retVal;
 }
 
-const randomUser = async (company) => {
+const generateUser = async (company) => {
   const maxTries = 5;
 
   for (let i = 0; i < maxTries; i++) {
-    const user = await this.generateUser(company);
+    const user = await this.createUser(company);
     if (user !== null) {
       return user;
     }
   }
   return null;
 };
-module.exports.randomUser = randomUser;
+module.exports.generateUser = generateUser;
 
 // Get date from somewhere between start and end
 const randomDate = (start, end) => {

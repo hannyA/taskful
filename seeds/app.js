@@ -4,15 +4,16 @@ const Issue = require("../models/issue");
 const Task = require("../models/task");
 
 const {
-  generateUser,
+  createUser,
   // randomDate,
   newProject,
   newIssue,
   daysBeforeDate,
-  randomUser,
+  generateUser,
+  randomItem,
 } = require("./utils");
 
-const { issues, type } = require("./seedHelper");
+const { issues, type, projectTitles } = require("./seedHelper");
 
 module.exports.deleteDB = async () => {
   await Issue.deleteMany({});
@@ -29,7 +30,7 @@ module.exports.makeAdmin = async (
   password,
   email
 ) => {
-  const adminUser = await generateUser(
+  const adminUser = await createUser(
     company,
     role || "Admin",
     firstname || "John",
@@ -39,40 +40,89 @@ module.exports.makeAdmin = async (
     email
   );
 
-  console.log("1) seedDB - adminUser: ", adminUser);
-
-  if (adminUser === null) {
-    return null;
-  }
-  const defaultAdmin = adminUser.registeredUser;
-  return defaultAdmin;
+  return adminUser;
 };
 
-module.exports.seedDB = async (company) => {
+module.exports.seedDB = async (company, admin) => {
   //TODO: create projects, issues and tasks assigned to defaultAdmin
-  for (let h = 0; h < 3; h++) {
-    // Users
-    console.log("seedDB: Adding new user");
 
-    const { user } = await randomUser(company);
-    console.log("seedDB >  Adding user: ", user);
-    if (user === null) break;
-    console.log("seedDB > Adding user: ", user);
+  const numberOfUsers = 10;
+  // Create random users in database
+  for (let i = 0; i < numberOfUsers; i++) {
+    await generateUser(company);
+  }
 
-    console.log("seedDB > Adding new project");
-    const project = newProject(user, h);
+  const allUsers = await User.find({
+    company,
+  });
+
+  //For 1/10 team create projects, including Admin
+  const numOfLeaders = Math.floor(numberOfUsers / 10);
+  const projectLeaders = await User.find({
+    company: company,
+    _id: { $ne: admin._id },
+  }).limit(numOfLeaders);
+
+  projectLeaders.push(admin);
+  // Create projets for all project leaders
+  for (let i = 0; i < projectTitles.length; i++) {
+    const projectInfo = projectTitles[i];
+    const projLeader = projectLeaders[i % projectLeaders.length];
+    const project = newProject(projLeader, projectInfo);
     await project.save();
 
-    // await user.save();
-
+    // Add issues for project
     let issueDate = project.createDate;
     console.log("Adding new issues");
     for (let i = 0; i < 10; i++) {
-      const issue = await newIssue(company, project.id, issueDate, issues[i]);
-      issueDate = issue.createDate;
+      const _issue = randomItem(issues);
+      const user = randomItem(allUsers);
 
+      const issue = await newIssue(
+        company,
+        user,
+        project.id,
+        issueDate,
+        _issue
+      );
       await issue.save();
-      // await ticketUser.save();
+      issueDate = issue.createDate;
     }
   }
+
+  // const projectInfo = projectTitles[projectTitles.length];
+  // const project = newProject(admin, h);
+  // await project.save();
+
+  // for (let i = 0; i < users.length; i++) {
+  //   // Get user id
+  //   // create project
+  //   // assign team members
+  // }
+
+  // for (let h = 0; h < 3; h++) {
+  //   // Users
+  //   console.log("seedDB: Adding new user");
+
+  //   const { user } = await generateUser(company);
+  //   console.log("seedDB >  Adding user: ", user);
+  //   if (user === null) break;
+  //   console.log("seedDB > Adding user: ", user);
+
+  //   console.log("seedDB > Adding new project");
+  //   const project = newProject(user, h);
+  //   await project.save();
+
+  //   // await user.save();
+
+  //   let issueDate = project.createDate;
+  //   console.log("Adding new issues");
+  //   for (let i = 0; i < 10; i++) {
+  //     const issue = await newIssue(company, project.id, issueDate, issues[i]);
+  //     issueDate = issue.createDate;
+
+  //     await issue.save();
+  //     // await ticketUser.save();
+  //   }
+  // }
 };

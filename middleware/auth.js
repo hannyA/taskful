@@ -7,7 +7,7 @@ module.exports._isDemo = async (req, res, next) => {
   const { demo, company } = req.body;
 
   if (demo) {
-    await seedDB(company);
+    await seedDB(company, req.registeredUser);
     console.log("isDemo adminUser: ");
   }
   next();

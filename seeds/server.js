@@ -32,11 +32,21 @@ db.once("open", () => {
 const runSeed = async () => {
   await deleteDB();
 
-  const admin = await makeAdmin(company);
-
+  // create all users
+  /**
+   * for every user
+   *  create a project
+   *    for every project -> assign 3-9 members to proj
+   *
+   *      FOr every user assign 2 - 7 issues
+   *      For every issue
+   *
+   *
+   */
   for (let company of companies) {
+    const admin = await makeAdmin(company);
     console.log("company: ", company);
-    await seedDB(company);
+    await seedDB(company, admin);
   }
 };
 
