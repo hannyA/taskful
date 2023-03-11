@@ -6,6 +6,43 @@ module.exports.renderRegisterForm = async (req, res) => {
   res.render("auth/register");
 };
 
+module.exports._registerUser = wrapAsync(async (req, res, next) => {
+  const { password } = req.body;
+  delete req.body.password;
+  const body = { ...req.body, username: req.body.email };
+
+  const user = new User(body);
+
+  try {
+    const registeredUser = await User.register(user, password);
+    console.log("_registerUser 2");
+
+    console.log("auth registerUser: ", registeredUser);
+    req.registeredUser = registeredUser;
+    next();
+  } catch (e) {
+    req.flash("error", e.message);
+    res.redirect("/api/v1/auth/register");
+  }
+});
+
+module.exports._loginUser = wrapAsync(async (req, res) => {
+  try {
+    const { registeredUser } = req;
+    console.log("auth registerUser: ", registeredUser);
+
+    req.login(registeredUser, (err) => {
+      if (err) return next(err);
+
+      req.flash("success", `Welcome ${registeredUser.first}!`);
+      res.redirect("/api/v1/dashboard");
+    });
+  } catch (e) {
+    req.flash("error", e.message);
+    res.redirect("/api/v1/auth/register");
+  }
+});
+
 module.exports.registerUser = wrapAsync(async (req, res) => {
   const { password } = req.body;
   delete req.body.password;
@@ -15,10 +52,12 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
   const user = new User(body);
   try {
     const registeredUser = await User.register(user, password);
+    console.log("auth registerUser: ", registerUser);
+
     req.login(registeredUser, (err) => {
       if (err) return next(err);
 
-      req.flash("success", `Welcome ${body.first}!`);
+      req.flash("success", `Welcome ${registeredUser.first}!`);
       res.redirect("/api/v1/dashboard");
     });
   } catch (e) {

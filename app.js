@@ -164,8 +164,9 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log("app.js: ", err);
+  console.log("app.js error message: ", err);
   const { statusCode = 500, message = "Something went wrong" } = err;
+
   if (req.isAuthenticated()) {
     if (statusCode === 503) {
       return res
@@ -180,10 +181,17 @@ app.use((err, req, res, next) => {
       message,
     });
   } else {
-    res.status(statusCode).render("templates/errors/signedout-error-template", {
-      statusCode,
-      message,
-    });
+    if (statusCode === 409) {
+      req.flash("error", message);
+      return res.redirect("/api/v1/auth/register");
+    } else {
+      res
+        .status(statusCode)
+        .render("templates/errors/signedout-error-template", {
+          statusCode,
+          message,
+        });
+    }
   }
 });
 

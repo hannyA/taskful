@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { seedDB, deleteDB } = require("./app");
+const { makeAdmin, seedDB, deleteDB } = require("./app");
 const { companies } = require("./seedHelper");
 mongoose.set("strictQuery", false);
 
@@ -32,9 +32,10 @@ db.once("open", () => {
 const runSeed = async () => {
   await deleteDB();
 
+  const admin = await makeAdmin(company);
+
   for (let company of companies) {
     console.log("company: ", company);
-
     await seedDB(company);
   }
 };

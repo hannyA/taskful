@@ -13,7 +13,7 @@ const {
   issueType,
 } = require("./seedHelper");
 
-module.exports.randomUser = async (
+module.exports.generateUser = async (
   company,
   role,
   firstname,
@@ -33,7 +33,7 @@ module.exports.randomUser = async (
     email: _email,
   });
 
-  if (dupslicateUsers.length > 0) return this.randomUser(company, role);
+  if (dupslicateUsers.length > 0) return null;
 
   const newUser = new User({
     first: _firstname,
@@ -45,21 +45,23 @@ module.exports.randomUser = async (
     company: company,
   });
 
-  return await this.registerUser(newUser, password);
+  const b = await this.registerUser(newUser, password);
+  return b;
 };
 
 module.exports.registerUser = async (user, password) => {
   const _password = password || generatePassword();
   try {
     const registeredUser = await User.register(user, _password);
-    console.log("registeredUser: ", registeredUser);
-    return { registeredUser, user };
+    const a = { registeredUser: registeredUser, user: user };
+    return a;
   } catch (e) {
     return null;
   }
 };
 
 module.exports.newProject = (user, h) => {
+  console.log("newproj date ob: ", user);
   const startDate = randomDate(user.registerDate, new Date());
   let endDate = new Date();
   endDate.setDate(startDate.getDate() + 7 + Math.random() * 120); // b
@@ -135,6 +137,19 @@ function generatePassword() {
   }
   return retVal;
 }
+
+const randomUser = async (company) => {
+  const maxTries = 5;
+
+  for (let i = 0; i < maxTries; i++) {
+    const user = await this.generateUser(company);
+    if (user !== null) {
+      return user;
+    }
+  }
+  return null;
+};
+module.exports.randomUser = randomUser;
 
 // Get date from somewhere between start and end
 const randomDate = (start, end) => {

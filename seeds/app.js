@@ -4,11 +4,12 @@ const Issue = require("../models/issue");
 const Task = require("../models/task");
 
 const {
-  randomUser,
+  generateUser,
   // randomDate,
   newProject,
   newIssue,
   daysBeforeDate,
+  randomUser,
 } = require("./utils");
 
 const { issues, type } = require("./seedHelper");
@@ -20,7 +21,7 @@ module.exports.deleteDB = async () => {
   await Task.deleteMany({});
 };
 
-module.exports.seedDB = async (
+module.exports.makeAdmin = async (
   company,
   role,
   firstname,
@@ -28,9 +29,7 @@ module.exports.seedDB = async (
   password,
   email
 ) => {
-  console.log("Adding Admin");
-  console.log("company: ", company);
-  const adminUser = await randomUser(
+  const adminUser = await generateUser(
     company,
     role || "Admin",
     firstname || "John",
@@ -40,16 +39,27 @@ module.exports.seedDB = async (
     email
   );
 
+  console.log("1) seedDB - adminUser: ", adminUser);
+
+  if (adminUser === null) {
+    return null;
+  }
   const defaultAdmin = adminUser.registeredUser;
+  return defaultAdmin;
+};
 
+module.exports.seedDB = async (company) => {
   //TODO: create projects, issues and tasks assigned to defaultAdmin
-
   for (let h = 0; h < 3; h++) {
     // Users
-    console.log("Adding new user");
-    const { user } = await randomUser(company);
+    console.log("seedDB: Adding new user");
 
-    console.log("Adding new project");
+    const { user } = await randomUser(company);
+    console.log("seedDB >  Adding user: ", user);
+    if (user === null) break;
+    console.log("seedDB > Adding user: ", user);
+
+    console.log("seedDB > Adding new project");
     const project = newProject(user, h);
     await project.save();
 
@@ -65,5 +75,4 @@ module.exports.seedDB = async (
       // await ticketUser.save();
     }
   }
-  return defaultAdmin;
 };

@@ -3,17 +3,33 @@ const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
 const { seedDB } = require("../seeds/app");
 
+module.exports._isDemo = async (req, res, next) => {
+  const { demo, company } = req.body;
+
+  if (demo) {
+    await seedDB(company);
+    console.log("isDemo adminUser: ");
+  }
+  next();
+};
+
 module.exports.isDemo = async (req, res, next) => {
   const { demo } = req.body;
 
   if (demo) {
     const { company, first, last, role, email, password } = req.body;
     const adminUser = await seedDB(company, role, first, last, password, email);
+    console.log("isDemo adminUser: ", adminUser);
+    if (adminUser === null) {
+      return next(new ExpressError("Email is already in use", 409));
+      // return res.redirect("/api/v1/auth/register");
+    }
+
     try {
       req.login(adminUser, (err) => {
         if (err) return next(err);
 
-        req.flash("success", `Welcome ${body.first}!`);
+        req.flash("success", `Welcome ${adminUser.first}!`);
         return res.redirect("/api/v1/dashboard");
       });
     } catch (e) {
