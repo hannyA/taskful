@@ -8,7 +8,7 @@ const {
   // randomDate,
   newProject,
   newIssue,
-  daysBeforeDate,
+  daysBeforeToday,
   generateUser,
   randomItem,
 } = require("./utils");
@@ -35,7 +35,7 @@ module.exports.makeAdmin = async (
     role || "Admin",
     firstname || "John",
     lastname || "Doe",
-    daysBeforeDate(),
+    daysBeforeToday(30),
     password || "a",
     email
   );
@@ -58,16 +58,20 @@ module.exports.seedDB = async (company, admin) => {
 
   //For 1/10 team create projects, including Admin
   const numOfLeaders = Math.floor(numberOfUsers / 10);
+
   const projectLeaders = await User.find({
     company: company,
     _id: { $ne: admin._id },
   }).limit(numOfLeaders);
 
   projectLeaders.push(admin);
+  console.log("projectLeaders: ", projectLeaders);
+
   // Create projets for all project leaders
   for (let i = 0; i < projectTitles.length; i++) {
     const projectInfo = projectTitles[i];
     const projLeader = projectLeaders[i % projectLeaders.length];
+    console.log("project leader: ", projLeader.first, projLeader.last);
     const project = newProject(projLeader, projectInfo);
     await project.save();
 

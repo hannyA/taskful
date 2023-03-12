@@ -98,7 +98,6 @@ module.exports.newIssue = async (
     project: projectId,
     createDate: daysAfterDate(nextDate, 3),
   });
-
   return issue;
 };
 
@@ -142,13 +141,17 @@ const daysAfterDate = (date, days) => {
   let endDate = new Date(date);
   endDate.setDate(date.getDate() + Math.random() * days);
 };
-const daysBeforeDate = () => {
+
+// new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+
+const daysBeforeToday = (days) => {
   let today = new Date();
   let before = new Date();
-  before.setDate(today.getDate() - 30);
+  before.setDate(today.getDate() - days);
+  return before;
 };
 
-module.exports.daysBeforeDate = daysBeforeDate;
+module.exports.daysBeforeToday = daysBeforeToday;
 
 function generatePassword() {
   var length = 8,

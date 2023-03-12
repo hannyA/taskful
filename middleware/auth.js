@@ -2,6 +2,16 @@ const User = require("../models/user");
 const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
 const { seedDB } = require("../seeds/app");
+const { daysBeforeToday } = require("../seeds/utils");
+module.exports.demoize = async (req, res, next) => {
+  const { demo } = req.body;
+
+  if (demo) {
+    req.body.registerDate = daysBeforeToday(30);
+  }
+
+  next();
+};
 
 module.exports._isDemo = async (req, res, next) => {
   const { demo, company } = req.body;

@@ -5,12 +5,12 @@ const auth = require("../controllers/auth");
 const { _registerUser, _loginUser } = require("../controllers/auth");
 const passport = require("passport");
 const { isLoggedIn } = require("../utils/middleware");
-const { isDemo, _isDemo } = require("../middleware/auth");
+const { isDemo, demoize, _isDemo } = require("../middleware/auth");
 router
   .route("/register")
   .get(auth.renderRegisterForm)
   // .post(isDemo, auth.registerUser);
-  .post(_registerUser, _isDemo, _loginUser);
+  .post(demoize, _registerUser, _isDemo, _loginUser);
 
 // auth.registerUser, isDemo, Login
 router
