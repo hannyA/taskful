@@ -5,46 +5,51 @@
     <li class="breadcrumb-item active" aria-current="page">Project</li>
   </ol>
 </nav> -->
-<!-- <h1 class="text-center">
-  <% if (page === 'mine') { %> My Projects <% } else{ %> Projects <% } %>
-</h1> -->
+
 <div class="row mb-5">
-  <div class="offset-4">
+  <div class="col-5 offset-4">
     <h1 class="text-cejnter">
       <% if (page === 'mine') { %> My Projects <% } else{ %> Projects <% } %>
     </h1>
   </div>
 </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th class="col-1" scope="col">ID</th>
-      <th class="col-2" scope="col">Title</th>
-      <th class="col-2" scope="col">Owner</th>
-      <th class="col-6" scope="col">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% for (let project of projects) { %>
-    <tr>
-      <td
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        title="<%=project._id%>"
-      >
-        <a href="/api/v1/projects/<%= project._id %> ">
-          ...<%=`${project._id}`.slice(-4)%></a
-        >
-      </td>
-      <td><%= project.title %></td>
-      <td><%= project.owner.first %> <%= project.owner.last %></td>
-      <td><%= project.description %></td>
-    </tr>
+<div class="project-table">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="" scope="col">ID</th>
+          <th class="" scope="col">Title</th>
+          <th class="" scope="col">Owner</th>
+          <th class="" scope="col">Description</th>
+          <th class="" scope="col">Create Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let project of projects) { %>
+        <tr>
+          <td
+            class=""
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="<%=project._id%>"
+          >
+            <a href="/api/v1/projects/<%= project._id %> ">
+              ...<%=`${project._id}`.slice(-4)%></a
+            >
+          </td>
+          <td class=""><%= project.title %></td>
+          <td class=""><%= project.owner.first %> <%= project.owner.last %></td>
+          <td class=""><%= project.description %></td>
+          <td class=""><%= project.createDate %></td>
+        </tr>
 
-    <% }%>
-  </tbody>
-</table>
+        <% }%>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <% if (projects.length ===0 ) { %>
 <div class="row">
@@ -53,7 +58,6 @@
   </div>
 </div>
 <% }%>
-
 
 <!-- <div>
   <% for (let project of projects) { %>
