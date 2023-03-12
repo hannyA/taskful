@@ -82,15 +82,9 @@ module.exports.seedDB = async (company, admin) => {
       const _issue = randomItem(issues);
       const user = randomItem(allUsers);
 
-      const issue = await newIssue(
-        company,
-        user,
-        project.id,
-        issueDate,
-        _issue
-      );
+      const issue = await newIssue(user, project.id, issueDate, _issue);
       await issue.save();
-      issueDate = issue.createDate;
+      // issueDate = issue.createDate;
     }
   }
 

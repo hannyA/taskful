@@ -81,13 +81,8 @@ module.exports.newProject = (user, projectTitles) => {
   return project;
 };
 
-module.exports.newIssue = async (
-  company,
-  user,
-  projectId,
-  nextDate,
-  _issue
-) => {
+module.exports.newIssue = async (user, projectId, nextDate, _issue) => {
+  const date = randomDate(nextDate, new Date());
   const issue = new Issue({
     title: _issue.title,
     description: _issue.description,
@@ -96,32 +91,11 @@ module.exports.newIssue = async (
     priority: randomItem(priorities),
     type: randomItem(issueType),
     project: projectId,
-    createDate: daysAfterDate(nextDate, 3),
+    createDate: date,
+    lastUpdate: date,
   });
   return issue;
 };
-
-// module.exports.newIssue = async (company, projectId, nextDate, _issue) => {
-//   const allAdmins = await User.find({
-//     company,
-//     $or: [{ role: "Admin" }, { role: "Technician" }],
-//   });
-
-//   const techSupport = randomItem(allAdmins);
-
-//   const issue = new Issue({
-//     title: _issue.title,
-//     description: _issue.description,
-//     author: techSupport,
-//     status: randomItem(issueStatus),
-//     priority: randomItem(priorities),
-//     type: randomItem(issueType),
-//     project: projectId,
-//     createDate: daysAfterDate(nextDate, 3),
-//   });
-
-//   return issue;
-// };
 
 const randomItem = (items) => {
   const a = Math.floor(Math.random() * items.length);
