@@ -109,9 +109,11 @@
     </div>
     <div class="col-3">
       <p><strong>Priority:</strong> <%= project.priority %></p>
-      <p><strong>Date Created:</strong> <%= project.createDate %></p>
+      <p><strong>Date Created:</strong> <%= project.createDateFormat %></p>
       <p><strong>Status:</strong> <%= project.status %></p>
-      <p><strong>Planned End date:</strong> <%= project.plannedEndDate %></p>
+      <p>
+        <strong>Planned End date:</strong> <%= project.plannedEndDateFormat %>
+      </p>
     </div>
   </div>
 </div>

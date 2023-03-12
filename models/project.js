@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const { formatDate, formatTime } = require("../utils/modelUtils");
 
 const ProjectSchema = new Schema({
   title: {
@@ -43,6 +44,14 @@ const ProjectSchema = new Schema({
   plannedEndDate: {
     type: Date,
   },
+});
+
+ProjectSchema.virtual("plannedEndDateFormat").get(function () {
+  return formatDate(this.plannedEndDate);
+});
+
+ProjectSchema.virtual("createDateFormat").get(function () {
+  return formatDate(this.createDate);
 });
 
 module.exports = mongoose.model("Project", ProjectSchema);
