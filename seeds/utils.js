@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const Project = require("../models/project");
 const Issue = require("../models/issue");
+const Task = require("../models/task");
 
 const {
   firstnames,
@@ -81,8 +82,7 @@ module.exports.newProject = (user, projectTitles) => {
   return project;
 };
 
-module.exports.newIssue = async (user, projectId, nextDate, _issue) => {
-  const date = randomDate(nextDate, new Date());
+module.exports.newIssue = async (user, projectId, date, _issue) => {
   const issue = new Issue({
     title: _issue.title,
     description: _issue.description,
@@ -98,11 +98,26 @@ module.exports.newIssue = async (user, projectId, nextDate, _issue) => {
   return issue;
 };
 
-const randomItem = (items) => {
-  const a = Math.floor(Math.random() * items.length);
-  return items[a];
+module.exports.newTask = async (
+  user,
+  issueId,
+  description,
+  createDate,
+  lastUpdate,
+  duration
+) => {
+  const task = new Task({
+    description: description,
+    author: user,
+    issue: issueId,
+    createDate: createDate,
+    lastUpdate: lastUpdate,
+    duration: duration,
+  });
+
+  await task.save();
+  return task;
 };
-module.exports.randomItem = randomItem;
 
 const getEmail = (first, last, email) => {
   return `${first}.${last}@${email}`;
@@ -125,7 +140,6 @@ const daysBeforeToday = (days) => {
   before.setDate(today.getDate() - days);
   return before;
 };
-
 module.exports.daysBeforeToday = daysBeforeToday;
 
 function generatePassword() {
@@ -151,11 +165,21 @@ const generateUser = async (company) => {
 };
 module.exports.generateUser = generateUser;
 
+const randomTaskDuration = () => {
+  return 5 * (1 + Math.floor(Math.random() * 35));
+};
+module.exports.randomTaskDuration = randomTaskDuration;
+
+const randomItem = (items) => {
+  const a = Math.floor(Math.random() * items.length);
+  return items[a];
+};
+module.exports.randomItem = randomItem;
+
 // Get date from somewhere between start and end
 const randomDate = (start, end) => {
   return new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
 };
-
 module.exports.randomDate = randomDate;

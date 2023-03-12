@@ -11,9 +11,12 @@ const {
   daysBeforeToday,
   generateUser,
   randomItem,
+  randomDate,
+  newTask,
+  randomTaskDuration,
 } = require("./utils");
 
-const { issues, type, projectTitles } = require("./seedHelper");
+const { issues, type, projectTitles, tasks } = require("./seedHelper");
 
 module.exports.deleteDB = async () => {
   await Issue.deleteMany({});
@@ -76,23 +79,40 @@ module.exports.seedDB = async (company, admin) => {
     await project.save();
 
     // Add issues for project
-    let issueDate = project.createDate;
+    let projectDate = project.createDate;
 
     if (projLeader.id === admin.id) {
-      console.log("projLeader id: , ", projLeader.id);
-      console.log("admin id: , ", admin.id);
-
       const _issue = randomItem(issues);
-      await newIssue(admin, project.id, issueDate, _issue);
+      const issueDate = randomDate(projectDate, new Date());
+      const issue = await newIssue(admin, project.id, issueDate, _issue);
+      await generateRandomTasks(admin, issue, issueDate);
     }
 
-    console.log("Adding new issues");
+    // console.log("Adding new issues");
     for (let i = 0; i < 10; i++) {
       const _issue = randomItem(issues);
       const user = randomItem(allUsers);
 
+      const issueDate = randomDate(projectDate, new Date());
       const issue = await newIssue(user, project.id, issueDate, _issue);
       // issueDate = issue.createDate;
+      // console.log("Adding new tasks");
+
+      await generateRandomTasks(user, issue, issue.createDate);
+
+      // const numOfTasks = Math.floor(Math.random() * 20) + 1;
+      // for (let j = 0; j < numOfTasks; j++) {
+      //   const taskDate = randomDate(issue.createDate, new Date());
+      //   const description = randomItem(tasks);
+      //   const task = await newTask(
+      //     user,
+      //     issue.id,
+      //     description,
+      //     taskDate,
+      //     taskDate,
+      //     randomTaskDuration()
+      //   );
+      // }
     }
   }
 
@@ -131,4 +151,20 @@ module.exports.seedDB = async (company, admin) => {
   //     // await ticketUser.save();
   //   }
   // }
+};
+
+const generateRandomTasks = async (user, issue, issueDate) => {
+  const numOfTasks = Math.floor(Math.random() * 20) + 1;
+  for (let j = 0; j < numOfTasks; j++) {
+    const taskDate = randomDate(issueDate, new Date());
+    const description = randomItem(tasks);
+    const task = await newTask(
+      user,
+      issue.id,
+      description,
+      taskDate,
+      taskDate,
+      randomTaskDuration()
+    );
+  }
 };
