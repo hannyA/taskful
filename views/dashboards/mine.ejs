@@ -75,10 +75,10 @@
           label: "Priority",
           data: [low, med, high, vhigh],
           backgroundColor: [
-            "rgb(54, 162, 235)",
-            "rgb(255, 205, 86)",
-            "rgb(255, 99, 132)",
-            "rgb(155, 155, 132)",
+            "rgb(255, 224, 20)",
+            "rgb(250, 163, 7)",
+            "rgb(232, 93, 4)",
+            "rgb(208,0,0)",
           ],
         },
       ],
@@ -111,18 +111,19 @@
     };
   } else {
       data2 = {
-        labels: ["New", "Complete", "Canceled", "Held", "In Progress"],
-        datasets: [
+        labels: ["New", "In Progress", "Held", "Complete", "Canceled"],
+      datasets: [
         {
           label: "Tasks",
-          data: [_new, complete, cancel, hold, progress],
+          data: [_new, progress, hold, complete, cancel],
           backgroundColor: [
-            "rgb(54, 162, 235)",
-            "rgb(255, 205, 86)",
-            "rgb(255, 99, 132)",
-            "rgb(150, 44, 180)",
-            "rgb(50, 50, 50)",
+            "rgb(224, 170, 255)",
+            "rgb(199, 125, 255)",
+            "rgb(157, 78, 221)",
+            "rgb(123, 44, 191)",
+            "rgb(39, 15, 62)",
           ],
+          // hoverOffset: 4,
         },
       ],
     };
@@ -157,10 +158,10 @@
           label: "Priority",
           data: [low, med, high, vhigh],
           backgroundColor: [
-            "rgb(54, 162, 235)",
-            "rgb(255, 205, 86)",
-            "rgb(255, 99, 132)",
-            "rgb(155, 155, 132)",
+            "rgb(255, 224, 20)",
+            "rgb(250, 163, 7)",
+            "rgb(232, 93, 4)",
+            "rgb(208,0,0)",
           ],
         },
       ],
@@ -192,17 +193,17 @@
     };
   } else {
     data4 = {
-      labels: ["New", "Assigned", "In Progress", "Solved", "Closed"],
+      labels: ["New", "In Progress", "Held", "Complete", "Canceled"],
       datasets: [
         {
           label: "Tasks",
-          data: [_new, assign, progress, solve, close],
+          data: [_new, progress, hold, complete, cancel],
           backgroundColor: [
-            "rgb(54, 162, 235)",
-            "rgb(255, 205, 86)",
-            "rgb(255, 99, 132)",
-            "rgb(150, 44, 180)",
-            "rgb(50, 50, 50)",
+            "rgb(224, 170, 255)",
+            "rgb(199, 125, 255)",
+            "rgb(157, 78, 221)",
+            "rgb(123, 44, 191)",
+            "rgb(39, 15, 62)",
           ],
           // hoverOffset: 4,
         },
