@@ -3,7 +3,12 @@ const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
 const { seedDB } = require("../seeds/app");
 const { daysBeforeToday } = require("../seeds/utils");
+
 module.exports.demoize = async (req, res, next) => {
+  if (process.env.NODE_ENV === "development") {
+    req.body.demo = "on";
+  }
+
   const { demo } = req.body;
 
   if (demo) {
