@@ -94,6 +94,7 @@ module.exports.newIssue = async (user, projectId, nextDate, _issue) => {
     createDate: date,
     lastUpdate: date,
   });
+  await issue.save();
   return issue;
 };
 

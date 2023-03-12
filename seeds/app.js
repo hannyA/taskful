@@ -71,19 +71,27 @@ module.exports.seedDB = async (company, admin) => {
   for (let i = 0; i < projectTitles.length; i++) {
     const projectInfo = projectTitles[i];
     const projLeader = projectLeaders[i % projectLeaders.length];
-    console.log("project leader: ", projLeader.first, projLeader.last);
+    // console.log("project leader: ", projLeader.first, projLeader.last);
     const project = newProject(projLeader, projectInfo);
     await project.save();
 
     // Add issues for project
     let issueDate = project.createDate;
+
+    if (projLeader.id === admin.id) {
+      console.log("projLeader id: , ", projLeader.id);
+      console.log("admin id: , ", admin.id);
+
+      const _issue = randomItem(issues);
+      await newIssue(admin, project.id, issueDate, _issue);
+    }
+
     console.log("Adding new issues");
     for (let i = 0; i < 10; i++) {
       const _issue = randomItem(issues);
       const user = randomItem(allUsers);
 
       const issue = await newIssue(user, project.id, issueDate, _issue);
-      await issue.save();
       // issueDate = issue.createDate;
     }
   }
