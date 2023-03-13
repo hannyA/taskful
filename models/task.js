@@ -45,6 +45,11 @@ const TaskSchema = new Schema({
   },
 });
 
+// TaskSchema.pre("save", function(next) {
+
+//   next()
+// })
+
 // Create a virtual property `fullname`
 TaskSchema.virtual("lastUpdateFormat").get(function () {
   let d = formatDate(this.lastUpdate);

@@ -252,8 +252,9 @@ module.exports.deleteProject = wrapAsync(async (req, res) => {
 module.exports.editProjectIssue = wrapAsync(async (req, res) => {
   const projectId = req.params.projectId;
   const issueId = req.params.issueId;
-  const project = await Issue.findByIdAndUpdate(issueId, {
+  const issue = await Issue.findByIdAndUpdate(issueId, {
     ...req.body.ticket,
+    lastUpdate: new Date(),
   });
   res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
 });
@@ -318,9 +319,16 @@ module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
 module.exports.updateTaskForm = wrapAsync(async (req, res) => {
   const { projectId, issueId, taskId } = req.params;
 
+  let date = new Date();
   const task = await Task.findByIdAndUpdate(taskId, {
     ...req.body,
+    lastUpdate: date,
   });
+
+  const issue = await Issue.findByIdAndUpdate(issueId, {
+    lastUpdate: date,
+  });
+
   res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
 });
 
