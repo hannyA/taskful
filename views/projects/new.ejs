@@ -36,6 +36,16 @@
       </div>
 
       <div class="mb-3">
+        <label class="form-label" for="priority">Priority</label>
+        <select class="form-select" name="priority" id="priority">
+          <option selected value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+          <option value="Very High">Very High</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
         <label class="form-label" for="owner">Owner Name</label>
         <select class="form-select" name="owner" id="owner" aria-label="Owner">
           <option selected value="<%= currentUser.id%>">

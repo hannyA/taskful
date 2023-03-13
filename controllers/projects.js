@@ -54,7 +54,6 @@ module.exports.renderNewProjectForm = async (req, res) => {
 
 module.exports.createProject = async (req, res) => {
   console.log(req.body);
-  console.log(req.body.project);
 
   const project = new Project(req.body);
   await project.save();
@@ -126,7 +125,7 @@ module.exports.renderEditProject = async (req, res) => {
 module.exports.editProject = async (req, res) => {
   const { projectId } = req.params;
   const project = await Project.findByIdAndUpdate(projectId, {
-    ...req.body.project,
+    ...req.body,
   });
   res.redirect(`/api/v1/projects/${projectId}`);
 };

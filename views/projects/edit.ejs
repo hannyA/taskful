@@ -20,7 +20,7 @@
         <input
           class="form-control"
           type="text"
-          name="project[title]"
+          name="title"
           id="title"
           aria-label="Title"
           value="<%= project.title%>"
@@ -31,7 +31,7 @@
         <label class="form-label" for="description">Description</label>
         <textarea
           class="form-control"
-          name="project[description]"
+          name="description"
           id="description"
           aria-label="Description"
         >
@@ -39,14 +39,33 @@
         >
       </div>
 
+      <% let pris = ["Low", "Medium", "High", "Very High"] %>
+      <div class="mb-3">
+        <label class="form-label" for="priority">Priority</label>
+        <select class="form-select" name="priority" id="priority">
+          <% pris.forEach(priority => { if (priority === project.priority) { %>
+          <option selected value="<%=priority%>"><%=priority%></option>
+          <%}else {%>
+          <option value="<%=priority%>"><%=priority%></option>
+          <%}}) %>
+        </select>
+      </div>
+
+      <% let s = ["New", "Complete", "Canceled", "On Hold", "In Progress"] %>
+      <div class="mb-3">
+        <label class="form-label" for="status">Status</label>
+        <select class="form-select" name="status" id="status">
+          <% s.forEach(status => { if (status === project.status) { %>
+          <option selected value="<%=status%>"><%=status%></option>
+          <%}else {%>
+          <option value="<%=status%>"><%=status%></option>
+          <%}}) %>
+        </select>
+      </div>
+
       <div class="mb-3">
         <label class="form-label" for="owner">Owner Name</label>
-        <select
-          class="form-select"
-          name="project[owner]"
-          id="owner"
-          aria-label="Owner"
-        >
+        <select class="form-select" name="owner" id="owner" aria-label="Owner">
           <% if (project.owner.id === currentUser.id) { %>
           <option selected value="<%= currentUser.id %>">
             <%= currentUser.first %> <%= currentUser.last %>
