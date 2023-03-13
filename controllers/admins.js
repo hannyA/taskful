@@ -6,12 +6,12 @@ const { getCompanyUsers } = require("./util");
 module.exports.users = async (req, res) => {
   const users = await getCompanyUsers(req, res);
   const page = "users";
-  res.render("admin/users/index", { users, page });
+  res.render("admin/users/index", { users, page, navbar: "admin" });
 };
 
 module.exports.renderNewUserForm = async (req, res) => {
   const page = "new";
-  res.render("admin/users/new", { page });
+  res.render("admin/users/new", { page, navbar: "admin" });
 };
 
 module.exports.newUser = async (req, res) => {

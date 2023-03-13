@@ -165,8 +165,9 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
   console.log("app.js error message: ", err);
-  const { statusCode = 500, message = "Something went wrong" } = err;
 
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  console.log("status code: ", statusCode);
   if (req.isAuthenticated()) {
     if (statusCode === 503) {
       return res
@@ -174,11 +175,21 @@ app.use((err, req, res, next) => {
         .render("templates/errors/signedin-notfound-template", {
           statusCode,
           message,
+          navbar: "none",
+        });
+    } else if (statusCode >= 500) {
+      return res
+        .status(statusCode)
+        .render("templates/errors/signedin-notfound-template", {
+          statusCode,
+          message: "Wooops! Something went wrong",
+          navbar: "none",
         });
     }
     res.status(statusCode).render("templates/errors/signedin-error-template", {
       statusCode,
       message,
+      navbar: "none",
     });
   } else {
     if (statusCode === 409) {
@@ -190,6 +201,7 @@ app.use((err, req, res, next) => {
         .render("templates/errors/signedout-error-template", {
           statusCode,
           message,
+          navbar: "none",
         });
     }
   }

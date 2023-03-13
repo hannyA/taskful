@@ -114,6 +114,7 @@ module.exports.renderCompanyDashbaord = async (req, res) => {
     res.render("dashboards/index", {
       stats,
       page: "stats",
+      navbar: "dashboard",
     });
   } catch (e) {
     console.log(e);
@@ -240,6 +241,7 @@ module.exports.renderMyDashboard = async (req, res) => {
     res.render("dashboards/mine", {
       stats,
       page: "my-stats",
+      navbar: "dashboard",
     });
   } catch (e) {
     console.log(e);
@@ -317,6 +319,7 @@ module.exports.renderDashboardIssues = async (req, res) => {
     console.log("stats: ", stats);
     res.render("dashboards/index", {
       stats,
+      navbar: "dashboard",
     });
   } catch (e) {
     console.log(e);
@@ -352,6 +355,7 @@ module.exports.renderDashboardTasks = async (req, res) => {
     console.log("stats: ", stats);
     res.render("dashboards/index", {
       stats,
+      navbar: "dashboard",
     });
   } catch (e) {
     console.log(e);

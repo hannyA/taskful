@@ -43,13 +43,14 @@ module.exports.index = async (req, res) => {
     totalPages,
     currentPage: features.page,
     resource,
+    navbar: "projects",
   });
 };
 
 module.exports.renderNewProjectForm = async (req, res) => {
   const users = await getCompanyUsers(req, res);
   const page = "new";
-  res.render("projects/new", { page, users });
+  res.render("projects/new", { page, users, navbar: "projects" });
 };
 
 module.exports.createProject = async (req, res) => {
@@ -98,13 +99,16 @@ module.exports.showProject = wrapAsync(async (req, res) => {
     totalPages,
     currentPage: features.page,
     resource: `projects/${projectID}?`,
+    navbar: "projects",
   });
 
   // res.render("projects/show", { project, issues, totalPages, page });
 });
 
 module.exports.error = async (req, res) => {
-  res.render("templates/errors/signedin-error-template");
+  res.render("templates/errors/signedin-error-template", {
+    navbar: "projects",
+  });
 };
 
 // Show edit project form
@@ -117,7 +121,7 @@ module.exports.renderEditProject = async (req, res) => {
   const users = await getCompanyUsers(req, res);
 
   const page = "edit";
-  res.render("projects/edit", { project, users, page });
+  res.render("projects/edit", { project, users, page, navbar: "projects" });
   // res.send("404 Need to do");
 };
 
@@ -179,6 +183,7 @@ module.exports.projectIssues = async (req, res) => {
     totalPages,
     currentPage: features.page,
     resource,
+    navbar: "projects",
   });
 };
 
@@ -219,6 +224,7 @@ module.exports.renderProjectIssue = async (req, res) => {
 
     totalPages,
     currentPage: features.page,
+    navbar: "projects",
   });
 };
 
@@ -230,7 +236,12 @@ module.exports.renderNewProjectIssue = async (req, res) => {
   console.log("renderNewProjectIssue users");
 
   const project = await Project.findById(req.params.projectId);
-  res.render("projects/issues/new-issue", { page, project, users });
+  res.render("projects/issues/new-issue", {
+    page,
+    project,
+    users,
+    navbar: "projects",
+  });
 };
 
 // Create ticket and redirect
@@ -269,7 +280,13 @@ module.exports.renderEditProjectIssue = wrapAsync(async (req, res) => {
   console.log("issue; ", issue);
 
   const users = await getCompanyUsers(req, res);
-  res.render("projects/issues/edit-issue", { project, issue, page, users });
+  res.render("projects/issues/edit-issue", {
+    project,
+    issue,
+    page,
+    users,
+    navbar: "projects",
+  });
 });
 
 module.exports.renderTasks = wrapAsync(async (req, res) => {
@@ -298,7 +315,13 @@ module.exports.renderNewTaskForm = wrapAsync(async (req, res) => {
   const users = await getCompanyUsers(req, res);
   const page = "new-task";
 
-  res.render("projects/tasks/new", { project, issue, page, users });
+  res.render("projects/tasks/new", {
+    project,
+    issue,
+    page,
+    users,
+    navbar: "projects",
+  });
 });
 
 module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
@@ -311,7 +334,14 @@ module.exports.renderEditTaskForm = wrapAsync(async (req, res) => {
   const users = await getCompanyUsers(req, res);
   const page = "edit-task";
 
-  res.render("projects/tasks/edit", { project, issue, task, page, users });
+  res.render("projects/tasks/edit", {
+    project,
+    issue,
+    task,
+    page,
+    users,
+    navbar: "projects",
+  });
 
   // res.send("renderNewTaskForm");
 });
