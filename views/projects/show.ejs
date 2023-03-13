@@ -111,9 +111,11 @@
       <p><strong>Priority:</strong> <%= project.priority %></p>
       <p><strong>Date Created:</strong> <%= project.createDateFormat %></p>
       <p><strong>Status:</strong> <%= project.status %></p>
+      <% if(project.plannedEndDateFormat !== undefined) {%>
       <p>
         <strong>Planned End date:</strong> <%= project.plannedEndDateFormat %>
       </p>
+      <% } %>
     </div>
   </div>
 </div>
