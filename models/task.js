@@ -66,8 +66,6 @@ TaskSchema.virtual("createDateTimeFormat").get(function () {
 
 // Create a virtual property `hours`
 TaskSchema.virtual("hours").get(function () {
-  console.log(" TaskSchema.virtual(hours):", this.duration);
-  console.log(" TaskSchema.virtual(hours):", this.duration / 60);
   return Math.floor(this.duration / 60);
 });
 
