@@ -72,27 +72,27 @@ module.exports.renderCompanyDashbaord = async (req, res) => {
     //   }
     // }
 
-    console.log(
-      "getArrCountcompanyProgressProjects, New: ",
-      getStatusCount(companyProgressProjects, "New")
-    );
+    // console.log(
+    //   "getArrCountcompanyProgressProjects, New: ",
+    //   getStatusCount(companyProgressProjects, "New")
+    // );
 
-    console.log(
-      "getArrCountcompanyProgressProjects, Complete: ",
-      getStatusCount(companyProgressProjects, "Complete")
-    );
-    console.log(
-      "getArrCountcompanyProgressProjects, Canceled: ",
-      getStatusCount(companyProgressProjects, "Canceled")
-    );
-    console.log(
-      "getArrCountcompanyProgressProjects, On Hold: ",
-      getStatusCount(companyProgressProjects, "On Hold")
-    );
-    console.log(
-      "getArrCountcompanyProgressProjects, In Progress: ",
-      getStatusCount(companyProgressProjects, "In Progress")
-    );
+    // console.log(
+    //   "getArrCountcompanyProgressProjects, Complete: ",
+    //   getStatusCount(companyProgressProjects, "Complete")
+    // );
+    // console.log(
+    //   "getArrCountcompanyProgressProjects, Canceled: ",
+    //   getStatusCount(companyProgressProjects, "Canceled")
+    // );
+    // console.log(
+    //   "getArrCountcompanyProgressProjects, On Hold: ",
+    //   getStatusCount(companyProgressProjects, "On Hold")
+    // );
+    // console.log(
+    //   "getArrCountcompanyProgressProjects, In Progress: ",
+    //   getStatusCount(companyProgressProjects, "In Progress")
+    // );
 
     const stats = {
       companyPriorityProjects: {
@@ -101,7 +101,6 @@ module.exports.renderCompanyDashbaord = async (req, res) => {
         high: getPriorityCount(companyPriorityProjects, "High"),
         vhigh: getPriorityCount(companyPriorityProjects, "Very High"),
       },
-      // ["New", "Complete", "Canceled", "On Hold", "In Progress"],
       companyProgressProjects: {
         new: getStatusCount(companyProgressProjects, "New"),
         complete: getStatusCount(companyProgressProjects, "Complete"),
@@ -114,6 +113,7 @@ module.exports.renderCompanyDashbaord = async (req, res) => {
     console.log("stats: ", stats);
     res.render("dashboards/index", {
       stats,
+      page: "stats",
     });
   } catch (e) {
     console.log(e);
@@ -239,6 +239,7 @@ module.exports.renderMyDashboard = async (req, res) => {
     console.log("stats: ", stats);
     res.render("dashboards/mine", {
       stats,
+      page: "my-stats",
     });
   } catch (e) {
     console.log(e);
