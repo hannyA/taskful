@@ -62,7 +62,7 @@ module.exports.registerUser = async (user, password) => {
   }
 };
 
-module.exports.newProject = (user, projectTitles) => {
+module.exports.newProject = (user, projectTitles, team) => {
   const startDate = randomDate(user.registerDate, new Date());
   let endDate = new Date();
   endDate.setDate(startDate.getDate() + 7 + Math.random() * 120); // b
@@ -78,6 +78,7 @@ module.exports.newProject = (user, projectTitles) => {
     priority: randomItem(priorities),
     status: randomItem(projectStatus),
     company: user.company,
+    team: team,
   });
   return project;
 };

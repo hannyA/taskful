@@ -12,6 +12,13 @@ const ProjectSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+
+    team: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     company: {
       type: String,
       required: true,
