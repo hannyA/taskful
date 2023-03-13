@@ -1,77 +1,84 @@
-<div class="">
-  <nav
-    id="navbar-example3"
-    class="h-100 flex-column align-items-stretch pe-4 border-end"
+<nav class="nav flex-column">
+  <a
+    class="nav-link ps-3 <%= page === 'new-issue'?'active-tab':'inactive-tab' %>"
+    href="/api/v1/projects/<%= project._id %>/issues/new"
   >
-    <nav class="nav nav-pills flex-column">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a
-            class="nav-link ps-3 <%= page === 'new-issue'?'active':'' %>"
-            href="/api/v1/projects/<%= project._id %>/issues/new"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-plus-circle-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-              />
-            </svg>
-            New Issue
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link ps-3 <%= page === 'all-issues'?'active':'' %>"
-            href="/api/v1/projects/<%= project._id %>/issues"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-stack"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.598.598 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535L7.733.063z"
-              />
-              <path
-                d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.598.598 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.659z"
-              />
-            </svg>
-            All Issues</a
-          >
-        </li>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-plus-circle-fill"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+      />
+    </svg>
+    New Issue
+  </a>
 
-        <li class="nav-item">
-          <a
-            class="nav-link ps-3 <%= page === 'mine'?'active':'' %>"
-            href="/api/v1/projects/<%= project._id %>/issues?author=<%= currentUser._id %>"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-file-person-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z"
-              />
-            </svg>
-            My Issues
-          </a>
-        </li>
+  <a
+    class="nav-link ps-3 <%= page === 'index'?'active-tab':'inactive-tab' %>"
+    href="/api/v1/projects/<%= project._id %>"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-house-door-fill"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"
+      />
+    </svg>
+    Home
+  </a>
+  <a
+    class="nav-link ps-3 <%= page === 'all-issues'?'active-tab':'inactive-tab' %>"
+    href="/api/v1/projects/<%= project._id %>/issues"
+    ><svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-stack"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.598.598 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535L7.733.063z"
+      />
+      <path
+        d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.598.598 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.659z"
+      />
+    </svg>
+    All Issues</a
+  >
 
-        <!-- <li class="nav-item">
+  <a
+    class="nav-link ps-3 <%= page === 'mine'?'active-tab':'inactive-tab' %>"
+    href="/api/v1/projects/<%= project._id %>/issues?author=<%= currentUser._id %>"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-file-person-fill"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z"
+      />
+    </svg>
+    My Issues
+  </a>
+
+  <!-- <li class="nav-item">
           <a
-            class="nav-link ps-3 <%= page === 'manage'?'active':'' %>"
+            class="nav-link ps-3 <%= page === 'manage'?'active-tab':'inactive-tab' %>"
             href="/api/v1/projects/<%= project._id %>/manage"
           >
             <svg
@@ -88,11 +95,12 @@
             </svg>
             Manage Team
           </a>
-        </li> -->
+       
+        -->
 
-        <!-- <li class="nav-item">
+  <!-- 
           <a
-            class="nav-link ps-3 <%= page === 'settings'?'active':'' %>"
+            class="nav-link ps-3 <%= page === 'settings'?'active-tab':'inactive-tab' %>"
             href="/api/v1/projects/settings"
           >
             <svg
@@ -109,8 +117,5 @@
             </svg>
             Edit Settings
           </a>
-        </li> -->
-      </ul>
-    </nav>
-  </nav>
-</div>
+         -->
+</nav>

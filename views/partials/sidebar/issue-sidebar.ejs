@@ -1,33 +1,43 @@
-<div class="">
-  <nav
-    id="navbar-example3"
-    class="h-100 flex-column align-items-stretch pe-4 border-end"
+<nav class="nav flex-column">
+  <a
+    class="nav-link ps-3 <%= page === 'issue'?'active-tab':'inactive-tab' %>"
+    href="/api/v1/projects/<%= project._id %>/issues/<%=issue.id%>"
   >
-    <nav class="nav nav-pills flex-column">
-      <ul class="navbar-nav">
-        <li class="nav-item">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-plus-circle-fill"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+      />
+    </svg>
+    All Task
+  </a>
+  <a
+    class="nav-link ps-3 <%= page === 'new-task'?'active-tab':'inactive-tab' %>"
+    href="/api/v1/projects/<%= project._id %>/issues/<%=issue.id%>/tasks/new"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-plus-circle-fill"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+      />
+    </svg>
+    New Task
+  </a>
+  <!-- <li class="nav-item">
           <a
-            class="nav-link ps-3 <%= page === 'new-issue'?'active':'' %>"
-            href="/api/v1/projects/<%= project._id %>/issues/<%=issue.id%>/tasks/new"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-plus-circle-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-              />
-            </svg>
-            New Task
-          </a>
-        </li>
-        <!-- <li class="nav-item">
-          <a
-            class="nav-link ps-3 <%= page === 'all-issues'?'active':'' %>"
+            class="nav-link ps-3 <%= page === 'all-issues'?'active-tab':'inactive-tab' %>"
             href="/api/v1/projects/<%= project._id %>/issues/<%=issue.id%>/tasks"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +60,7 @@
 
         <li class="nav-item">
           <a
-            class="nav-link ps-3 <%= page === 'mine'?'active':'' %>"
+            class="nav-link ps-3 <%= page === 'mine'?'active-tab':'inactive-tab' %>"
             href="/api/v1/projects/<%= project._id %>/issues?author=<%= currentUser._id %>"
           >
             <svg
@@ -68,7 +78,4 @@
             My Tasks
           </a>
         </li> -->
-      </ul>
-    </nav>
-  </nav>
-</div>
+</nav>

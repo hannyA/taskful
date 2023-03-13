@@ -89,7 +89,7 @@ module.exports.showProject = wrapAsync(async (req, res) => {
   // const { owner } = req.query;
   // const page = owner === req.user.id ? "mine" : "index";
 
-  const page = "show";
+  const page = "index";
 
   res.render("projects/show", {
     // pagination: true,

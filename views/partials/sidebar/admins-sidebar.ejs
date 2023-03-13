@@ -7,7 +7,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a
-            class="nav-link ps-3 <%= page === 'new'?'active':'' %>"
+            class="nav-link ps-3 <%= page === 'new'?'active-tab':'inactive-tab' %>"
             href="/api/v1/admin/users/new"
           >
             <svg
@@ -28,7 +28,7 @@
 
         <li class="nav-item">
           <a
-            class="nav-link ps-3 <%= page === 'users'?'active':'' %>"
+            class="nav-link ps-3 <%= page === 'users'?'active-tab':'inactive-tab' %>"
             href="/api/v1/admin"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
