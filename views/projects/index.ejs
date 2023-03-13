@@ -23,6 +23,8 @@
           <th class="" scope="col">Title</th>
           <th class="" scope="col">Owner</th>
           <th class="" scope="col">Description</th>
+          <th class="" scope="col">Priority</th>
+          <th class="" scope="col">Status</th>
           <th class="" scope="col">Create Date</th>
         </tr>
       </thead>
@@ -42,6 +44,8 @@
           <td class=""><%= project.title %></td>
           <td class=""><%= project.owner.first %> <%= project.owner.last %></td>
           <td class=""><%= project.description %></td>
+          <td class=""><%= project.priority %></td>
+          <td class=""><%= project.status %></td>
           <td class=""><%= project.createDateFormat %></td>
         </tr>
 
