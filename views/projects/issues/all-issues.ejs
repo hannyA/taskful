@@ -42,13 +42,13 @@
               >
             </td>
 
-            <td><%= ticket.createDateFormat %></td>
+            <td><%= ticket.createdAtDate %></td>
             <td><%= ticket.title %></td>
             <td><%= ticket.description %></td>
             <td><%= ticket.status %></td>
             <td><%= ticket.priority %></td>
             <td><%= ticket.author.fullname %></td>
-            <td><%= ticket.lastUpdateFormat %></td>
+            <td><%= ticket.updatedAtDate %></td>
           </tr>
 
           <% }%>

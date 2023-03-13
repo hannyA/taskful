@@ -335,11 +335,10 @@ module.exports.renderDashboardTasks = async (req, res) => {
       },
       {
         $group: {
-          // _id: { $toDate: "$createDate" },
           _id: {
             $dateToString: {
               format: "%m-%d-%Y",
-              date: "$createDate",
+              date: "$createdAt",
               timezone: "America/New_York",
             },
           },

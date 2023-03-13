@@ -137,10 +137,10 @@
       </div>
       <div class="col-6">
         <p class="card-text">
-          <strong>Date Created:</strong> <%= issue.createDateFormat %>
+          <strong>Date Created:</strong> <%= issue.createdAtDate %>
         </p>
         <p class="card-text">
-          <strong>Last Update:</strong> <%= issue.lastUpdateFormat %>
+          <strong>Last Update:</strong> <%= issue.updatedAtDate %>
         </p>
 
         <p class="card-text">
@@ -264,7 +264,7 @@
 
       <div class="card-footer text-muted">
         Done by <strong><%= task.author.fullname %></strong> at <%=
-        task.createDateTimeFormat %> <br />
+        task.createdAtDateTime %> <br />
         Took: <%= task.hours%> hours: <%= task.minutes%> minutes
       </div>
     </div>

@@ -79,7 +79,7 @@ module.exports.seedDB = async (company, admin) => {
     await project.save();
 
     // Add issues for project
-    let projectDate = project.createDate;
+    let projectDate = project.createdAt;
 
     if (projLeader.id === admin.id) {
       const _issue = randomItem(issues);
@@ -95,14 +95,14 @@ module.exports.seedDB = async (company, admin) => {
 
       const issueDate = randomDate(projectDate, new Date());
       const issue = await newIssue(user, project.id, issueDate, _issue);
-      // issueDate = issue.createDate;
+      // issueDate = issue.createdAt;
       // console.log("Adding new tasks");
 
-      await generateRandomTasks(user, issue, issue.createDate);
+      await generateRandomTasks(user, issue, issue.createdAt);
 
       // const numOfTasks = Math.floor(Math.random() * 20) + 1;
       // for (let j = 0; j < numOfTasks; j++) {
-      //   const taskDate = randomDate(issue.createDate, new Date());
+      //   const taskDate = randomDate(issue.createdAt, new Date());
       //   const description = randomItem(tasks);
       //   const task = await newTask(
       //     user,
@@ -141,11 +141,11 @@ module.exports.seedDB = async (company, admin) => {
 
   //   // await user.save();
 
-  //   let issueDate = project.createDate;
+  //   let issueDate = project.createdAt;
   //   console.log("Adding new issues");
   //   for (let i = 0; i < 10; i++) {
   //     const issue = await newIssue(company, project.id, issueDate, issues[i]);
-  //     issueDate = issue.createDate;
+  //     issueDate = issue.createdAt;
 
   //     await issue.save();
   //     // await ticketUser.save();

@@ -254,7 +254,7 @@ module.exports.editProjectIssue = wrapAsync(async (req, res) => {
   const issueId = req.params.issueId;
   const issue = await Issue.findByIdAndUpdate(issueId, {
     ...req.body.ticket,
-    lastUpdate: new Date(),
+    updatedAt: new Date(),
   });
   res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);
 });
@@ -322,11 +322,11 @@ module.exports.updateTaskForm = wrapAsync(async (req, res) => {
   let date = new Date();
   const task = await Task.findByIdAndUpdate(taskId, {
     ...req.body,
-    lastUpdate: date,
+    // updatedAt: date,
   });
 
   const issue = await Issue.findByIdAndUpdate(issueId, {
-    lastUpdate: date,
+    updatedAt: date,
   });
 
   res.redirect(`/api/v1/projects/${projectId}/issues/${issueId}`);

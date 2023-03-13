@@ -77,7 +77,7 @@ router.get(
   auth.canEditProject,
   projects.renderNewTaskForm
 );
-//
+// Update task. Delete task
 router
   .route("/:projectId/issues/:issueId/tasks/:taskId")
   .put(
@@ -87,7 +87,7 @@ router
     projects.updateTaskForm
   ) // Submit edit new task
   .delete(isLoggedIn, auth.canEditProject, projects.deleteTask); // Delete task
-//
+// Get the edit task form
 router.get(
   "/:projectId/issues/:issueId/tasks/:taskId/edit",
   isLoggedIn,

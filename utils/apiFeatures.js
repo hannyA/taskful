@@ -31,7 +31,7 @@ class APIFeatures {
       const sortBy = this.queryString.sort.split(",").join(" ");
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort("-createDate"); // newest items first
+      this.query = this.query.sort("-createdAt"); // newest items first
     }
     return this;
   }

@@ -67,13 +67,13 @@ module.exports.newProject = (user, projectTitles) => {
   let endDate = new Date();
   endDate.setDate(startDate.getDate() + 7 + Math.random() * 120); // b
 
-  // const enddate = new Date(createdate.getTime() + 72 * 60 * 60 * 1000);
-  // const endDate = randomDate(createDate, new Date());
+  // const enddate = new Date(createdAt.getTime() + 72 * 60 * 60 * 1000);
+  // const endDate = randomDate(createdAt, new Date());
   const project = new Project({
     title: projectTitles.title,
     description: projectTitles.description,
     owner: user,
-    createDate: startDate,
+    createdAt: startDate,
     plannedEndDate: endDate,
     priority: randomItem(priorities),
     status: randomItem(projectStatus),
@@ -91,8 +91,8 @@ module.exports.newIssue = async (user, projectId, date, _issue) => {
     priority: randomItem(priorities),
     type: randomItem(issueType),
     project: projectId,
-    createDate: date,
-    lastUpdate: date,
+    createdAt: date,
+    updatedAt: date,
   });
   await issue.save();
   return issue;
@@ -102,16 +102,16 @@ module.exports.newTask = async (
   user,
   issueId,
   description,
-  createDate,
-  lastUpdate,
+  createdAt,
+  updatedAt,
   duration
 ) => {
   const task = new Task({
     description: description,
     author: user,
     issue: issueId,
-    createDate: createDate,
-    lastUpdate: lastUpdate,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
     duration: duration,
   });
 

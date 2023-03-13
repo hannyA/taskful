@@ -2,70 +2,62 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { formatDate, formatTime } = require("../utils/modelUtils");
 
-const TaskSchema = new Schema({
-  description: String,
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  // status: {
-  //   type: String,
-  //   enum: ["New", "Assigned", "In Progress", "Solved", "Closed"],
-  //   default: "New",
-  // },
-  issue: {
-    type: Schema.Types.ObjectId,
-    ref: "Issue",
-  },
-  // priority: {
-  //   type: String,
-  //   enum: ["Low", "Medium", "High", "Very High"],
-  //   default: "Low",
-  // },
-  createDate: {
-    type: Date,
-    default: Date.now,
-  },
-  lastUpdate: {
-    type: Date,
-    default: Date.now,
-  },
-  duration: {
-    type: Number,
-    default: 0,
-    // hours: {
-    //   type: Number,
-    //   default: 0,
+const TaskSchema = new Schema(
+  {
+    description: String,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    // status: {
+    //   type: String,
+    //   enum: ["New", "Assigned", "In Progress", "Solved", "Closed"],
+    //   default: "New",
     // },
-    // minutes: {
-    //   type: Number,
-    //   default: 0,
+    issue: {
+      type: Schema.Types.ObjectId,
+      ref: "Issue",
+    },
+    // priority: {
+    //   type: String,
+    //   enum: ["Low", "Medium", "High", "Very High"],
+    //   default: "Low",
     // },
+    duration: {
+      type: Number,
+      default: 0,
+      // hours: {
+      //   type: Number,
+      //   default: 0,
+      // },
+      // minutes: {
+      //   type: Number,
+      //   default: 0,
+      // },
+    },
   },
-});
-
-// TaskSchema.pre("save", function(next) {
-
-//   next()
-// })
+  { timestamps: true }
+  // doc.createdAt = new Date(0);
+  // doc.updatedAt = new Date(0)
+);
 
 // Create a virtual property `fullname`
-TaskSchema.virtual("lastUpdateFormat").get(function () {
-  let d = formatDate(this.lastUpdate);
-  let t = formatTime(this.lastUpdate);
+TaskSchema.virtual("updatedAtDate").get(function () {
+  let d = formatDate(this.updatedAt);
+  let t = formatTime(this.updatedAt);
   return `${d} - ${t}`;
 });
 
 // Create a virtual property `fullname`
-TaskSchema.virtual("createDateFormat").get(function () {
-  return formatDate(this.createDate);
+TaskSchema.virtual("createdAtDate").get(function () {
+  return formatDate(this.createdAt);
 });
 
 // Create a virtual property `fullname`
-TaskSchema.virtual("createDateTimeFormat").get(function () {
-  let d = formatDate(this.createDate);
-  let t = formatTime(this.createDate);
+TaskSchema.virtual("createdAtDateTime").get(function () {
+  let d = formatDate(this.createdAt);
+  let t = formatTime(this.createdAt);
   return `${d} - ${t}`;
 });
 

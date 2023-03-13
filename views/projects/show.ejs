@@ -109,7 +109,7 @@
     </div>
     <div class="col-3">
       <p><strong>Priority:</strong> <%= project.priority %></p>
-      <p><strong>Date Created:</strong> <%= project.createDateFormat %></p>
+      <p><strong>Date Created:</strong> <%= project.createdAtDate %></p>
       <p><strong>Status:</strong> <%= project.status %></p>
       <% if(project.plannedEndDateFormat !== undefined) {%>
       <p>
@@ -153,13 +153,13 @@
               ...<%=`${ticket._id}`.slice(-4)%>
             </a>
           </td>
-          <td><%= ticket.createDateFormat %></td>
+          <td><%= ticket.createdAtDate %></td>
           <td><%= ticket.title %></td>
           <td><%= ticket.description %></td>
           <td><%= ticket.status %></td>
           <td><%= ticket.priority %></td>
           <td><%= ticket.author.fullname %></td>
-          <td><%= ticket.lastUpdateFormat %></td>
+          <td><%= ticket.updatedAtDate %></td>
         </tr>
 
         <% }) %>
