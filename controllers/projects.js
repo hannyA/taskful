@@ -134,20 +134,49 @@ module.exports.editProject = async (req, res) => {
   res.redirect(`/api/v1/projects/${projectId}`);
 };
 
+module.exports.saveTeam = async (req, res) => {
+  console.log("project team:", req.body);
+  const { projectId } = req.params;
+  const project = await Project.findByIdAndUpdate(projectId, {
+    ...req.body,
+  });
+
+  req.flash("success", `Updated team!`);
+
+  res.redirect(`/api/v1/projects/${projectId}/manage`);
+};
+
 module.exports.manageTeam = async (req, res) => {
   const { projectId } = req.params;
+  const project = await Project.findById(projectId)
+    .populate("owner")
+    .populate("team");
+
+  console.log("project team:", project.team);
+
+  const allUsers = await User.find({
+    company: project.owner.company,
+    _id: { $nin: project.team },
+  });
+
+  console.log("allUsers: ", allUsers);
 
   // TEam members
   // assign roles
-
-  res.redirect(`/api/v1/projects/${projectId}`);
+  res.render("projects/manageteam3", {
+    project,
+    team: project.team,
+    allUsers: allUsers,
+    page: "manage",
+    navbar: "projects",
+  });
 };
 
 /// Show all issues
 // search by tickets/issues -> author is me or some other user
 module.exports.projectIssues = async (req, res) => {
   const { projectId } = req.params;
-  const project = await Project.findById(projectId);
+  const project = await Project.findById(projectId).populate("owner");
 
   req.query.project = projectId;
 

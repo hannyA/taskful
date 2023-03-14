@@ -23,7 +23,8 @@ router
 
 router
   .route("/:projectId/manage")
-  .get(isLoggedIn, auth.canEditProject, projects.manageTeam);
+  .get(isLoggedIn, auth.canEditProject, projects.manageTeam)
+  .post(isLoggedIn, auth.canEditProject, projects.saveTeam);
 
 router.route("/:projectId/error").get(isLoggedIn, projects.error);
 

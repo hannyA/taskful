@@ -1,0 +1,71 @@
+<% layout('templates/project-template') %>
+
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/api/v1/projects">Projects</a></li>
+    <li class="breadcrumb-item">
+      <a href="/api/v1/projects/<%= project.id %>"><%= project.title %></a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Manage Team</li>
+  </ol>
+</nav>
+
+<h2 class="text-center">Current Team</h2>
+<div hidden id="current-team"><%= team %></div>
+<div hidden id="company"><%= allUsers %></div>
+
+<form action="/api/v1/projects/<%=project.id %>/manage" method="post">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Assigned Team</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <% team.forEach(person => { %>
+      <tr>
+        <!-- <th scope="row"></th> -->
+        <td>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="team"
+              value="<%= person.id %>"
+              id="flexCheckChecked"
+              onclick="checkedBox()"
+              checked
+            />
+          </div>
+        </td>
+        <td hidden><%= person.id %></td>
+        <td><%= person.first %></td>
+        <td><%= person.last %></td>
+      </tr>
+      <%})%> <% allUsers.forEach(person => { %>
+      <tr class="team-user">
+        <!-- <th scope="row"></th> -->
+        <td class="">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="team"
+              value="<%= person.id %>"
+              id="flexCheckChecked"
+              onclick="checkedBox()"
+            />
+          </div>
+        </td>
+        <td hidden><%= person.id %></td>
+        <td><%= person.first %></td>
+        <td><%= person.last %></td>
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
+
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>

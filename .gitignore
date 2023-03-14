@@ -3,3 +3,6 @@ node_modules
 TODO.md
 config.env
 seeds/delete.js
+
+views/projects/manageteam.ejs
+views/projects/manageteam2.ejs
