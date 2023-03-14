@@ -6,7 +6,7 @@ const { getCompanyUsers } = require("./util");
 module.exports.users = async (req, res) => {
   const users = await getCompanyUsers(req, res);
   const page = "users";
-  res.render("admin/users/index", { users, page, navbar: "admin" });
+  res.render("admin/users/index2", { users, page, navbar: "admin" });
 };
 
 module.exports.renderNewUserForm = async (req, res) => {
@@ -23,10 +23,10 @@ module.exports.newUser = async (req, res) => {
 
 module.exports.deleteUsers = async (req, res) => {
   try {
-    console.log("deleteUsers");
+    console.log("admin deleteUsers");
     const { users } = req.body;
     console.log("users: ", users);
-    console.log("users: ", req.body);
+    console.log("users body: ", req.body);
     console.log("user company: ", req.user.company);
 
     for (let id of users) {
@@ -39,25 +39,21 @@ module.exports.deleteUsers = async (req, res) => {
         { $set: { deleted: true } }
       );
     }
+    return res.redirect("/api/v1/admin/users");
 
     // company !== user.company ||
     // await User.deleteMany({ _id: { $in: users } });
 
-    // res.send({ data: "done" });
-
-    res.status(200).json({
-      message: "Users deleted!",
-    });
+    // res.status(200).json({
+    //   message: "Users deleted!",
+    // });
   } catch (e) {
-    return res
-      .status(403)
-      .json({ message: "You are not authorized to view this page" });
+    // return res.redirect("/api/v1/admin/users");
+    req.flash("error", "You are not authorized to view this page");
+    return res.render("templates/errors/signedin-error-template");
+
+    // return res
+    //   .status(403)
+    //   .json({ message: "You are not authorized to view this page" });
   }
-
-  // await User.findByIdAndDelete(userId);
-  // res.redirect("/api/v1/admin/users");
 };
-
-//   // req.body.company = user.company;
-//   req.query.company = user.company;
-//   req.params.company = user.company;

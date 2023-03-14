@@ -1,9 +1,6 @@
 <% layout('templates/admins-template') %>
-<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 
 <script>
-  // const axios = require("axios");
-
   let dUsers = [];
 
   function checkedBox() {
@@ -35,39 +32,13 @@
     }
     // console.log("dUsers: ", dUsers);
   }
-  const deleteUsers = async () => {
-    console.log("dUsers: ", dUsers);
-    try {
-      const res = await axios.delete("/api/v1/admin/users", {
-        data: {
-          users: dUsers,
-        },
-      });
 
-      console.log("mesage: ", res.data.message);
-      removeRows();
+  const deleteUserss = async () => {
+    console.log("index2 : ");
+    console.log("deleteUsers : ", dUsers);
 
-      let messageAlertElement = document.getElementById(
-        "alert-message-container"
-      );
-      let messageAlert = document.getElementById("alert-message");
-      messageAlert.innerText = res.data.message;
-
-      messageAlertElement.classList.add("d-block");
-      messageAlertElement.classList.remove("d-none");
-    } catch (e) {
-      console.log("errpr: ", e.response.data.message);
-
-      let messageAlertElement = document.getElementById(
-        "alert-message-container"
-      );
-
-      let messageAlert = document.getElementById("alert-message");
-      messageAlert.innerText = e.response.data.message;
-
-      messageAlertElement.classList.add("d-block");
-      messageAlertElement.classList.remove("d-none");
-    }
+    var form = document.getElementById("delete-form");
+    form.submit();
   };
 
   const removeRows = () => {
@@ -110,7 +81,7 @@
             id="delete-user"
             class="btn nav-link disabled"
             type="button"
-            onclick="deleteUsers()"
+            onclick="deleteUserss()"
           >
             Delete
           </button>
@@ -132,7 +103,11 @@
     </div>
   </nav>
   <div>
-    <form action="">
+    <form
+      id="delete-form"
+      action="/api/v1/admin/users?_method=DELETE "
+      method="POST"
+    >
       <table class="table">
         <thead>
           <tr>
@@ -153,7 +128,8 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value=""
+                  name="users[]"
+                  value="<%= user.id %>"
                   id="flexCheckChecked"
                   onclick="checkedBox()"
                 />

@@ -1,6 +1,7 @@
 const wrapAsync = require("../utils/wrapAsync");
 
 module.exports.isLoggedIn = (req, res, next) => {
+  console.log("woriug");
   console.log("Islogged in currrent user:", req.user);
   if (!req.isAuthenticated()) {
     req.session.returnTo = req.originalUrl;
@@ -10,8 +11,11 @@ module.exports.isLoggedIn = (req, res, next) => {
   next();
 };
 
-module.exports.isAdmin = wrapAsync(async (req, res, next) => {
+module.exports.isAdmin = async (req, res, next) => {
   // const user = await User.findById(req.user._id);
+
+  console.log("not faioenfijfn");
+  console.log("is admin: ", req.user.role);
 
   if (req.user.role !== "Admin") {
     // if (user.role !== "Admin") {
@@ -20,4 +24,4 @@ module.exports.isAdmin = wrapAsync(async (req, res, next) => {
     return res.redirect(`/api/v1/projects/${projectId}/error`);
   }
   next();
-});
+};
