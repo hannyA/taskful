@@ -2,29 +2,117 @@
 
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/api/v1/ticket">Ticket</a></li>
+    <li class="breadcrumb-item"><a href="/api/v1/tickets">Tickets</a></li>
+    <li class="breadcrumb-item"><a href="/api/v1/tickets/<%=ticket.id%>">Ticket</a></li>
     <li class="breadcrumb-item active" aria-current="page">Edit Ticket</li>
   </ol>
 </nav>
 
-<h1>Edit ticket</h1>
-
-<form action="/api/v1/tickets/<%= ticket._id %>?_method=PUT" method="post">
-  <div>
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title" value="<%= ticket.title %>" />
+<div class="card" style="width: 38rem">
+  <div class="card-header p-4">
+    <h1 class="card-title">Edit Ticket</h1>
+    <p class="card-text">
+      Edit the incident record to report or request with an issue you are having
+    </p>
   </div>
 
-  <div>
-    <label for="description">Description</label>
-    <input
-      type="text"
-      name="description"
-      id="description"
-      value="<%= ticket.description %>"
-    />
-  </div>
+  <div class="card-body">
+    <form action="/api/v1/tickets/<%=ticket.id %>?_method=PUT" method="post">
+      <div class="mb-3">
+        <label class="form-label" for="title">Subject</label>
+        <input
+          class="form-control"
+          type="text"
+          name="title"
+          id="title"
+          value="<%=ticket.title %>"
+        />
+      </div>
 
-  <button>Save</button>
-  <button>Cancel</button>
-</form>
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          class="form-control"
+          name="description"
+          id="description"
+          aria-label="Description"
+        >
+<%=ticket.description%></textarea
+        >
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="priority">Priority</label>
+        <select class="form-select" name="priority" id="priority">
+          <% let options = [ "Low", "Medium", "High", "Very High"]; options.forEach(option => { %>
+          <option <%= ( ticket.priority === option ) ? "selected" : ""%> value="<%=option %>"> 
+            <%=option %>
+          </option>
+          <% }) %>
+        </select>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label" for="status">Status</label>
+        <select class="form-select" name="status" id="status">
+          <!-- <option selected>Status</option> -->
+          <% let priorityOptions = ["New", "Assigned", "In Progress", "Solved", "Closed"]; priorityOptions.forEach(option => { %>
+          <option <%= ( ticket.status === option ) ? "selected" : ""%> value="<%=option %>"> 
+            <%=option %>
+          </option>
+          <% }) %>
+        </select>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label" for="owner">Owner</label>
+        <select
+          class="form-select"
+          name="owner"
+          id="owner"
+          aria-label="Owner"
+        >
+         <option <%= ( ticket.owner.id === currentUser.id ) ? "selected" : "" %>
+            value="<%= currentUser.id %>"> <%= currentUser.first %> <%=
+            currentUser.last %>
+          </option>
+
+          <% users.forEach(user => { if (user.id !== currentUser.id) {  %>
+          <option <%= ( ticket.owner.id === user.id ) ? "selected" : "" %>
+            value="<%= user._id%>"> <%= user.first%> <%=user.last %>
+          </option>
+          <% }}) %>
+        </select>
+      </div>
+
+
+
+      <div class="mb-3">
+        <label class="form-label" for="assignee">Assigned to</label>
+        <select
+          class="form-select"
+          name="assignee"
+          id="assignee"
+          aria-label="as"
+        >
+        <option selected value=""> Select User</option>
+        <option <%= ( ticket.assignee && ticket.assignee.id === currentUser.id ) ? "selected" : "" %>
+            value="<%= currentUser.id %>"> <%= currentUser.first %> <%=
+            currentUser.last %>
+          </option>
+
+          <% users.forEach(user => { if (user.id !== currentUser.id) {  %>
+          <option <%= ( ticket.assignee && ticket.assignee.id === user.id ) ? "selected" : "" %>
+            value="<%= user._id%>"> <%= user.first%> <%=user.last %>
+          </option>
+          <% }}) %>
+        </select>
+      </div>
+
+
+
+      <button type="submit" class="btn btn-outline-dark btn-lg">Save</button>
+    </form>
+  </div>
+</div>

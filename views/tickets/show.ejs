@@ -111,10 +111,20 @@
 
   <div class="card-body">
     <div class="row">
-      <div class="col-6">
+      <div class="col-10">
         <p class="card-text">
           <strong>Description:</strong> <%= ticket.description %>
         </p>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <p class="card-text">
+          <strong>Opened by:</strong> <%= ticket.owner.fullname %>
+        </p>
+
         <p class="card-text"><strong>Status:</strong> <%= ticket.status %></p>
         <p class="card-text">
           <strong>Priority:</strong> <%= ticket.priority %>
@@ -122,14 +132,14 @@
       </div>
       <div class="col-6">
         <p class="card-text">
+          <strong>Assigned to:</strong> <%= ticket.assignee &&
+          ticket.assignee.fullname %>
+        </p>
+        <p class="card-text">
           <strong>Date Created:</strong> <%= ticket.createdAtDate %>
         </p>
         <p class="card-text">
           <strong>Last Update:</strong> <%= ticket.updatedAtDate %>
-        </p>
-
-        <p class="card-text">
-          <strong>Assigned to:</strong> <%= ticket.owner.fullname %>
         </p>
       </div>
     </div>

@@ -20,7 +20,7 @@ router
   .put(isLoggedIn, tickets.updateTicket)
   .delete(isLoggedIn, tickets.deleteTicket);
 
-router.get("/:id/edit", isLoggedIn, tickets.editTicket);
+router.get("/:id/edit", isLoggedIn, tickets.renderEditTicketForm);
 
 router.route("/:id/tasks/new").get(isLoggedIn, tickets.renderNewTaskForm);
 router.route("/:id/tasks").post(isLoggedIn, convertDuration, tickets.newTask);

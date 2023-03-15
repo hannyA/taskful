@@ -2,7 +2,7 @@ const APIFeatures = require("../utils/apiFeatures");
 
 const Ticket = require("../models/ticket");
 const TicketTask = require("../models/ticket-task");
-const { getCompanyUsers } = require("./util");
+const { getCompanyUsers, getCompanyTech } = require("./util");
 
 module.exports.index = async (req, res) => {
   console.log("total pages:: index");
@@ -13,7 +13,9 @@ module.exports.index = async (req, res) => {
     .sort()
     .limitFields()
     .paginate();
-  const tickets = await features.query.populate({ path: "owner" });
+  const tickets = await features.query
+    .populate({ path: "owner" })
+    .populate("assignee");
 
   // Get number of projects and calculate number of pages
   const countQuery = new APIFeatures(Ticket.find(), req.query).filter();
@@ -48,7 +50,6 @@ module.exports.index = async (req, res) => {
 
 module.exports.renderNewForm = async (req, res) => {
   const page = "new";
-
   res.render("tickets/new", { page, navbar: "tickets" });
 };
 
@@ -62,7 +63,9 @@ module.exports.createNewTicket = async (req, res) => {
 
 module.exports.showTicket = async (req, res) => {
   console.log("show ticket");
-  const ticket = await Ticket.findById(req.params.id);
+  const ticket = await Ticket.findById(req.params.id)
+    .populate({ path: "owner" })
+    .populate("assignee");
 
   // const tasks = await TicketTask.findById(req.params.id);
 
@@ -92,23 +95,29 @@ module.exports.showTicket = async (req, res) => {
   });
 };
 
-module.exports.editTicket = async (req, res) => {
-  const ticket = await Ticket.findById(req.params.id);
+module.exports.renderEditTicketForm = async (req, res) => {
+  const ticket = await Ticket.findById(req.params.id)
+    .populate("owner")
+    .populate("assignee");
+  const users = await getCompanyTech(req, res);
+
+  console.log("ticket owner: ", ticket.owner);
+  console.log("ticket assignee: ", ticket.assignee);
   const page = "5";
-  res.render("tickets/edit", { ticket, page, navbar: "tickets" });
+  res.render("tickets/edit", { ticket, users, page, navbar: "tickets" });
 };
+
 module.exports.updateTicket = async (req, res) => {
   const { id } = req.params;
-  const ticket = await Ticket.findByIdAndUpdate(id, { ...req.body.ticket });
-  const page = "6";
-  res.redirect(`/api/v1/tickets/${ticket._id}`, { page });
+  console.log("req.body:", req.body);
+  const ticket = await Ticket.findByIdAndUpdate(id, { ...req.body });
+  res.redirect(`/api/v1/tickets/${ticket._id}`);
 };
 
 module.exports.deleteTicket = async (req, res) => {
   const { id } = req.params;
   const ticket = await Ticket.findByIdAndDelete(id);
-  const page = "7";
-  res.redirect("/api/v1/tickets", { page });
+  res.redirect("/api/v1/tickets");
 };
 
 module.exports.renderNewTaskForm = async (req, res) => {
@@ -137,11 +146,4 @@ module.exports.newTask = async (req, res) => {
   const task = new TicketTask(body);
   await task.save();
   res.redirect(`/api/v1/tickets/${ticket}`);
-
-  // // const users = await getCompanyUsers(req, res);
-  // console.log("renderNewProjectIssue users");
-
-  // const ticket = await Ticket.findById(req.params.id);
-
-  // res.render("tickets/new-task", { ticket, page, users, navbar: "tickets" });
 };

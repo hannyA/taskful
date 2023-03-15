@@ -42,19 +42,16 @@ const TaskSchema = new Schema(
   // doc.updatedAt = new Date(0)
 );
 
-// Create a virtual property `fullname`
 TaskSchema.virtual("updatedAtDate").get(function () {
   let d = formatDate(this.updatedAt);
   let t = formatTime(this.updatedAt);
   return `${d} - ${t}`;
 });
 
-// Create a virtual property `fullname`
 TaskSchema.virtual("createdAtDate").get(function () {
   return formatDate(this.createdAt);
 });
 
-// Create a virtual property `fullname`
 TaskSchema.virtual("createdAtDateTime").get(function () {
   let d = formatDate(this.createdAt);
   let t = formatTime(this.createdAt);
