@@ -188,7 +188,7 @@
                 type="button"
                 class="dropdown-item"
                 data-bs-toggle="modal"
-                data-bs-target="#deleteTask"
+                data-bs-target="#delete<%=task._id%>"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +212,7 @@
             <!-- Modal for Delete button -->
             <div
               class="modal fade"
-              id="deleteTask"
+              id="delete<%= task._id %>"
               tabindex="-1"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
