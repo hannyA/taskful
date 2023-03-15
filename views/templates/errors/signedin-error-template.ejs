@@ -22,11 +22,12 @@
         <%- include('../../partials/flash') %>
         <img
           width="50%"
-          id="under-consruction"
-          src="/images/not-authorized.jpg"
-          alt="Under Construction image"
+          id="<%=error.id%>"
+          src="<%=error.src%>"
+          alt="<%=error.alt%>"
         />
       </div>
+      <h2 class="mt-5 text-center"><%= message %></h2>
     </main>
 
     <span class="mt-auto"> <%- include('../../partials/footer') %> </span>

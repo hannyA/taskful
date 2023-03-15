@@ -124,7 +124,7 @@ app.get(`/`, function (req, res) {
 });
 
 app.get(`/credits`, function (req, res) {
-  res.render("others/credits");
+  res.render("others/credits", { navbar: "none" });
 });
 
 app.all("*", (req, res, next) => {
@@ -144,38 +144,65 @@ app.all("*", (req, res, next) => {
     var n = req.path.lastIndexOf("/");
 
     let result = req.path.substring(n + 1);
-    console.log("result: ", result);
+    // console.log("result: ", result);
     const page = result.charAt(0).toUpperCase() + result.slice(1);
-    console.log("page:", page);
+    // console.log("page:", page);
 
-    return next(new ExpressError(`${page} page is under construction`, 503));
+    const navbar = result;
+
+    console.log("app navbar: ", navbar);
+    return next(
+      new ExpressError(`${page} page is under construction`, 503, navbar)
+    );
   } else if (signedinPages.includes(req.path)) {
     var n = req.path.lastIndexOf("/");
 
     let result = req.path.substring(n + 1);
-    console.log("result: ", result);
+    // console.log("result: ", result);
     const page = result.charAt(0).toUpperCase() + result.slice(1);
-    console.log("page:", page);
+    // console.log("page:", page);
 
-    return next(new ExpressError(`${page} page is under construction`, 503));
+    const navbar = result;
+    return next(
+      new ExpressError(`${page} page is under construction`, 503, navbar)
+    );
   }
-
   next(new ExpressError("Page not found", 404));
 });
+
+const errorImages = {
+  notAuthorized: {
+    id: "not-authorized",
+    src: "/images/not-authorized.jpg",
+    alt: "Not authorized image",
+  },
+  underConstruction: {
+    id: "under-consruction",
+    src: "/images/under-construction-1920.jpg",
+    alt: "Under Construction image",
+  },
+  notFound: {
+    id: "not-found",
+    src: "/images/404-error.jpg",
+    alt: "Not Found image",
+  },
+};
 
 app.use((err, req, res, next) => {
   console.log("app.js error message: ", err);
 
-  const { statusCode = 500, message = "Something went wrong" } = err;
+  const { statusCode = 500, message = "Something went wrong", navbar } = err;
+
   console.log("status code: ", statusCode);
   if (req.isAuthenticated()) {
     if (statusCode === 503) {
       return res
         .status(statusCode)
-        .render("templates/errors/signedin-notfound-template", {
+        .render("templates/errors/signedin-error-template", {
           statusCode,
           message,
-          navbar: "none",
+          navbar,
+          error: errorImages.underConstruction,
         });
     } else if (statusCode >= 500) {
       return res
@@ -184,6 +211,15 @@ app.use((err, req, res, next) => {
           statusCode,
           message: "Wooops! Something went wrong",
           navbar: "none",
+        });
+    } else if (statusCode === 404) {
+      return res
+        .status(statusCode)
+        .render("templates/errors/signedin-error-template", {
+          statusCode,
+          message: "Wooops! Page not found",
+          navbar: navbar,
+          error: errorImages.notFound,
         });
     }
     res.status(statusCode).render("templates/errors/signedin-error-template", {
