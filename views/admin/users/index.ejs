@@ -132,44 +132,42 @@
     </div>
   </nav>
   <div>
-    <form action="">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Role</th>
-            <th scope="col">Email</th>
-            <th scope="col" hidden>User ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= console.log("User count: ", users.length )%> <% for (let user of
-          users) { %>
-          <tr class="user-row">
-            <td class="">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckChecked"
-                  onclick="checkedBox()"
-                />
-              </div>
-            </td>
-            <td><%= user.first %></td>
-            <td><%= user.last %></td>
-            <td><%= user.role %></td>
-            <td><%= user.email %></td>
-            <td hidden><%= user.id %></td>
-          </tr>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Role</th>
+          <th scope="col">Email</th>
+          <th scope="col" hidden>User ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= console.log("User count: ", users.length )%> <% for (let user of
+        users) { %>
+        <tr class="user-row">
+          <td class="">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckChecked"
+                onclick="checkedBox()"
+              />
+            </div>
+          </td>
+          <td><%= user.first %></td>
+          <td><%= user.last %></td>
+          <td><%= user.role %></td>
+          <td><%= user.email %></td>
+          <td hidden><%= user.id %></td>
+        </tr>
 
-          <% }%>
-        </tbody>
-      </table>
-    </form>
+        <% }%>
+      </tbody>
+    </table>
   </div>
 
   <footer class="mt-5"></footer>
