@@ -19,16 +19,6 @@
   <div class="card-body">
     <form action="/api/v1/tickets/" method="post">
       <div class="mb-3">
-        <label class="form-label" for="priority">Priority</label>
-        <select class="form-select" name="priority" id="priority">
-          <!-- <option selected>priority</option> -->
-          <option selected value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-          <option value="Very High">Very High</option>
-        </select>
-      </div>
-      <div class="mb-3">
         <label class="form-label" for="title">Subject</label>
         <input class="form-control" type="text" name="title" id="title" />
       </div>
@@ -41,6 +31,16 @@
           id="description"
           aria-label="Description"
         ></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="priority">Priority</label>
+        <select class="form-select" name="priority" id="priority">
+          <% let options = [ "Low", "Medium", "High", "Very High"];
+          options.forEach(option => { %>
+          <option value="<%=option %>"><%=option %></option>
+          <% }) %>
+        </select>
       </div>
 
       <button type="submit" class="btn btn-outline-dark btn-lg">Create</button>
