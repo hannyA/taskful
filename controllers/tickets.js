@@ -147,3 +147,28 @@ module.exports.newTask = async (req, res) => {
   await task.save();
   res.redirect(`/api/v1/tickets/${ticket}`);
 };
+
+module.exports.renderEditTask = async (req, res) => {
+  console.log("renderEditTask");
+  const ticket = await Ticket.findById(req.params.id);
+  const task = await TicketTask.findById(req.params.taskId).populate("author");
+  console.log("renderEditTask 2");
+  const users = await getCompanyTech(req, res);
+  const page = "6";
+
+  res.render("tickets/edit-task", {
+    ticket,
+    task,
+    users,
+    navbar: "tickets",
+    page,
+  });
+};
+
+module.exports.editTask = async (req, res) => {
+  const { id } = req.params;
+  const { taskId } = req.params;
+  console.log("req.body:", req.body);
+  const ticket = await TicketTask.findByIdAndUpdate(taskId, { ...req.body });
+  res.redirect(`/api/v1/tickets/${id}`);
+};

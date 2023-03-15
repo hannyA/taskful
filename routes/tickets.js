@@ -23,6 +23,13 @@ router
 router.get("/:id/edit", isLoggedIn, tickets.renderEditTicketForm);
 
 router.route("/:id/tasks/new").get(isLoggedIn, tickets.renderNewTaskForm);
+
+// href="/api/v1/tickets/<%= ticket._id %>/tasks/<%= task._id %>/edit "
+
 router.route("/:id/tasks").post(isLoggedIn, convertDuration, tickets.newTask);
+router.route("/:id/tasks/:taskId/edit").get(isLoggedIn, tickets.renderEditTask);
+router
+  .route("/:id/tasks/:taskId")
+  .put(isLoggedIn, convertDuration, tickets.editTask);
 
 module.exports = router;
