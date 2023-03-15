@@ -3,7 +3,7 @@ const User = require("../models/user");
 const Project = require("../models/project");
 
 module.exports.renderRegisterForm = async (req, res) => {
-  res.render("auth/register");
+  res.render("auth/register", { navbar: "account" });
 };
 
 module.exports._registerUser = wrapAsync(async (req, res, next) => {
@@ -88,7 +88,7 @@ module.exports.registerUser = wrapAsync(async (req, res) => {
 // });
 
 module.exports.renderLoginForm = (req, res) => {
-  res.render("auth/login");
+  res.render("auth/login", { navbar: "account" });
 };
 
 module.exports.loginUser = (req, res) => {

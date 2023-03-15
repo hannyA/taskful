@@ -120,11 +120,15 @@ app.get(`/`, function (req, res) {
   if (res.locals.currentUser) {
     return res.redirect(`/api/${version}/dashboard`);
   }
-  res.render("home");
+  res.render("home", { navbar: "home" });
 });
 
 app.get(`/credits`, function (req, res) {
-  res.render("others/credits", { navbar: "none" });
+  res.render("home/credits", { navbar: "none" });
+});
+
+app.get(`/pricing`, function (req, res) {
+  res.render("home/price", { navbar: "pricing" });
 });
 
 app.all("*", (req, res, next) => {

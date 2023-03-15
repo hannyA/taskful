@@ -21,24 +21,45 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a
+            class="nav-link <%= navbar === 'home' && 'active' %>"
+            aria-current="page"
+            href="/"
+            >Home</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/features">Features</a>
+          <a
+            class="nav-link <%= navbar === 'features' && 'active' %>"
+            href="/features"
+            >Features</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/teams">For Teams</a>
+          <a
+            class="nav-link <%= navbar === 'teams' && 'active' %>"
+            href="/teams"
+            >For Teams</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/pricing">Pricing</a>
+          <a
+            class="nav-link <%= navbar === 'pricing' && 'active' %>"
+            href="/pricing"
+            >Pricing</a
+          >
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/support">Support</a>
+          <a
+            class="nav-link <%= navbar === 'support' && 'active' %>"
+            href="/support"
+            >Support</a
+          >
         </li>
         <li class="nav-item dropdown">
           <a
-            class="nav-link dropdown-toggle"
+            class="nav-link dropdown-toggle <%= navbar === 'account' && 'active' %>"
             href="#"
             role="button"
             data-bs-toggle="dropdown"
