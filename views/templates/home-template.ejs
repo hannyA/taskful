@@ -12,6 +12,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/navigation.css" />
 
     <!-- Font Awesome icons -->
     <script
@@ -23,12 +24,11 @@
     <section class="navbar-section">
       <!-- <div class="container-fluid"> -->
       <%- include('../partials/navbar/signedout-navbar') %>
-
       <!-- </div> -->
     </section>
-    <div class="container-fluid">
-      <%- include('../partials/flash') %> <%- body %>
-    </div>
+
+    <div class=""><%- include('../partials/flash') %> <%- body %></div>
+
     <span class="mt-auto"> <%- include('../partials/footer') %> </span>
 
     <script
