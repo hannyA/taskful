@@ -4,8 +4,6 @@ const Ticket = require("../models/ticket");
 
 module.exports.index = async (req, res) => {
   console.log("total pages:: index");
-  const page = "index";
-
   // req.query.company = req.user.company;
 
   const features = new APIFeatures(Ticket.find(), req.query)
@@ -21,7 +19,17 @@ module.exports.index = async (req, res) => {
 
   // console.log("numProjects: ", numProjects);
   const totalPages = Math.ceil(numTickets / features.limit);
-  console.log("total pages:: index");
+  console.log("2 total pages:: index");
+
+  let page = "index";
+  let resource = "tickets?";
+
+  const ownerId = req.query.owner;
+
+  if (ownerId && ownerId === req.user.id) {
+    page = "mine";
+    resource = `${resource}owner=${ownerId}&`;
+  }
 
   res.render("tickets/index", {
     // pagination: true,
@@ -29,7 +37,7 @@ module.exports.index = async (req, res) => {
     page,
     totalPages,
     currentPage: features.page,
-    // resource,
+    resource,
     navbar: "tickets",
   });
 
