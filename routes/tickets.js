@@ -2,13 +2,14 @@ const express = require("express");
 const Issue = require("../models/issue");
 const { isLoggedIn } = require("../utils/middleware");
 const tickets = require("../controllers/tickets");
+const { isAuthorized } = require("../controllers/auth");
 
 const router = express.Router({ mergeParams: true });
 
 router
   .route("/")
-  .get(isLoggedIn, tickets.index)
-  .post(isLoggedIn, tickets.createNewTicket);
+  .get(isLoggedIn, isAuthorized, tickets.index)
+  .post(isLoggedIn, isAuthorized, tickets.createNewTicket);
 
 router.get("/new", isLoggedIn, tickets.renderNewForm);
 

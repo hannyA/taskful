@@ -109,7 +109,7 @@ app.use((req, res, next) => {
 
 const version = "v1";
 app.use(`/api/${version}/projects`, projectRoutes);
-app.use(`/api/${version}/ticket`, ticketRoutes);
+app.use(`/api/${version}/tickets`, ticketRoutes);
 app.use(`/api/${version}/admin`, adminRoutes);
 app.use(`/api/${version}/auth`, authRoutes);
 app.use(`/api/${version}/dashboard`, dashRoutes);
@@ -136,7 +136,7 @@ app.all("*", (req, res, next) => {
   const signedinPages = [
     "/api/v1/assets",
     "/api/v1/tools",
-    "/api/v1/ticket",
+    "/api/v1/tickets",
     "/api/v1/support",
   ];
 

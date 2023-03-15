@@ -9,22 +9,17 @@
 
 <h1>Edit ticket</h1>
 
-<form action="/api/v1/ticket/<%= ticket._id %>?_method=PUT" method="post">
+<form action="/api/v1/tickets/<%= ticket._id %>?_method=PUT" method="post">
   <div>
     <label for="title">Title</label>
-    <input
-      type="text"
-      name="ticket[title]"
-      id="title"
-      value="<%= ticket.title %>"
-    />
+    <input type="text" name="title" id="title" value="<%= ticket.title %>" />
   </div>
 
   <div>
     <label for="description">Description</label>
     <input
       type="text"
-      name="ticket[description]"
+      name="description"
       id="description"
       value="<%= ticket.description %>"
     />

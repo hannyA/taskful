@@ -2,7 +2,7 @@
 
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/api/v1/ticket">Tickets</a></li>
+    <li class="breadcrumb-item"><a href="/api/v1/tickets">Tickets</a></li>
     <li class="breadcrumb-item active" aria-current="page">Create Ticket</li>
   </ol>
 </nav>
@@ -17,11 +17,11 @@
   </div>
 
   <div class="card-body">
-    <form action="/api/v1/ticket/" method="post">
+    <form action="/api/v1/tickets/" method="post">
       <div class="mb-3">
-        <label class="form-label" for="status">Priority</label>
-        <select class="form-select" name="ticket[status]" id="status">
-          <!-- <option selected>Status</option> -->
+        <label class="form-label" for="priority">Priority</label>
+        <select class="form-select" name="priority" id="priority">
+          <!-- <option selected>priority</option> -->
           <option selected value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
@@ -30,19 +30,14 @@
       </div>
       <div class="mb-3">
         <label class="form-label" for="title">Subject</label>
-        <input
-          class="form-control"
-          type="text"
-          name="ticket[title]"
-          id="title"
-        />
+        <input class="form-control" type="text" name="title" id="title" />
       </div>
 
       <div class="mb-3">
         <label class="form-label" for="description">Description</label>
         <textarea
           class="form-control"
-          name="ticket[description]"
+          name="description"
           id="description"
           aria-label="Description"
         ></textarea>
