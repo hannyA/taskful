@@ -14,6 +14,7 @@
         <h3>Ticket: <%= ticket.title %></h3>
       </div>
 
+      <!-- Menu button for ticket dropdown -->
       <div class="col-2">
         <div class="dropdown">
           <button
@@ -69,15 +70,13 @@
       class="modal fade"
       id="exampleModal"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="delete-ticket"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Delete Ticket?
-            </h1>
+            <h1 class="modal-title fs-5" id="delete-ticket">Delete Ticket?</h1>
             <button
               type="button"
               class="btn-close"
@@ -155,7 +154,8 @@
   <h2>Tasks</h2>
 
   <div>
-    <% (tasks).forEach(task => { %>
+    <% (tasks).forEach(task => { %> <%=console.log('for each task: ' , task.id)
+    %>
 
     <div class="card my-4" style="width: 38rem">
       <div class="card-header">
@@ -188,7 +188,7 @@
                 type="button"
                 class="dropdown-item"
                 data-bs-toggle="modal"
-                data-bs-target="#deleteTask"
+                data-bs-target="#d<%= task.id %>"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -212,15 +212,15 @@
             <!-- Modal for Delete button -->
             <div
               class="modal fade"
-              id="deleteTask"
+              id="d<%= task.id %>"
               tabindex="-1"
-              aria-labelledby="exampleModalLabel"
+              aria-labelledby="delete-task"
               aria-hidden="true"
             >
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    <h1 class="modal-title fs-5" id="delete-task">
                       Delete Task?
                     </h1>
                     <button
@@ -231,7 +231,7 @@
                     ></button>
                   </div>
                   <div class="modal-body">
-                    Are you sure you want to delete this task?
+                    Are you sure you want to delete this task? <%= task.id %>
                   </div>
                   <div class="modal-footer">
                     <button
@@ -258,7 +258,6 @@
         </div>
       </div>
       <div class="card-body p-4">
-        <!-- <h5 class="card-title"><%= task.description %></h5> -->
         <p class="card-text"><%= task.description %></p>
       </div>
 

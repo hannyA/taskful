@@ -30,6 +30,7 @@ router.route("/:id/tasks").post(isLoggedIn, convertDuration, tickets.newTask);
 router.route("/:id/tasks/:taskId/edit").get(isLoggedIn, tickets.renderEditTask);
 router
   .route("/:id/tasks/:taskId")
-  .put(isLoggedIn, convertDuration, tickets.editTask);
+  .put(isLoggedIn, convertDuration, tickets.editTask)
+  .delete(isLoggedIn, convertDuration, tickets.deleteTask);
 
 module.exports = router;

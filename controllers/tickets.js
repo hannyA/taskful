@@ -67,8 +67,6 @@ module.exports.showTicket = async (req, res) => {
     .populate({ path: "owner" })
     .populate("assignee");
 
-  // const tasks = await TicketTask.findById(req.params.id);
-
   const features = new APIFeatures(TicketTask.find(), req.query)
     .filter()
     .sort()
@@ -168,7 +166,13 @@ module.exports.renderEditTask = async (req, res) => {
 module.exports.editTask = async (req, res) => {
   const { id } = req.params;
   const { taskId } = req.params;
-  console.log("req.body:", req.body);
-  const ticket = await TicketTask.findByIdAndUpdate(taskId, { ...req.body });
+
+  const ticket = await TicketTask.updateOne({ _id: taskId }, { ...req.body });
+  res.redirect(`/api/v1/tickets/${id}`);
+};
+
+module.exports.deleteTask = async (req, res) => {
+  const { id, taskId } = req.params;
+  const ticket = await TicketTask.deleteOne({ _id: taskId });
   res.redirect(`/api/v1/tickets/${id}`);
 };

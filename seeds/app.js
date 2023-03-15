@@ -17,6 +17,7 @@ const {
 } = require("./utils");
 
 const { issues, type, projectTitles, tasks } = require("./seedHelper");
+const ticketTask = require("../models/ticket-task");
 
 module.exports.deleteDB = async () => {
   await Issue.deleteMany({});
@@ -121,6 +122,25 @@ const makeTeam = async (company, leader) => {
 };
 
 const generateRandomTasks = async (user, issue, issueDate) => {
+  const numOfTasks = Math.floor(Math.random() * 20) + 1;
+  for (let j = 0; j < numOfTasks; j++) {
+    const taskDate = randomDate(issueDate, new Date());
+    const description = randomItem(tasks);
+    const task = await newTask(
+      user,
+      issue.id,
+      description,
+      taskDate,
+      taskDate,
+      randomTaskDuration()
+    );
+  }
+};
+
+const generateRandomTicketsAndTasks = async (user, issue, issueDate) => {
+  // Get all users - create ticketTask
+  // get technicians for tasks
+
   const numOfTasks = Math.floor(Math.random() * 20) + 1;
   for (let j = 0; j < numOfTasks; j++) {
     const taskDate = randomDate(issueDate, new Date());
