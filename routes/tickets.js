@@ -3,6 +3,7 @@ const Issue = require("../models/issue");
 const { isLoggedIn } = require("../utils/middleware");
 const tickets = require("../controllers/tickets");
 const { isAuthorized } = require("../controllers/auth");
+const { convertDuration } = require("../middleware/forms");
 
 const router = express.Router({ mergeParams: true });
 
@@ -20,5 +21,8 @@ router
   .delete(isLoggedIn, tickets.deleteTicket);
 
 router.get("/:id/edit", isLoggedIn, tickets.editTicket);
+
+router.route("/:id/tasks/new").get(isLoggedIn, tickets.renderNewTaskForm);
+router.route("/:id/tasks").post(isLoggedIn, convertDuration, tickets.newTask);
 
 module.exports = router;
