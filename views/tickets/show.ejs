@@ -154,8 +154,7 @@
   <h2>Tasks</h2>
 
   <div>
-    <% (tasks).forEach(task => { %> <%=console.log('for each task: ' , task.id)
-    %>
+    <% (tasks).forEach(task => { %>
 
     <div class="card my-4" style="width: 38rem">
       <div class="card-header">
@@ -231,7 +230,7 @@
                     ></button>
                   </div>
                   <div class="modal-body">
-                    Are you sure you want to delete this task? <%= task.id %>
+                    Are you sure you want to delete this task?
                   </div>
                   <div class="modal-footer">
                     <button
