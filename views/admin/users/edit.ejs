@@ -1,0 +1,65 @@
+<% layout('templates/admins-template') %>
+
+<!-- <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Project</li>
+  </ol>
+</nav> -->
+
+<h1>New User</h1>
+<div class="card-body">
+  <form
+    class="new-issue-form w-100"
+    action="/api/v1/admin/users?_method=PUT"
+    method="post"
+  >
+    <div class="mb-3">
+      <label class="form-label" for="firstname">First Name</label>
+      <input
+        class="form-control"
+        type="text"
+        name="first"
+        id="firstname"
+        value="<%=user.first%>"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="lastname">Last Name</label>
+      <input
+        class="form-control"
+        type="text"
+        name="last"
+        id="lastname"
+        value="<%=user.last%>"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="email">Email</label>
+      <input
+        class="form-control"
+        name="email"
+        id="email"
+        aria-label="Email"
+        value="<%=user.email%>"
+      />
+    </div>
+
+    <% let roles = ['Admin', 'Technician', 'User'] %>
+    <div class="mb-3">
+      <label class="form-label" for="role">Role</label>
+      <select class="form-select" name="role" id="role">
+        <% roles.forEach(role => { if (role === user.role) { %>
+        <option selected value="<%=role%>"><%=role%></option>
+        <%}else {%>
+        <option value="<%=role%>"><%=role%></option>
+        <%}}) %>
+      </select>
+    </div>
+
+    <input hidden type="text" name="id" value="<%=user.id%>" />
+
+    <button type="submit" class="btn btn-outline-dark btn-lg">Save</button>
+  </form>
+</div>

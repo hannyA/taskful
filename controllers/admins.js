@@ -21,6 +21,28 @@ module.exports.newUser = async (req, res) => {
   // res.render("admin/users", { user, page });
 };
 
+module.exports.renderEditUserForm = async (req, res) => {
+  console.log("req.query: ", req.query);
+  const { id } = req.query;
+
+  const user = await User.findById(id);
+  const page = "edit";
+  res.render("admin/users/edit", { user, page, navbar: "admin" });
+};
+
+module.exports.editUser = async (req, res) => {
+  const { id } = req.body;
+  delete req.body.id;
+
+  const user = await User.findByIdAndUpdate(id, {
+    ...req.body,
+  });
+
+  res.redirect("/api/v1/admin/users");
+
+  // res.render("admin/users/edit", { user, page, navbar: "admin" });
+};
+
 module.exports.deleteUsers = async (req, res) => {
   try {
     console.log("admin deleteUsers");

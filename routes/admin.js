@@ -10,8 +10,11 @@ router
   .route("/users")
   .get(isLoggedIn, isAdmin, admin.users)
   .post(isLoggedIn, isAdmin, addCompany, addUsername, admin.newUser)
-  .delete(isLoggedIn, isCompanyAdmin, admin.deleteUsers);
+  .delete(isLoggedIn, isCompanyAdmin, admin.deleteUsers)
+  .put(isLoggedIn, isCompanyAdmin, admin.editUser);
 
 router.route("/users/new").get(isLoggedIn, isAdmin, admin.renderNewUserForm);
+
+router.route("/users/edit").get(isLoggedIn, isAdmin, admin.renderEditUserForm);
 
 module.exports = router;

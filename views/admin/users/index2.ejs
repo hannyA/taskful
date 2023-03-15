@@ -1,59 +1,5 @@
 <% layout('templates/admins-template') %>
 
-<script>
-  let dUsers = [];
-
-  function checkedBox() {
-    console.log("checkedBox: ", dUsers);
-
-    dUsers = [];
-    const deleteElement = document.getElementById("delete-user");
-    deleteElement.classList.add("disabled");
-
-    let inputs = document.getElementsByClassName("form-check-input");
-    for (let i = 0; i < inputs.length; i++) {
-      let parentNode = inputs[i].parentNode.parentNode.parentNode; //tr
-
-      if (inputs[i].type === "checkbox") {
-        console.log("inputs[i]: ", i, inputs[i]);
-        let input = inputs[i];
-
-        console.log("input: ", input.checked);
-        console.log("inputs[i]: ", i, inputs[i].checked);
-        if (inputs[i].checked === true) {
-          console.log("checked here");
-          let id = parentNode.getElementsByTagName("td")[5].innerHTML;
-          dUsers.push(id);
-          deleteElement.classList.remove("disabled");
-        } else {
-          inputs[i].checked = false;
-        }
-      }
-    }
-    // console.log("dUsers: ", dUsers);
-  }
-
-  const deleteUserss = async () => {
-    console.log("index2 : ");
-    console.log("deleteUsers : ", dUsers);
-
-    var form = document.getElementById("delete-form");
-    form.submit();
-  };
-
-  const removeRows = () => {
-    let inputs = document.getElementsByClassName("form-check-input");
-    for (let i = 0; i < inputs.length; i++) {
-      let parentNode = inputs[i].parentNode.parentNode.parentNode; //tr
-
-      if (dUsers.includes(parentNode.getElementsByTagName("td")[5].innerHTML)) {
-        parentNode.remove();
-        i--;
-      }
-    }
-  };
-</script>
-
 <div
   id="alert-message-container"
   class="alert alert-danger alert-dismissible d-none show fade"
@@ -89,6 +35,14 @@
           <form action="/api/v1/admin/users?_method=DELETE " method="POST">
             <a href="" class="nav-link disabled">Delete</a>
           </form> -->
+        </li>
+        <li class="nav-item">
+          <a
+            href="/api/v1/admin/users/edit"
+            id="edit-user"
+            class="nav-link disabled"
+            >Edit User</a
+          >
         </li>
       </ul>
       <!-- <form class="d-flex" role="search">
@@ -152,5 +106,71 @@
 </div>
 
 <script>
-  checkedBox();
+  let dUsers = [];
+
+  function checkedBox() {
+    console.log("checkedBox: ", dUsers);
+
+    dUsers = [];
+    const deleteElement = document.getElementById("delete-user");
+    deleteElement.classList.add("disabled");
+
+    let inputs = document.getElementsByClassName("form-check-input");
+    for (let i = 0; i < inputs.length; i++) {
+      let parentNode = inputs[i].parentNode.parentNode.parentNode; //tr
+
+      if (inputs[i].type === "checkbox") {
+        console.log("inputs[i]: ", i, inputs[i]);
+        let input = inputs[i];
+
+        console.log("input: ", input.checked);
+        console.log("inputs[i]: ", i, inputs[i].checked);
+        if (inputs[i].checked === true) {
+          console.log("checked here");
+          let id = parentNode.getElementsByTagName("td")[5].innerHTML;
+          dUsers.push(id);
+          deleteElement.classList.remove("disabled");
+        } else {
+          inputs[i].checked = false;
+        }
+      }
+    }
+
+    const editElement = document.getElementById("edit-user");
+    if (dUsers.length === 1) {
+      editElement.classList.remove("disabled");
+
+      editElement.setAttribute(
+        "href",
+        "/api/v1/admin/users/edit?id=" + dUsers[0]
+      );
+    } else {
+      editElement.classList.add("disabled");
+    }
+    // console.log("dUsers: ", dUsers);
+  }
+
+  const deleteUserss = async () => {
+    console.log("index2 : ");
+    console.log("deleteUsers : ", dUsers);
+
+    var form = document.getElementById("delete-form");
+    form.submit();
+  };
+
+  const removeRows = () => {
+    let inputs = document.getElementsByClassName("form-check-input");
+    for (let i = 0; i < inputs.length; i++) {
+      let parentNode = inputs[i].parentNode.parentNode.parentNode; //tr
+
+      if (dUsers.includes(parentNode.getElementsByTagName("td")[5].innerHTML)) {
+        parentNode.remove();
+        i--;
+      }
+    }
+  };
+
+  window.onload = function () {
+    checkedBox();
+  };
 </script>
