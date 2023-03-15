@@ -7,22 +7,61 @@
 </nav>
 <!-- <h1>Dashboard</h1> -->
 
-<div>
-  <% for (let ticket of tickets) { %>
-
-  <div class="card mb-3 ticket-card">
-    <div class="card-body">
-      <h5 class="card-title">
-        <a href="/api/v1/tickets/<%= ticket._id %> "> <%= ticket.title %></a>
-      </h5>
-      <h6 class="card-subtitle mb-2 text-muted">
-        <strong>Owner: </strong><%= ticket.author %> - <%= ticket.status %>
-      </h6>
-      <p class="card-text">
-        <strong>Description: </strong><%= ticket.description %>
-      </p>
-    </div>
+<div class="row mb-5">
+  <div class="col-5 offset-4">
+    <h1 class="text-cejnter">
+      <% if (page === 'mine') { %> My Tickets <% } else{ %> Tickets <% } %>
+    </h1>
   </div>
-
-  <% }%>
 </div>
+
+<div class="project-table">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="" scope="col">ID</th>
+          <th class="" scope="col">Title</th>
+          <th class="" scope="col">Owner</th>
+          <th class="" scope="col">Assigned to</th>
+          <th class="" scope="col">Description</th>
+          <th class="" scope="col">Priority</th>
+          <th class="" scope="col">Status</th>
+          <th class="" scope="col">Create Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let ticket of tickets) { %>
+        <tr>
+          <td
+            class=""
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="<%=ticket._id%>"
+          >
+            <a href="/api/v1/tickets/<%= ticket._id %> ">
+              ...<%=`${ticket._id}`.slice(-4)%></a
+            >
+          </td>
+          <td class=""><%= ticket.title %></td>
+          <td class=""><%= ticket.owner.fullname%></td>
+          <td class=""><%= ticket.assignee && ticket.assignee.fullname %></td>
+          <td class=""><%= ticket.description %></td>
+          <td class=""><%= ticket.priority %></td>
+          <td class=""><%= ticket.status %></td>
+          <td class=""><%= ticket.createdAtDate %></td>
+        </tr>
+
+        <% }%>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<% if (tickets.length ===0 ) { %>
+<div class="row">
+  <div class="col-6">
+    <h2 class="mt-5 offset-md-6 offset-2">No tickets found</h2>
+  </div>
+</div>
+<% }%>
