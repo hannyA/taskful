@@ -101,6 +101,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.apiVersion = "v1";
+  res.locals.companyName = "Bugger";
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -120,7 +121,7 @@ app.get(`/`, function (req, res) {
   if (res.locals.currentUser) {
     return res.redirect(`/api/${version}/dashboard`);
   }
-  res.render("home", { navbar: "home" });
+  res.render("home/home", { navbar: "home" });
 });
 
 app.get(`/credits`, function (req, res) {
@@ -128,7 +129,63 @@ app.get(`/credits`, function (req, res) {
 });
 
 app.get(`/pricing`, function (req, res) {
-  res.render("home/price", { navbar: "pricing" });
+  const plans = [
+    {
+      type: "Basic",
+      description:
+        "For individuals or teams just getting started with project management.",
+      price: 8.99,
+      priceDesc: "Free forever",
+      subTitle: "Manage tasks and personal to-dos:",
+      benefits: [
+        "Unlimited tasks",
+        "Unlimited projects",
+        "Unlimited messages",
+        "Unlimited activity log",
+        "Unlimited file storage (100MB per file)",
+        "Collaborate with up to 15 teammates",
+        "List view projects",
+        "Board view projects",
+      ],
+    },
+    {
+      type: "Premium",
+      description:
+        "For teams that need to create project plans with confidence.",
+      price: 16.99,
+      priceDesc: "Per user, per month billed annually $16.99 billed monthly",
+      subTitle: "Track team projects with features and resources like:",
+      benefits: [
+        "Calendar view",
+        "Assignee and due dates",
+        "Project Overview",
+        "Project Brief",
+        "iOS and Android mobile apps",
+        "Time tracking with integrations - See time tracking apps",
+        "100+ free integrations with your favorite apps - Learn more",
+      ],
+    },
+    {
+      type: "Enterprise",
+      description:
+        "For teams and companies that need to manage work across initiatives.",
+      price: 22.99,
+      priceDesc: "Per user, per month billed annually $22.99 billed monthly",
+      subTitle: "Everything in Premium, plus:",
+      benefits: [
+        "Portfolios",
+        "Goals",
+        "Workload",
+        "Custom rules builder",
+        "Forms branching & customization",
+        "Approvals",
+        "Proofing",
+        "Lock custom fields",
+      ],
+    },
+  ];
+
+  res.render("home/price", { navbar: "pricing", plans });
 });
 
 app.all("*", (req, res, next) => {
@@ -241,7 +298,7 @@ app.use((err, req, res, next) => {
         .render("templates/errors/signedout-error-template", {
           statusCode,
           message,
-          navbar: "none",
+          navbar,
         });
     }
   }

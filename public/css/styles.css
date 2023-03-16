@@ -51,7 +51,7 @@ body {
 /* Sections */
 
 .section-container {
-  padding: 10% 5% !important;
+  padding: 5% 5% !important;
 }
 .colored-section {
   background-color: blueviolet;
@@ -94,3 +94,38 @@ footer {
   position: sticky;
   bottom: 0;
 } */
+
+.pricing-card-notpopular-margin {
+  margin-top: 41px;
+}
+.pricing-card-premium-header {
+  color: purple;
+}
+.pricing-card-enterprise-header {
+  color: red;
+}
+
+.price-description {
+  font-size: 0.8rem;
+  height: 3rem;
+}
+
+.basic-button {
+  /* margin-top: 40px; */
+}
+
+.benefit-text {
+  font-size: 14px;
+
+  margin-top: 2rem;
+}
+.pricing-list {
+  padding: 0;
+}
+
+.pricing-list-item {
+  margin: 5px;
+}
+.pricing-list-item-text {
+  font-size: 13px;
+}
