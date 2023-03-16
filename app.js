@@ -239,7 +239,7 @@ const errorImages = {
   },
   underConstruction: {
     id: "under-consruction",
-    src: "/images/under-construction-1920.jpg",
+    src: "/images/under-construction-920.jpg",
     alt: "Under Construction image",
   },
   notFound: {
