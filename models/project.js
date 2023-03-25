@@ -54,6 +54,13 @@ const ProjectSchema = new Schema(
   // doc.updatedAt = new Date(0);
 );
 
+ProjectSchema.virtual("startDateFormat").get(function () {
+  console.log("this.startDateFormat:, ", this.plannedStartDate);
+  return this.plannedStartDate === undefined
+    ? null
+    : formatDate(this.plannedStartDate);
+});
+
 ProjectSchema.virtual("plannedEndDateFormat").get(function () {
   console.log("this.plannedEndDate:, ", this.plannedEndDate);
   return this.plannedEndDate === undefined

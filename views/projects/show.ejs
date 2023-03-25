@@ -105,12 +105,21 @@
     <div class="col-6">
       <p><strong>Title:</strong> <%= project.title %></p>
       <p><strong>Description:</strong> <%= project.description %></p>
-      <p><strong>Lead:</strong> <%= project.owner.fullname %></p>
     </div>
-    <div class="col-3">
-      <p><strong>Priority:</strong> <%= project.priority %></p>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <p><strong>Lead:</strong> <%= project.owner.fullname %></p>
       <p><strong>Date Created:</strong> <%= project.createdAtDate %></p>
+    </div>
+    <div class="col-4">
+      <p><strong>Priority:</strong> <%= project.priority %></p>
       <p><strong>Status:</strong> <%= project.status %></p>
+    </div>
+
+    <div class="col-4">
+      <p><strong>Start date:</strong> <%= project.startDateFormat %></p>
       <% if(project.plannedEndDateFormat !== undefined) {%>
       <p>
         <strong>Planned End date:</strong> <%= project.plannedEndDateFormat %>
