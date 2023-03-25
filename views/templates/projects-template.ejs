@@ -53,8 +53,22 @@
     </script> -->
 
     <script>
-      let startPicker = datepicker("#startDate");
-      let endpicker = datepicker("#endDate");
+      let startPicker = datepicker("#startDate", {
+        // Event callbacks.
+        onSelect: (instance) => {
+          // Show which date was selected.
+          // console.log(instance.dateSelected);
+          endPicker.setMin(new Date(instance.dateSelected));
+        },
+      });
+      let endPicker = datepicker("#endDate", {
+        // Event callbacks.
+        onSelect: (instance) => {
+          // Show which date was selected.
+          // console.log(instance.dateSelected);
+          startPicker.setMax(new Date(instance.dateSelected));
+        },
+      });
     </script>
   </body>
 </html>

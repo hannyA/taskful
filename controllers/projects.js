@@ -54,7 +54,11 @@ module.exports.renderNewProjectForm = async (req, res) => {
 };
 
 module.exports.createProject = async (req, res) => {
-  console.log(req.body);
+  console.log("createProject old: ", req.body);
+  const { startDate, endDate } = req.body;
+  req.body.plannedStartDate = startDate;
+  req.body.plannedEndDate = endDate;
+  console.log("createProject new: ", req.body);
 
   const project = new Project(req.body);
   await project.save();
