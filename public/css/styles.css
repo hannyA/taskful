@@ -129,3 +129,5 @@ footer {
 .pricing-list-item-text {
   font-size: 13px;
 }
+
+@import "~js-datepicker/dist/datepicker.min.css";
