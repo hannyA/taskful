@@ -17,6 +17,7 @@ const {
   newTask,
   randomTaskDuration,
   newTicket,
+  newTicketTask,
 } = require("./utils");
 
 const { issues, type, projectTitles, tasks } = require("./seedHelper");
@@ -117,14 +118,12 @@ module.exports.seedDB = async (company, seedUser) => {
     role: { $eq: "User" },
   });
 
-  if (seedUser.role !== "user") {
-    await makeTicketAsAdmin(techSupport, normalUsers, company);
-  } else {
-    await makeTicketAsUser(techSupport, normalUsers, company);
-  }
+  const numTickets =
+    (seedUser.role !== "user" ? techSupport.length : users.length) * 2;
+  await makeTicket(techSupport, normalUsers, company, numTickets);
 };
 
-const makeTicketAsAdmin = async (techSupport, users, company) => {
+const makeTicket = async (techSupport, users, company, numTickets) => {
   for (let i = 0; i < techSupport.length * 2; i++) {
     let user = users[i % users.length];
     let tech = techSupport[i % techSupport.length];
@@ -133,25 +132,49 @@ const makeTicketAsAdmin = async (techSupport, users, company) => {
         ? tech.registerDate
         : user.registerDate;
     let date = randomDate(laterDate, new Date());
-    const ticket = await makeTicket(user, tech, company, date);
-
-    // Make Task
+    const ticket = await createTicket(user, tech, company, date);
+    // Make Tasks
+    await generateRandomTicketTasks(tech, ticket.id, ticket.createdAt);
   }
 };
 
-const makeTicketAsUser = async (techSupport, users, company) => {
-  for (let i = 0; i < users.length * 2; i++) {
-    let user = users[i % users.length];
-    let tech = techSupport[i % techSupport.length];
-    let laterDate =
-      tech.registerDate > user.registerDate
-        ? tech.registerDate
-        : user.registerDate;
-    let date = randomDate(laterDate, new Date());
+// const makeTicketAsUser = async (techSupport, users, company) => {
+//   for (let i = 0; i < users.length * 2; i++) {
+//     let user = users[i % users.length];
+//     let tech = techSupport[i % techSupport.length];
+//     let laterDate =
+//       tech.registerDate > user.registerDate
+//         ? tech.registerDate
+//         : user.registerDate;
+//     let date = randomDate(laterDate, new Date());
 
-    const ticket = await makeTicket(user, tech, company, date);
+//     const ticket = await createTicket(user, tech, company, date);
+//     // Make Tasks
+//     await generateRandomTicketTasks(tech, ticket.id, ticket.createdAt);
+//   }
+// };
 
-    // Make Task
+// newTicket = async (user, tech, company, date, ticketInfo) => {
+const createTicket = async (user, tech, company, date) => {
+  const ticketInfo = randomItem(issues);
+  const ticketDate = randomDate(date, new Date());
+  const ticket = await newTicket(user, tech, company, ticketDate, ticketInfo);
+  return ticket;
+};
+
+const generateRandomTicketTasks = async (user, ticketId, createDate) => {
+  const numOfTasks = Math.floor(Math.random() * 5) + 1;
+  for (let j = 0; j < numOfTasks; j++) {
+    const taskDate = randomDate(createDate, new Date());
+    const description = randomItem(tasks);
+    const task = await newTicketTask(
+      user,
+      ticketId,
+      description,
+      taskDate,
+      taskDate,
+      randomTaskDuration()
+    );
   }
 };
 
@@ -211,12 +234,4 @@ const generateRandomTicketsAndTasks = async (user, issue, issueDate) => {
       randomTaskDuration()
     );
   }
-};
-// newTicket = async (user, tech, company, date, ticketInfo) => {
-const makeTicket = async (user, tech, company, date) => {
-  const ticketInfo = randomItem(issues);
-  const ticketDate = randomDate(date, new Date());
-  const ticket = await newTicket(user, tech, company, ticketDate, ticketInfo);
-  return ticket;
-  // await generateRandomTasks(user, issue, issue.createdAt);
 };

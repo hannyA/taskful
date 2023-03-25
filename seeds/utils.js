@@ -140,6 +140,27 @@ module.exports.newTicket = async (user, tech, company, date, ticket) => {
   return _ticket;
 };
 
+module.exports.newTicketTask = async (
+  user,
+  ticketId,
+  description,
+  createdAt,
+  updatedAt,
+  duration
+) => {
+  const task = new TicketTask({
+    description: description,
+    author: user,
+    ticket: ticketId,
+    duration: duration,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+  });
+
+  await task.save();
+  return task;
+};
+
 const getEmail = (first, last, email) => {
   return `${first}.${last}@${email}`;
 };
