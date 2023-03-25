@@ -67,6 +67,7 @@ module.exports.showTicket = async (req, res) => {
     .populate({ path: "owner" })
     .populate("assignee");
 
+  console.log("ticket task req.query: ", req.query);
   const features = new APIFeatures(TicketTask.find(), req.query)
     .filter()
     .sort()
@@ -74,6 +75,7 @@ module.exports.showTicket = async (req, res) => {
     .paginate();
 
   const tasks = await features.query.populate("author");
+  console.log("ticket tasks: ", tasks);
 
   // Get number of projects and calculate number of pages
   const countQuery = new APIFeatures(TicketTask.find(), req.query).filter();

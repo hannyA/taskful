@@ -268,7 +268,7 @@ app.use((err, req, res, next) => {
     } else if (statusCode >= 500) {
       return res
         .status(statusCode)
-        .render("templates/errors/signedin-notfound-template", {
+        .render("templates/errors/signedin-error-template", {
           statusCode,
           message: "Wooops! Something went wrong",
           navbar: "none",

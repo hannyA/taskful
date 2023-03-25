@@ -20,6 +20,11 @@ const TicketSchema = new Schema(
       enum: ["New", "Assigned", "In Progress", "Solved", "Closed"],
       default: "New",
     },
+    type: {
+      type: String,
+      enum: ["Service", "Incident", "Problem", "Change"],
+      required: true,
+    },
     company: {
       type: String,
       required: true,

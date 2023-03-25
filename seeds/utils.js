@@ -2,6 +2,8 @@ const User = require("../models/user");
 const Project = require("../models/project");
 const Issue = require("../models/issue");
 const Task = require("../models/task");
+const Ticket = require("../models/ticket");
+const TicketTask = require("../models/ticket-task");
 
 const {
   firstnames,
@@ -12,6 +14,7 @@ const {
   issueStatus,
   priorities,
   issueType,
+  ticketType,
 } = require("./seedHelper");
 
 module.exports.createUser = async (
@@ -118,6 +121,23 @@ module.exports.newTask = async (
 
   await task.save();
   return task;
+};
+
+module.exports.newTicket = async (user, tech, company, date, ticket) => {
+  const _ticket = new Ticket({
+    title: ticket.title,
+    description: ticket.description,
+    owner: user,
+    assignee: tech,
+    status: randomItem(issueStatus),
+    company: company,
+    priority: randomItem(priorities),
+    type: randomItem(ticketType),
+    createdAt: date,
+    updatedAt: date,
+  });
+  await _ticket.save();
+  return _ticket;
 };
 
 const getEmail = (first, last, email) => {

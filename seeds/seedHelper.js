@@ -168,3 +168,4 @@ module.exports.issueStatus = [
 ];
 module.exports.priorities = ["Low", "Medium", "High", "Very High"];
 module.exports.issueType = ["Bug", "Issue", "Feature"];
+module.exports.ticketType = ["Service", "Incident", "Problem", "Change"];

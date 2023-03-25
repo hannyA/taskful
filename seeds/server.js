@@ -30,8 +30,6 @@ db.once("open", () => {
 // });
 
 const runSeed = async () => {
-  await deleteDB();
-
   // create all users
   /**
    * for every user
@@ -46,6 +44,7 @@ const runSeed = async () => {
   for (let company of companies) {
     const admin = await makeAdmin(company);
     console.log("company: ", company);
+    console.log("admin: ", admin);
     await seedDB(company, admin);
   }
 };
