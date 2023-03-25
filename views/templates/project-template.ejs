@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="/css/navigation.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/project.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/js-datepicker/dist/datepicker.min.css"
+    />
   </head>
   <body class="d-flex flex-column vh-100">
     <%- include('../partials/navbar/signedin-navbar') %>
@@ -86,6 +91,34 @@
       //   console.log("collapseEl: ", collapseEl);
       //   return new bootstrap.Collapse(collapseEl);
       // });
+    </script>
+    <script src="https://unpkg.com/js-datepicker"></script>
+
+    <script>
+      const startdate = "<%= project.plannedStartDate%>";
+      const enddate = "<%= project.plannedEndDate%>";
+
+      const startOpt = startdate ? { minDate: new Date(startdate) } : {};
+      const endOpt = enddate ? { maxDate: new Date(enddate) } : {};
+      let startPicker = datepicker("#startDate", {
+        // Event callbacks.
+        onSelect: (instance) => {
+          // Show which date was selected.
+          endPicker.setMin(new Date(instance.dateSelected));
+        },
+        dateSelected: new Date(startdate),
+        ...endOpt,
+      });
+
+      let endPicker = datepicker("#endDate", {
+        // Event callbacks.
+        onSelect: (instance) => {
+          // Show which date was selected.
+          startPicker.setMax(new Date(instance.dateSelected));
+        },
+        dateSelected: new Date(enddate),
+        ...startOpt,
+      });
     </script>
   </body>
 </html>

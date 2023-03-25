@@ -1,4 +1,4 @@
-<% layout('templates/projects-template') %>
+<% layout('templates/project-template') %>
 
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -88,6 +88,27 @@
         </select>
       </div>
 
+      <div class="mb-3">
+        <label class="form-label" for="startDate">Start date</label>
+        <input
+          class="form-control"
+          type="text"
+          name="startDate"
+          id="startDate"
+          aria-label="startDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="endDate">Deadline</label>
+        <input
+          class="form-control"
+          type="text"
+          name="endDate"
+          id="endDate"
+          aria-label="endDate"
+        />
+      </div>
       <!-- <div>
     <label for="company">Company</label>
     <input type="text" name="project[company]" id="company" />

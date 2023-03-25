@@ -132,6 +132,11 @@ module.exports.renderEditProject = async (req, res) => {
 // Edit project
 module.exports.editProject = async (req, res) => {
   const { projectId } = req.params;
+
+  const { startDate, endDate } = req.body;
+  req.body.plannedStartDate = startDate;
+  req.body.plannedEndDate = endDate;
+
   const project = await Project.findByIdAndUpdate(projectId, {
     ...req.body,
   });
