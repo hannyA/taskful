@@ -63,11 +63,15 @@ module.exports.createNewTicket = async (req, res) => {
 
 module.exports.showTicket = async (req, res) => {
   console.log("show ticket");
+  const ticketId = req.params.id;
+
   const ticket = await Ticket.findById(req.params.id)
     .populate({ path: "owner" })
     .populate("assignee");
 
   console.log("ticket task req.query: ", req.query);
+  req.query.ticket = ticketId;
+
   const features = new APIFeatures(TicketTask.find(), req.query)
     .filter()
     .sort()

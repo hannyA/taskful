@@ -119,7 +119,7 @@ module.exports.seedDB = async (company, seedUser) => {
   });
 
   const numTickets =
-    (seedUser.role !== "user" ? techSupport.length : users.length) * 2;
+    (seedUser.role !== "User" ? techSupport.length : users.length) * 2;
   await makeTicket(techSupport, normalUsers, company, numTickets);
 };
 
