@@ -43,7 +43,7 @@
       <div class="mb-3">
         <label class="form-label" for="priority">Priority</label>
         <select class="form-select" name="priority" id="priority">
-          <% let options = [ "Low", "Medium", "High", "Very High"]; options.forEach(option => { %>
+          <% options.forEach(option => { %>
           <option <%= ( ticket.priority === option ) ? "selected" : ""%> value="<%=option %>"> 
             <%=option %>
           </option>
@@ -73,12 +73,14 @@
           id="owner"
           aria-label="Owner"
         >
-         <option <%= ( ticket.owner.id === currentUser.id ) ? "selected" : "" %>
+        
+         <option <%= ( ticket.owner._id === currentUser.id ) ? "selected" : "" %>
             value="<%= currentUser.id %>"> <%= currentUser.first %> <%=
             currentUser.last %>
           </option>
 
           <% users.forEach(user => { if (user.id !== currentUser.id) {  %>
+           
           <option <%= ( ticket.owner.id === user.id ) ? "selected" : "" %>
             value="<%= user._id%>"> <%= user.first%> <%=user.last %>
           </option>
@@ -102,7 +104,7 @@
             currentUser.last %>
           </option>
 
-          <% users.forEach(user => { if (user.id !== currentUser.id) {  %>
+          <% techs.forEach(user => { if (user.id !== currentUser.id) {  %>
           <option <%= ( ticket.assignee && ticket.assignee.id === user.id ) ? "selected" : "" %>
             value="<%= user._id%>"> <%= user.first%> <%=user.last %>
           </option>

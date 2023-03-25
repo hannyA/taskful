@@ -1,10 +1,10 @@
 const Project = require("../models/project");
 const Issue = require("../models/issue");
 const User = require("../models/user");
-const { getCompanyUsers } = require("./util");
+const { getCompanyStaff } = require("./util");
 
 module.exports.users = async (req, res) => {
-  const users = await getCompanyUsers(req, res);
+  const users = await getCompanyStaff(req, res);
   const page = "users";
   res.render("admin/users/index2", { users, page, navbar: "admin" });
 };

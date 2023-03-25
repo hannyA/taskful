@@ -2,7 +2,7 @@ const APIFeatures = require("../utils/apiFeatures");
 
 const Ticket = require("../models/ticket");
 const TicketTask = require("../models/ticket-task");
-const { getCompanyUsers, getCompanyTech } = require("./util");
+const { getCompanyUsers, getCompanyTech, getCompanyStaff } = require("./util");
 
 module.exports.index = async (req, res) => {
   console.log("total pages:: index");
@@ -103,12 +103,21 @@ module.exports.renderEditTicketForm = async (req, res) => {
   const ticket = await Ticket.findById(req.params.id)
     .populate("owner")
     .populate("assignee");
-  const users = await getCompanyTech(req, res);
+  const users = await getCompanyStaff(req, res);
+  const techs = await getCompanyTech(req, res);
 
   console.log("ticket owner: ", ticket.owner);
   console.log("ticket assignee: ", ticket.assignee);
   const page = "5";
-  res.render("tickets/edit", { ticket, users, page, navbar: "tickets" });
+  let options = ["Low", "Medium", "High", "Very High"];
+  res.render("tickets/edit", {
+    ticket,
+    users,
+    techs,
+    page,
+    options,
+    navbar: "tickets",
+  });
 };
 
 module.exports.updateTicket = async (req, res) => {
@@ -126,7 +135,7 @@ module.exports.deleteTicket = async (req, res) => {
 
 module.exports.renderNewTaskForm = async (req, res) => {
   const page = "new-task";
-  const users = await getCompanyUsers(req, res);
+  const users = await getCompanyTech(req, res);
   console.log("renderNewProjectIssue users");
 
   const ticket = await Ticket.findById(req.params.id);
