@@ -50,6 +50,10 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  "/scripts",
+  express.static(__dirname + "/node_modules/js-datepicker/dist/")
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));

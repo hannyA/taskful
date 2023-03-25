@@ -14,11 +14,7 @@
     <link rel="stylesheet" href="/css/navigation.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/project.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/js-datepicker/dist/datepicker.min.css"
-    />
+    <link rel="stylesheet" href="/scripts/datepicker.min.css" />
   </head>
   <body class="d-flex flex-column vh-100">
     <%- include('../partials/navbar/signedin-navbar') %>
@@ -92,7 +88,7 @@
       //   return new bootstrap.Collapse(collapseEl);
       // });
     </script>
-    <script src="https://unpkg.com/js-datepicker"></script>
+    <script src="/scripts/datepicker.min.js"></script>
 
     <script>
       const startdate = "<%= project.plannedStartDate%>";

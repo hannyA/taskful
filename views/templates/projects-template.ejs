@@ -14,10 +14,9 @@
     <link rel="stylesheet" href="/css/navigation.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/js-datepicker/dist/datepicker.min.css"
-    />
+    <link rel="stylesheet" href="/scripts/datepicker.min.css" />
+
+    <!-- <script src="/scripts/datepicker.min.js"></script> -->
   </head>
 
   <body class="d-flex flex-column vh-100">
@@ -46,12 +45,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="https://unpkg.com/js-datepicker"></script>
-
-    <!-- <script type="module">
-      import datepicker from "../../node_modules/js-datepicker/dist/datepicker.min.js";
-    </script> -->
-
+    <script src="/scripts/datepicker.min.js"></script>
     <script>
       let startPicker = datepicker("#startDate", {
         // Event callbacks.
