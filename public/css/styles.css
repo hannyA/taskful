@@ -129,3 +129,21 @@ footer {
 .pricing-list-item-text {
   font-size: 13px;
 }
+
+/* #auth-img-container {
+  position: relative;
+} */
+
+.auth-img {
+  position: relative;
+  top: -7rem;
+  right: 5rem;
+  /* border: 5px solid red; */
+  min-width: 60rem;
+  /* box-shadow: inset -8em 0 1em 1em white; */
+  /* background: linear-gradient(blue, white); */
+}
+
+.auth-form {
+  z-index: 1;
+}
