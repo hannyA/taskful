@@ -54,11 +54,11 @@ UserSchema.virtual("fullname").get(function () {
   // return this.email.slice(this.email.indexOf('@') + 1);
 });
 
-// UserSchema.pre("save", function (next) {
-//   let now = new Date();
-//   this.timezone = now.getTimezoneOffset();
-//   next();
-// });
+UserSchema.pre("save", function (next) {
+  let now = new Date();
+  this.timezone = now.getTimezoneOffset() * -1;
+  next();
+});
 
 // UserSchema.pre("/^find/", function (next) {
 //   this.find({ deleted: { $ne: true } });
