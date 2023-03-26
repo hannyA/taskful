@@ -1,7 +1,52 @@
 <% layout('templates/account-template') %>
 
-<div class="row">
+<div class="row mt-5 mb-3">
   <div class="col-6 offset-2">
     <h1 class="text-center">Security</h1>
   </div>
 </div>
+
+<section class="container-fluid">
+  <div class="row">
+    <div class="col-6 offset-3">
+      <h3 class="mb-3">Change password</h3>
+
+      <form action="/api/v1/account/security" method="post">
+        <div class="mb-3">
+          <label class="form-label" for="oldPassword">Old password:</label>
+          <input
+            class="form-control"
+            name="oldPassword"
+            id="oldPassword"
+            type="text"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="newPassword">New password:</label>
+          <input
+            class="form-control"
+            name="newPassword"
+            id="newPassword"
+            type="text"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="confirmNewPassword"
+            >Confirm new password:</label
+          >
+          <input
+            class="form-control"
+            name="confirmNewPassword"
+            id="confirmNewPassword"
+            type="text"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-outline-dark btn-lg">
+          Update password
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

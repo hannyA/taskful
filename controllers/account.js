@@ -9,9 +9,24 @@ module.exports.getSecurity = async (req, res) => {
 module.exports.getProfile = async (req, res) => {
   res.render("account/profile", { navbar: "account", page: "profile" });
 };
-
 module.exports.renderSettingsForm = async (req, res) => {
   res.render("account/settings", { navbar: "account", page: "settings" });
+};
+
+module.exports.updatePassword = async (req, res) => {
+  console.log("req.user.id: ", req.user.id);
+  const user = await User.findById(req.user.id);
+
+  if (req.body.newPassword !== req.body.confirmNewPassword) {
+    req.flash("error", "Password confirmation doesn't match the new password");
+    res.redirect("/api/v1/account/security");
+  }
+  user.changePassword(req.body.oldPassword, req.body.newPassword);
+  await user.save();
+
+  req.flash("success", `Password changed successfully`);
+  res.redirect("/api/v1/account/security");
+  // res.render("account/security", { navbar: "account", page: "security" });
 };
 
 module.exports.submitSettingsForm = async (req, res) => {
