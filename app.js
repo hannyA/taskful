@@ -23,7 +23,7 @@ const ticketRoutes = require("./routes/tickets");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
 const dashRoutes = require("./routes/dashboard");
-const settingsRoutes = require("./routes/settings");
+const accountRoutes = require("./routes/account");
 // const { session } = require("passport");
 
 // mongoose.connect("mongodb://localhost:27017/issue-tracker", {
@@ -119,7 +119,7 @@ app.use(`/api/${version}/tickets`, ticketRoutes);
 app.use(`/api/${version}/admin`, adminRoutes);
 app.use(`/api/${version}/auth`, authRoutes);
 app.use(`/api/${version}/dashboard`, dashRoutes);
-app.use(`/api/${version}/settings`, settingsRoutes);
+app.use(`/api/${version}/account`, accountRoutes);
 // app.use("/login", authRoutes);
 
 // Signed out pages
