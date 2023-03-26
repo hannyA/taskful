@@ -2,8 +2,15 @@
 
 <section class="container-fluid">
   <div class="row">
-    <div class="col-6 offset-6">
-      <h3 class="mb-3">Create a new account</h3>
+    <div class="col-6 auth-img-container">
+      <img
+        class="img-fluid auth-img"
+        src="/images/signup.png"
+        alt="Signin image"
+      />
+    </div>
+    <div class="col-6 auth-form">
+      <h1 class="my-5 text-center">Create a new account</h1>
 
       <form action="/api/v1/auth/register" method="post">
         <div class="mb-3">

@@ -136,12 +136,14 @@ footer {
 
 .auth-img {
   position: relative;
-  top: -7rem;
-  right: 5rem;
+  /* top: -2em;
+  right: 2rem; */
   /* border: 5px solid red; */
-  min-width: 60rem;
+  min-width: 50rem;
   /* box-shadow: inset -8em 0 1em 1em white; */
   /* background: linear-gradient(blue, white); */
+
+  z-index: -1;
 }
 
 .auth-form {
