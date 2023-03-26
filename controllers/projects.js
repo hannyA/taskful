@@ -36,6 +36,8 @@ module.exports.index = async (req, res) => {
     resource = `${resource}owner=${req.query.owner}&`;
   }
 
+  console.log("projects: ", projects);
+
   res.render("projects/index", {
     pagination: true,
     projects,
@@ -94,6 +96,8 @@ module.exports.showProject = wrapAsync(async (req, res) => {
   // const page = owner === req.user.id ? "mine" : "index";
 
   const page = "index";
+
+  console.log("issues : ", issues);
 
   res.render("projects/show", {
     // pagination: true,

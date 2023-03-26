@@ -1,0 +1,31 @@
+<% layout('templates/home-signedin-template') %>
+
+<div class="row">
+  <div class="col-6 offset-2">
+    <h1 class="text-center">Settings</h1>
+
+    <form action="/api/v1/settings" method="POST">
+      <script type="text/javascript" src="/js/timezone.js"></script>
+
+      <div class="mb-3">
+        <label class="form-label" for="timezone">Timezone</label>
+        <select class="form-select" name="timezone" id="timezone"></select>
+      </div>
+      <script>
+        // var shoppingitems = ["soap", "toothpaste", "tissue", "toothbrush"];
+        var zone = document.getElementById("timezone");
+        for (let n = 0; n < tzInts.length; n++) {
+          let timezone = tzInts[n];
+
+          let isSelected =
+            Number("<%= currentUser.timezone%>") === timezone.value * 60
+              ? "selected"
+              : "";
+          zone.innerHTML += `<option ${isSelected} value="${timezone.value}">${timezone.label}</option>`;
+        }
+      </script>
+
+      <button type="submit" class="btn btn-outline-dark btn-lg">Save</button>
+    </form>
+  </div>
+</div>

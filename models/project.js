@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { formatDate, formatTime } = require("../utils/modelUtils");
 
+const User = require("./user");
+
 const ProjectSchema = new Schema(
   {
     title: {
@@ -71,5 +73,15 @@ ProjectSchema.virtual("plannedEndDateFormat").get(function () {
 ProjectSchema.virtual("createdAtDate").get(function () {
   return formatDate(this.createdAt);
 });
+
+// ProjectSchema.post("find", function (docs, next) {
+//   let now = new Date();
+//   let offset = now.getTimezoneOffset();
+//   docs.forEach((doc) => {
+//     doc.createdAt = new Date(doc.createdAt.getTime() - offset * 60000);
+//   });
+
+//   next();
+// });
 
 module.exports = mongoose.model("Project", ProjectSchema);
