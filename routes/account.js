@@ -4,7 +4,11 @@ const user = require("../models/user");
 const account = require("../controllers/account");
 
 router.route("/").get(account.getIndex);
-router.route("/profile").get(account.getProfile);
+router
+  .route("/profile")
+  .get(account.getProfile)
+  .post(account.submitProfileUpdate);
+router.route("/editprofile").get(account.renderEditProfile);
 router.route("/security").get(account.getSecurity).post(account.updatePassword);
 router
   .route("/settings")

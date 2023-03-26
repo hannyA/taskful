@@ -1,0 +1,56 @@
+<% layout('templates/account-template') %>
+
+<!-- <div class="row">
+  <div class="col-6 offset-2">
+    <h1 class="text-center">Edit Profile</h1>
+  </div>
+</div> -->
+
+<section class="mt-5 container-fluid">
+  <div class="row">
+    <div class="col-6 offset-3">
+      <h3 class="mb-3 ms-3">Edit profile</h3>
+
+      <form action="/api/v1/account/profile" method="post">
+        <div class="mb-3">
+          <div class="row mx-auto">
+            <div class="col">
+              <label class="form-label" for="firstname">First Name:</label>
+              <input
+                class="form-control"
+                name="first"
+                id="firstname"
+                type="text"
+                value="<%=currentUser.first%>"
+              />
+            </div>
+
+            <div class="col">
+              <label class="form-label" for="lastname">Last Name:</label>
+              <input
+                class="form-control"
+                name="last"
+                id="lastname"
+                type="text"
+                value="<%=currentUser.last%>"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="email">Email:</label>
+          <input
+            class="form-control"
+            name="email"
+            id="email"
+            type="email"
+            value="<%=currentUser.email%>"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-outline-dark btn-lg">Save</button>
+      </form>
+    </div>
+  </div>
+</section>

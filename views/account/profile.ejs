@@ -5,3 +5,22 @@
     <h1 class="text-center">Profile</h1>
   </div>
 </div>
+
+<div class="card" style="width: 38rem">
+  <div class="card-header p-4">
+    <h1 class="card-title">Profile</h1>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text">
+      <strong>Name: </strong><%=currentUser.first%> <%=currentUser.last%>
+    </p>
+    <p class="card-text"><strong>Email: </strong><%=currentUser.email%></p>
+    <p class="card-text"><strong>Company: </strong><%=currentUser.company%></p>
+    <p class="card-text"><strong>Role: </strong><%=currentUser.role%></p>
+
+    <a href="/api/v1/account/editprofile" class="btn btn-outline-dark btn-lg"
+      >Update profile</a
+    >
+  </div>
+</div>
