@@ -147,12 +147,37 @@ module.exports.editProject = async (req, res) => {
   res.redirect(`/api/v1/projects/${projectId}`);
 };
 
+//Transfer ownership
 module.exports.saveTeam = async (req, res) => {
   console.log("project team:", req.body);
   const { projectId } = req.params;
-  const project = await Project.findByIdAndUpdate(projectId, {
-    ...req.body,
-  });
+
+  // 1) Check is all users are in company
+  // 2) Make sure owner is in list
+  // team: []
+
+  const team =
+    typeof req.body.team === "object" ? [...req.body.team] : [req.body.team];
+
+  // 2) Make sure owner is in list
+  if (!team.includes(req.user.id)) team.push(req.user.id);
+
+  // //3) TODO: Make sure all users in company
+  // const members = await User.find({
+  //   company: project.owner.company,
+  //   _id: { $in: team },
+  // });
+
+  const project = await Project.findOneAndUpdate(
+    { _id: projectId, owner: req.user.id },
+    {
+      team,
+    }
+  );
+
+  // const project = await Project.findByIdAndUpdate(projectId, {
+  //   ...req.body,
+  // });
 
   req.flash("success", `Updated team!`);
 
@@ -167,19 +192,19 @@ module.exports.manageTeam = async (req, res) => {
 
   console.log("project team:", project.team);
 
-  const allUsers = await User.find({
+  const otherUsers = await User.find({
     company: project.owner.company,
     _id: { $nin: project.team },
   });
 
-  console.log("allUsers: ", allUsers);
+  // console.log("otherUsers: ", otherUsers);
 
   // TEam members
   // assign roles
   res.render("projects/manageteam3", {
     project,
     team: project.team,
-    allUsers: allUsers,
+    otherUsers: otherUsers,
     page: "manage",
     navbar: "projects",
   });

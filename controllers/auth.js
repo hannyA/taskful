@@ -154,7 +154,7 @@ module.exports.canEditProject = wrapAsync(async (req, res, next) => {
   const { projectId } = req.params;
 
   const user = await User.findById(req.user._id);
-  const project = await Project.findById(projectId);
+  const project = await Project.findById(projectId).populate("owner");
 
   if (
     project.company !== user.company ||

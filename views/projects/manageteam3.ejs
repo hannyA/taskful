@@ -12,7 +12,7 @@
 
 <h2 class="text-center">Current Team</h2>
 <div hidden id="current-team"><%= team %></div>
-<div hidden id="company"><%= allUsers %></div>
+<div hidden id="company"><%= otherUsers %></div>
 
 <form action="/api/v1/projects/<%=project.id %>/manage" method="post">
   <table class="table">
@@ -44,7 +44,7 @@
         <td><%= person.first %></td>
         <td><%= person.last %></td>
       </tr>
-      <%})%> <% allUsers.forEach(person => { %>
+      <%})%> <% otherUsers.forEach(person => { %>
       <tr class="team-user">
         <!-- <th scope="row"></th> -->
         <td class="">
