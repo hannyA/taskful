@@ -106,7 +106,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.apiVersion = "v1";
-  res.locals.companyName = "Bugger";
+  res.locals.companyName = "Taskful";
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
