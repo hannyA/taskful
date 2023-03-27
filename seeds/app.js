@@ -22,6 +22,10 @@ const {
 
 const { issues, type, projectTitles, tasks } = require("./seedHelper");
 
+const Admin = "Admin";
+const Technician = "Technician";
+const NormalUser = "User";
+
 module.exports.deleteDB = async () => {
   await Issue.deleteMany({});
   await Project.deleteMany({});
@@ -61,10 +65,6 @@ module.exports.seedDB = async (company, seedUser) => {
     await generateUser(company);
   }
 
-  const allUsers = await User.find({
-    company,
-  });
-
   //For 1/10 team create projects, including Admin
   const numOfLeaders = Math.floor(numberOfUsers / 10);
 
@@ -74,7 +74,12 @@ module.exports.seedDB = async (company, seedUser) => {
     _id: { $ne: seedUser._id },
   }).limit(numOfLeaders);
 
-  projectLeaders.push(seedUser);
+  if (seedUser === Admin) {
+    projectLeaders.push(seedUser);
+  } else if (seedUser === Technician) {
+  } else {
+    projectLeaders.push(seedUser);
+  }
   console.log("projectLeaders: ", projectLeaders);
 
   // Create projects for all project leaders
@@ -91,7 +96,7 @@ module.exports.seedDB = async (company, seedUser) => {
     // Add issues for project
     let projectDate = project.createdAt;
 
-    // Create at least one issue for demo user
+    // Create at least one issue assigned to demo user for their project
     if (projLeader.id === seedUser.id) {
       await makeIssue(seedUser, project.id, projectDate);
     }
@@ -107,24 +112,40 @@ module.exports.seedDB = async (company, seedUser) => {
 
   // Get Tech support
 
+  // seeduser will be in one of these
   const techSupport = await User.find({
     company: company,
-    // _id: { $ne: seedUser._id },
     role: { $ne: "User" },
   });
   const normalUsers = await User.find({
     company: company,
-    // _id: { $ne: seedUser._id },
     role: { $eq: "User" },
   });
 
+  // where is uesrs defined?
+  // what is uesr, technician admin?
+  // difference between technician and admin?
+
+  /**
+   *
+   * Admin has control over company site settings, permissions
+   *    Can change peoples roles
+   *
+   * Technician can create tickets and add tasks to them, and assign them to others, create users
+   *    Can change peoples roles
+   *
+   * Users: Can be part of projects, can create project, issues, tasks
+   *    Can also create tickets
+   * Project owners: Can add/remove team members
+   */
   const numTickets =
-    (seedUser.role !== "User" ? techSupport.length : users.length) * 2;
+    (seedUser.role !== NormalUser ? techSupport.length : normalUsers.length) *
+    2;
   await makeTicket(techSupport, normalUsers, company, numTickets);
 };
 
 const makeTicket = async (techSupport, users, company, numTickets) => {
-  for (let i = 0; i < techSupport.length * 2; i++) {
+  for (let i = 0; i < numTickets; i++) {
     let user = users[i % users.length];
     let tech = techSupport[i % techSupport.length];
     let laterDate =
