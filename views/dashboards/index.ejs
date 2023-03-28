@@ -53,6 +53,9 @@
     new Chart(ctx, {
       type: "pie",
       data: data,
+      options: {
+        animations: false
+      }
     });
   } else {
 
@@ -75,6 +78,9 @@
     new Chart(ctx, {
       type: "pie",
       data: data,
+      options: {
+        animations: false
+      }
     });
   }
 
@@ -102,6 +108,9 @@
     new Chart(ctx2, {
       type: "pie",
       data: data2,
+      options: {
+        animations: false
+      }
     });
   } else {
     const ctx2 = document.getElementById("myChart2");
@@ -125,6 +134,9 @@
     new Chart(ctx2, {
       type: "pie",
       data: data2,
+      options: {
+        animations: false
+      }
     });
   }
 </script>

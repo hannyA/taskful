@@ -87,6 +87,9 @@
   new Chart(ctx1, {
     type: "pie",
     data: data,
+    options: {
+        animations: false
+      }
   });
 
 
@@ -131,6 +134,9 @@
   new Chart(ctx2, {
     type: "pie",
     data: data2,
+    options: {
+        animations: false
+      }
   });
 
 
@@ -170,6 +176,9 @@
   new Chart(ctx3, {
     type: "pie",
     data: data3,
+    options: {
+        animations: false
+      }
   });
 
   _new = <%= stats.issueStatus.new %>
@@ -213,5 +222,8 @@
   new Chart(ctx4, {
     type: "pie",
     data: data4,
+    options: {
+        animations: false
+      }
   });
 </script>
