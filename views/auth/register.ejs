@@ -12,27 +12,40 @@
     <div class="col-6 auth-form">
       <h1 class="my-5 text-center">Create a new account</h1>
 
-      <form action="/api/v1/auth/register" method="post">
+      <form
+        class="needs-validation"
+        action="/api/v1/auth/register"
+        method="post"
+        novalidate
+      >
         <div class="mb-3">
           <div class="row">
             <div class="col-6">
               <label class="form-label" for="firstname">First Name:</label>
               <input
                 class="form-control"
-                name="first"
+                name="First name"
                 id="firstname"
                 type="text"
+                required
+                minlength="2"
+                maxlength="30"
               />
+              <div class="invalid-feedback">Provide valid first name</div>
             </div>
 
             <div class="col-6">
               <label class="form-label" for="lastname">Last Name:</label>
               <input
                 class="form-control"
-                name="last"
+                name="Last name"
                 id="lastname"
                 type="text"
+                required
+                minlength="2"
+                maxlength="30"
               />
+              <div class="invalid-feedback">Provide valid last name</div>
             </div>
           </div>
         </div>
@@ -40,23 +53,42 @@
           <label class="form-label" for="company">Company:</label>
           <input
             class="form-control"
-            name="company"
+            name="Company"
             id="company"
-            type="company"
+            type="text"
+            required
+            maxlength="30"
           />
+          <div class="invalid-feedback">Provide valid Company</div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="email">Email:</label>
-          <input class="form-control" name="email" id="email" type="email" />
+          <input
+            class="form-control"
+            name="Email"
+            id="email"
+            type="email"
+            required
+            minlength="2"
+            maxlength="30"
+          />
+          <div class="invalid-feedback">Provide valid Email</div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="password">Password:</label>
           <input
             class="form-control"
-            name="password"
+            name="Password"
             id="password"
-            type="text"
+            type="password"
+            autocomplete="new-password"
+            required
+            minlength="6"
+            maxlength="15"
           />
+          <div class="invalid-feedback">
+            Provide valid Password between 6-15 characters
+          </div>
         </div>
 
         <div class="mb-3">
@@ -64,15 +96,19 @@
             >Confirm Password:</label
           >
           <input
-            class="form-control"
+            class="form-control valid"
             name="confirmpassword"
             id="confirmpassword"
-            type="text"
+            type="password"
+            autocomplete="new-password"
+            required
           />
+          <div class="invalid-feedback">Passwords do not match</div>
         </div>
+
         <div class="mb-3">
           <label class="form-label" for="role">Role</label>
-          <select class="form-select" name="role" id="role">
+          <select class="form-select" name="role" id="role" required>
             <!-- <option selected>Status</option> -->
             <option selected value="Admin">Admin</option>
             <option value="Technician">Technician</option>
@@ -91,13 +127,7 @@
 
         <!-- Button trigger modal -->
 
-        <button
-          type="submit"
-          data-bs-toggle="modal"
-          data-bs-target="#loadingModal"
-          class="btn btn-outline-dark btn-lg"
-          onclick="isDemo()"
-        >
+        <button type="submit" class="btn btn-outline-dark btn-lg">
           Sign up
         </button>
 
@@ -147,7 +177,147 @@
     if (!demoEl.checked) {
       console.log("hide loadingModal");
       const loadingModal = document.getElementById("loadingModal");
-      loadingModal.style.display = "none";
+      myModal.hide();
+
+      // loadingModal.style.display = "none";
+    } else {
+      const myModal = document.getElementById("loadingModal");
+      myModal.show();
     }
   }
+
+  function valid(ele) {
+    ele.classList.add("is-valid");
+    ele.classList.remove("is-invalid");
+  }
+  function invalid(ele) {
+    ele.classList.remove("is-valid");
+    ele.classList.add("is-invalid");
+  }
+
+  function validateLastName() {
+    const lname = document.getElementById("lastname");
+    if (lname.value.length > 1) {
+      valid(lname);
+    } else {
+      invalid(lname);
+    }
+  }
+
+  function validateFirstName() {
+    const fname = document.getElementById("firstname");
+    if (fname.value.length > 1) {
+      valid(fname);
+    } else {
+      invalid(fname);
+    }
+  }
+
+  function validateCompany() {
+    const company = document.getElementById("company");
+    if (company.value.length > 0) {
+      valid(company);
+    } else {
+      invalid(company);
+    }
+  }
+
+  function validateEmail() {
+    const email = document.getElementById("email");
+
+    const emailRegExp =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const isValid = email.value.length > 0 && emailRegExp.test(email.value);
+    if (isValid) {
+      valid(email);
+    } else {
+      invalid(email);
+    }
+  }
+
+  function validatePassword() {
+    const password = document.getElementById("password");
+    if (password.value.length >= 6 && password.value.length <= 15) {
+      valid(password);
+    } else {
+      invalid(password);
+    }
+  }
+
+  function checkPasswordMatch() {
+    const password = document.getElementById("password");
+    const confirmpassword = document.getElementById("confirmpassword");
+    if (
+      password.value.length > 0 &&
+      confirmpassword.value.localeCompare(password.value) === 0
+    ) {
+      valid(confirmpassword);
+    } else {
+      invalid(confirmpassword);
+    }
+  }
+
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (() => {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            console.log("!form.checkValidity()");
+            event.preventDefault();
+            event.stopPropagation();
+
+            //validate names
+            const fname = document.getElementById("firstname");
+            validateFirstName(fname);
+            const lname = document.getElementById("lastname");
+            validateLastName(lname);
+
+            validateCompany();
+
+            //validate email
+            validateEmail();
+
+            //validate passwords
+            validatePassword();
+            checkPasswordMatch();
+          } else {
+            console.log("is ok?");
+            isDemo();
+          }
+
+          //validate names
+          const fname = document.getElementById("firstname");
+          fname.addEventListener("input", validateFirstName);
+          const lname = document.getElementById("lastname");
+          lname.addEventListener("input", validateLastName);
+
+          //validate email
+          const company = document.getElementById("company");
+          company.addEventListener("input", validateCompany);
+
+          //validate email
+          const email = document.getElementById("email");
+          email.addEventListener("input", validateEmail);
+
+          //validate passwords
+          const confirmpassword = document.getElementById("confirmpassword");
+          confirmpassword.addEventListener("input", checkPasswordMatch);
+          const password = document.getElementById("password");
+          password.addEventListener("input", checkPasswordMatch);
+          password.addEventListener("input", validatePassword);
+
+          // form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
 </script>

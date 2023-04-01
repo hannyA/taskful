@@ -79,8 +79,9 @@ module.exports.validateUserRegistration = (req, res, next) => {
   console.log("validateUserRegistration");
   const { error } = validateUserRegistrationSchema.validate(req.body);
   if (error) {
+    console.log("validateUserRegistration: ", error);
+
     const msg = error.details.map((el) => el.message).join(".");
-    // throw new ExpressError(msg, 400);
     next(new ExpressError(msg, 400));
   } else {
     next();

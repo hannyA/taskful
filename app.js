@@ -295,7 +295,10 @@ app.use((err, req, res, next) => {
       navbar: "none",
     });
   } else {
-    if (statusCode === 409) {
+    if (statusCode === 400) {
+      req.flash("error", message);
+      return res.redirect("/api/v1/auth/register");
+    } else if (statusCode === 409) {
       req.flash("error", message);
       return res.redirect("/api/v1/auth/register");
     } else {
