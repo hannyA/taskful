@@ -3,18 +3,17 @@ const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
 const { seedDB } = require("../seeds/app");
 const { daysBeforeToday } = require("../seeds/utils");
+const { validateUserRegistrationSchema } = require("../joi_schema/auth");
 
 module.exports.demoize = async (req, res, next) => {
   if (process.env.NODE_ENV === "development") {
     req.body.demo = "on";
   }
-
   const { demo } = req.body;
 
   if (demo) {
     req.body.registerDate = daysBeforeToday(30);
   }
-
   next();
 };
 
@@ -37,9 +36,7 @@ module.exports.isDemo = async (req, res, next) => {
     console.log("isDemo adminUser: ", adminUser);
     if (adminUser === null) {
       return next(new ExpressError("Email is already in use", 409));
-      // return res.redirect("/api/v1/auth/register");
     }
-
     try {
       req.login(adminUser, (err) => {
         if (err) return next(err);
@@ -76,4 +73,16 @@ module.exports.isCompanyAdmin = async (req, res, next) => {
     return res.redirect(`/api/v1/projects/${projectId}/error`);
   }
   next();
+};
+
+module.exports.validateUserRegistration = (req, res, next) => {
+  console.log("validateUserRegistration");
+  const { error } = validateUserRegistrationSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(".");
+    // throw new ExpressError(msg, 400);
+    next(new ExpressError(msg, 400));
+  } else {
+    next();
+  }
 };
