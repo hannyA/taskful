@@ -6,9 +6,9 @@ const { daysBeforeToday } = require("../seeds/utils");
 const { validateUserRegistrationSchema } = require("../joi_schema/auth");
 
 module.exports.demoize = async (req, res, next) => {
-  if (process.env.NODE_ENV === "development") {
-    req.body.demo = "on";
-  }
+  // if (process.env.NODE_ENV === "development") {
+  //   req.body.demo = "on";
+  // }
   const { demo } = req.body;
 
   if (demo) {
@@ -77,13 +77,36 @@ module.exports.isCompanyAdmin = async (req, res, next) => {
 
 module.exports.validateUserRegistration = (req, res, next) => {
   console.log("validateUserRegistration");
-  const { error } = validateUserRegistrationSchema.validate(req.body);
-  if (error) {
-    console.log("validateUserRegistration: ", error);
 
+  const body = {
+    ...req.body,
+    "First name": req.body.firstname,
+    "Last name": req.body.lastname,
+    "Confirmed password": req.body.Confirmpassword,
+  };
+
+  delete body.firstname;
+  delete body.lastname;
+  delete body.Confirmpassword;
+  delete body.demo;
+
+  const { error } = validateUserRegistrationSchema.validate(body);
+
+  if (error) {
     const msg = error.details.map((el) => el.message).join(".");
-    next(new ExpressError(msg, 400));
+
+    delete req.body.password;
+    delete req.body.confirmpassword;
+
+    req.session.body = req.body;
+    console.log("============ validateUserRegistration req.body: ", req.body);
+
+    req.flash("error", msg);
+    return res.redirect("/api/v1/auth/register");
+
+    // next(new ExpressError(msg, 400, "none", req.body));
   } else {
+    console.log("============ validateUserRegistrationgo to next");
     next();
   }
 };

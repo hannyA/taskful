@@ -3,14 +3,33 @@ const User = require("../models/user");
 const Project = require("../models/project");
 
 module.exports.renderRegisterForm = async (req, res) => {
-  res.render("auth/register", { navbar: "account" });
+  let { body } = req.session;
+  delete req.session.body;
+  console.log("renderRegisterForm body: ", body);
+  console.log("renderRegisterForm req.session: ", req.session);
+
+  if (body === undefined) {
+    body = { firstname: "", lastname: "", Email: "", Company: "", demo: "" };
+  }
+
+  res.render("auth/register", { navbar: "account", body });
 };
 
 module.exports._registerUser = wrapAsync(async (req, res, next) => {
-  const { password } = req.body;
-  delete req.body.password;
-  const body = { ...req.body, username: req.body.email };
+  const password = req.body.Password;
+  // delete req.body.password;
+  console.log(" _registerUser body: ", req.body);
 
+  const body = {
+    username: req.body.Email,
+    company: req.body.Company,
+    email: req.body.Email,
+    first: req.body.firstname,
+    last: req.body.lastname,
+    role: req.body.Role,
+  };
+
+  console.log(" _registerUser body: ", body);
   const user = new User(body);
 
   try {

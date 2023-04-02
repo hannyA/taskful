@@ -125,8 +125,11 @@ app.use(`/api/${version}/account`, accountRoutes);
 // Signed out pages
 app.get(`/`, function (req, res) {
   if (res.locals.currentUser) {
+    console.log("Return to dashboard");
     return res.redirect(`/api/${version}/dashboard`);
   }
+  console.log("Return to home");
+
   res.render("home/home", { navbar: "home" });
 });
 

@@ -10,8 +10,6 @@ module.exports.validateUserRegistrationSchema = Joi.object({
     .required()
     .min(6)
     .max(15),
-  confirmpassword: Joi.ref("password"),
-  role: Joi.array()
-    .items(Joi.string().valid("User", "Technician", "Admin"))
-    .required(),
+  "Confirmed password": Joi.ref("Password"),
+  Role: Joi.string().valid("User", "Technician", "Admin").required(),
 }).required();
