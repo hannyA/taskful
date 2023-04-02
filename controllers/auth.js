@@ -3,11 +3,13 @@ const User = require("../models/user");
 const Project = require("../models/project");
 
 module.exports.renderRegisterForm = async (req, res) => {
+  // Redirect uesr to dashboard if they hit backbutton
+  if (res.locals.currentUser) {
+    console.log("Return to dashboard");
+    return res.redirect("/api/v1/dashboard");
+  }
   let { body } = req.session;
   delete req.session.body;
-  console.log("renderRegisterForm body: ", body);
-  console.log("renderRegisterForm req.session: ", req.session);
-
   if (body === undefined) {
     body = { firstname: "", lastname: "", Email: "", Company: "", demo: "" };
   }
