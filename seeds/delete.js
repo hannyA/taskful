@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const path = require("path");
 
-const { deleteDB } = require("./app");
-
 const dotenv = require("dotenv");
 dotenv.config({ path: path.join(__dirname, "../config.env") });
 
@@ -29,6 +27,22 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
   console.log("Database connected");
 });
+
+const User = require("../models/user");
+const Project = require("../models/project");
+const Issue = require("../models/issue");
+const Task = require("../models/task");
+const Ticket = require("../models/ticket");
+const TicketTask = require("../models/ticket-task");
+
+const deleteDB = async () => {
+  await Issue.deleteMany({});
+  await Project.deleteMany({});
+  await User.deleteMany({});
+  await Task.deleteMany({});
+  await Ticket.deleteMany({});
+  await TicketTask.deleteMany({});
+};
 
 const run = async () => {
   await deleteDB();

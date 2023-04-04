@@ -26,15 +26,6 @@ const Admin = "Admin";
 const Technician = "Technician";
 const NormalUser = "User";
 
-module.exports.deleteDB = async () => {
-  await Issue.deleteMany({});
-  await Project.deleteMany({});
-  await User.deleteMany({});
-  await Task.deleteMany({});
-  await Ticket.deleteMany({});
-  await TicketTask.deleteMany({});
-};
-
 module.exports.makeAdmin = async (
   company,
   role,
@@ -58,6 +49,8 @@ module.exports.makeAdmin = async (
 
 module.exports.seedDB = async (company, seedUser) => {
   //TODO: create projects, issues and tasks assigned to defaultAdmin
+
+  const start = Date.now();
 
   const numberOfUsers = 10;
   // Create random users in database
@@ -108,6 +101,11 @@ module.exports.seedDB = async (company, seedUser) => {
     }
   }
 
+  const mid = Date.now();
+  const midPoint = (mid - start) / 1000;
+
+  console.log("Creating projects took ", midPoint, " seconds");
+
   // Make Tickets
 
   // Get Tech support
@@ -141,7 +139,14 @@ module.exports.seedDB = async (company, seedUser) => {
   const numTickets =
     (seedUser.role !== NormalUser ? techSupport.length : normalUsers.length) *
     2;
+  console.log("Making ", numTickets, " tickets");
+
   await makeTicket(techSupport, normalUsers, company, numTickets);
+
+  const end = Date.now();
+  const endPoint = (end - mid) / 1000;
+  console.log("Finish tickets took ", endPoint, " seconds");
+  console.log("Total time took ", (end - start) / 1000, " seconds");
 };
 
 const makeTicket = async (techSupport, users, company, numTickets) => {
