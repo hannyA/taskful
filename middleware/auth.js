@@ -17,15 +17,15 @@ module.exports.demoize = async (req, res, next) => {
   next();
 };
 
-module.exports._isDemo = async (req, res, next) => {
-  const { demo, company } = req.body;
+module.exports._isDemo = wrapAsync(async (req, res, next) => {
+  const { demo, Company } = req.body;
 
   if (demo) {
-    await seedDB(company, req.registeredUser);
+    await seedDB(Company, req.registeredUser);
     console.log("isDemo adminUser: ");
   }
   next();
-};
+});
 
 module.exports.isDemo = async (req, res, next) => {
   const { demo } = req.body;

@@ -16,6 +16,7 @@ const {
   issueType,
   ticketType,
 } = require("./seedHelper");
+const user = require("../models/user");
 
 module.exports.createUser = async (
   company,
@@ -194,17 +195,45 @@ function generatePassword() {
   return retVal;
 }
 
-const generateUser = async (company) => {
-  const maxTries = 5;
+const generateUser = async (company, numOfUsers) => {
+  let users = [];
 
-  for (let i = 0; i < maxTries; i++) {
-    const user = await this.createUser(company);
-    if (user !== null) {
-      return user;
-    }
+  for (let i = 0; i < numOfUsers; i++) {
+    const _firstname = firstnames[i % firstnames.length];
+    const _lastname = lastnames[i % lastnames.length];
+    const _role = roles[i % roles.length];
+    const regDate = randomDate(new Date(2022, 6, 1), new Date());
+    const _email = makeEmail(_firstname, _lastname, company);
+
+    const newUser = new User({
+      first: _firstname,
+      last: _lastname,
+      username: _email,
+      email: _email,
+      role: _role,
+      registerDate: regDate,
+      company: company,
+    });
+    users.push(newUser);
   }
-  return null;
+
+  console.log("users: ", users);
+  // Function call
+  const newUsers = await User.insertMany(users);
+  return newUsers;
 };
+
+// const generateUser = async (company) => {
+//   const maxTries = 5;
+
+//   for (let i = 0; i < maxTries; i++) {
+//     const user = await this.createUser(company);
+//     if (user !== null) {
+//       return user;
+//     }
+//   }
+//   return null;
+// };
 module.exports.generateUser = generateUser;
 
 const randomTaskDuration = () => {

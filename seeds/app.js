@@ -21,6 +21,7 @@ const {
 } = require("./utils");
 
 const { issues, type, projectTitles, tasks } = require("./seedHelper");
+const wrapAsync = require("../utils/wrapAsync");
 
 const Admin = "Admin";
 const Technician = "Technician";
@@ -47,16 +48,19 @@ module.exports.makeAdmin = async (
   return adminUser;
 };
 
-module.exports.seedDB = async (company, seedUser) => {
+module.exports.seedDB = wrapAsync(async (company, seedUser) => {
   //TODO: create projects, issues and tasks assigned to defaultAdmin
+  console.log("seeddb company ", company);
 
   const start = Date.now();
 
   const numberOfUsers = 10;
   // Create random users in database
-  for (let i = 0; i < numberOfUsers; i++) {
-    await generateUser(company);
-  }
+  await generateUser(company, numberOfUsers);
+
+  // for (let i = 0; i < numberOfUsers; i++) {
+  //   await generateUser(company, numberOfUsers);
+  // }
 
   let markPoint = Date.now();
   console.log("Generate users took ", (markPoint - start) / 1000, " seconds");
@@ -160,7 +164,7 @@ module.exports.seedDB = async (company, seedUser) => {
   const endPoint = (end - markPoint) / 1000;
   console.log("Finish tickets took ", endPoint, " seconds");
   console.log("Total time took ", (end - start) / 1000, " seconds");
-};
+});
 
 const makeTicket = async (techSupport, users, company, numTickets) => {
   for (let i = 0; i < numTickets; i++) {
@@ -221,7 +225,7 @@ const makeIssue = async (user, projectId, projectDate) => {
   const _issue = randomItem(issues);
   const issueDate = randomDate(projectDate, new Date());
   const issue = await newIssue(user, projectId, issueDate, _issue);
-
+  console.log("make issue: ");
   await generateRandomTasks(user, issue, issue.createdAt);
 };
 
@@ -245,6 +249,7 @@ const generateRandomTasks = async (user, issue, issueDate) => {
   for (let j = 0; j < numOfTasks; j++) {
     const taskDate = randomDate(issueDate, new Date());
     const description = randomItem(tasks);
+
     const task = await newTask(
       user,
       issue.id,
