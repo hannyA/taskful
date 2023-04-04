@@ -18,6 +18,8 @@ module.exports.renderRegisterForm = async (req, res) => {
 };
 
 module.exports._registerUser = wrapAsync(async (req, res, next) => {
+  const start = Date.now();
+
   const password = req.body.Password;
   // delete req.body.password;
   console.log(" _registerUser body: ", req.body);
@@ -30,16 +32,26 @@ module.exports._registerUser = wrapAsync(async (req, res, next) => {
     last: req.body.lastname,
     role: req.body.Role,
   };
-
-  console.log(" _registerUser body: ", body);
   const user = new User(body);
+
+  let markPoint = Date.now();
+  console.log(
+    "_registerUser new user took ",
+    (markPoint - start) / 1000,
+    " seconds"
+  );
 
   try {
     const registeredUser = await User.register(user, password);
-    console.log("_registerUser 2");
 
-    console.log("auth registerUser: ", registeredUser);
     req.registeredUser = registeredUser;
+    markPoint = Date.now();
+    console.log(
+      "_registerUser - Register user took ",
+      (markPoint - start) / 1000,
+      " seconds"
+    );
+
     next();
   } catch (e) {
     req.flash("error", e.message);
