@@ -58,6 +58,9 @@ module.exports.seedDB = async (company, seedUser) => {
     await generateUser(company);
   }
 
+  let markPoint = Date.now();
+  console.log("Generate users took ", (markPoint - start) / 1000, " seconds");
+
   //For 1/10 team create projects, including Admin
   const numOfLeaders = Math.floor(numberOfUsers / 10);
 
@@ -74,6 +77,13 @@ module.exports.seedDB = async (company, seedUser) => {
     projectLeaders.push(seedUser);
   }
   console.log("projectLeaders: ", projectLeaders);
+  let oldPoint = markPoint;
+  markPoint = Date.now();
+  console.log(
+    "Find projectLeaders users took ",
+    (markPoint - oldPoint) / 1000,
+    " seconds"
+  );
 
   // Create projects for all project leaders
   for (let i = 0; i < projectTitles.length; i++) {
@@ -100,11 +110,14 @@ module.exports.seedDB = async (company, seedUser) => {
       await makeIssue(user, project.id, projectDate);
     }
   }
+  oldPoint = markPoint;
+  markPoint = Date.now();
 
-  const mid = Date.now();
-  const midPoint = (mid - start) / 1000;
-
-  console.log("Creating projects took ", midPoint, " seconds");
+  console.log(
+    "Creating projects took ",
+    (markPoint - oldPoint) / 1000,
+    " seconds"
+  );
 
   // Make Tickets
 
@@ -144,7 +157,7 @@ module.exports.seedDB = async (company, seedUser) => {
   await makeTicket(techSupport, normalUsers, company, numTickets);
 
   const end = Date.now();
-  const endPoint = (end - mid) / 1000;
+  const endPoint = (end - markPoint) / 1000;
   console.log("Finish tickets took ", endPoint, " seconds");
   console.log("Total time took ", (end - start) / 1000, " seconds");
 };
