@@ -217,9 +217,11 @@ const generateUser = async (company, numOfUsers) => {
     users.push(newUser);
   }
 
-  console.log("users: ", users);
+  // console.log("users: ", users);
   // Function call
   const newUsers = await User.insertMany(users);
+  console.log("generateUser newUsers: ", newUsers);
+
   return newUsers;
 };
 

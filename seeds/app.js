@@ -48,7 +48,7 @@ module.exports.makeAdmin = async (
   return adminUser;
 };
 
-module.exports.seedDB = wrapAsync(async (company, seedUser) => {
+module.exports.seedDB = async (company, seedUser) => {
   //TODO: create projects, issues and tasks assigned to defaultAdmin
   console.log("seeddb company ", company);
 
@@ -68,7 +68,6 @@ module.exports.seedDB = wrapAsync(async (company, seedUser) => {
   //For 1/10 team create projects, including Admin
   const numOfLeaders = Math.floor(numberOfUsers / 10);
 
-  console.log("seedUser: ", seedUser);
   const projectLeaders = await User.find({
     company: company,
     _id: { $ne: seedUser._id },
@@ -80,7 +79,7 @@ module.exports.seedDB = wrapAsync(async (company, seedUser) => {
   } else {
     projectLeaders.push(seedUser);
   }
-  console.log("projectLeaders: ", projectLeaders);
+
   let oldPoint = markPoint;
   markPoint = Date.now();
   console.log(
@@ -164,7 +163,7 @@ module.exports.seedDB = wrapAsync(async (company, seedUser) => {
   const endPoint = (end - markPoint) / 1000;
   console.log("Finish tickets took ", endPoint, " seconds");
   console.log("Total time took ", (end - start) / 1000, " seconds");
-});
+};
 
 const makeTicket = async (techSupport, users, company, numTickets) => {
   for (let i = 0; i < numTickets; i++) {
@@ -225,7 +224,6 @@ const makeIssue = async (user, projectId, projectDate) => {
   const _issue = randomItem(issues);
   const issueDate = randomDate(projectDate, new Date());
   const issue = await newIssue(user, projectId, issueDate, _issue);
-  console.log("make issue: ");
   await generateRandomTasks(user, issue, issue.createdAt);
 };
 
