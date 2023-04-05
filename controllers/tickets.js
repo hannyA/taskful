@@ -13,9 +13,12 @@ module.exports.index = async (req, res) => {
     .sort()
     .limitFields()
     .paginate();
+
   const tickets = await features.query
     .populate({ path: "owner" })
     .populate("assignee");
+
+  console.log("tickets: ", tickets);
 
   // Get number of projects and calculate number of pages
   const countQuery = new APIFeatures(Ticket.find(), req.query).filter();
@@ -28,15 +31,15 @@ module.exports.index = async (req, res) => {
   let page = "index";
   let resource = "tickets?";
 
-  const ownerId = req.query.owner;
+  const ownerId = req.query.assignee;
 
   if (ownerId && ownerId === req.user.id) {
     page = "mine";
-    resource = `${resource}owner=${ownerId}&`;
+    resource = `${resource}assignee=${ownerId}&`;
   }
 
   res.render("tickets/index", {
-    // pagination: true,
+    pagination: true,
     tickets,
     page,
     totalPages,
