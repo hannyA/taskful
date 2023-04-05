@@ -36,7 +36,7 @@ module.exports.index = async (req, res) => {
     resource = `${resource}owner=${req.query.owner}&`;
   }
 
-  console.log("projects: ", projects);
+  // console.log("projects: ", projects);
 
   res.render("projects/index", {
     pagination: true,

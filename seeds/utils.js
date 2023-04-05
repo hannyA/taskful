@@ -121,7 +121,7 @@ module.exports.newTask = (
   return task;
 };
 
-module.exports.newTicket = async (user, tech, company, date, ticket) => {
+module.exports.newTicket = (user, tech, company, date, ticket) => {
   const _ticket = new Ticket({
     title: ticket.title,
     description: ticket.description,
@@ -134,11 +134,11 @@ module.exports.newTicket = async (user, tech, company, date, ticket) => {
     createdAt: date,
     updatedAt: date,
   });
-  await _ticket.save();
+  // await _ticket.save();
   return _ticket;
 };
 
-module.exports.newTicketTask = async (
+module.exports.newTicketTask = (
   user,
   ticketId,
   description,
@@ -155,7 +155,6 @@ module.exports.newTicketTask = async (
     updatedAt: updatedAt,
   });
 
-  await task.save();
   return task;
 };
 
@@ -217,7 +216,6 @@ const generateUser = async (company, numOfUsers) => {
   // console.log("users: ", users);
   // Function call
   const newUsers = await User.insertMany(users);
-  console.log("generateUser newUsers: ", newUsers);
 
   return newUsers;
 };
