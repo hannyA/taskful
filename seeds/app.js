@@ -88,6 +88,8 @@ module.exports.seedDB = async (company, seedUser) => {
     " seconds"
   );
 
+  const projects = [];
+
   // Create projects for all project leaders
   for (let i = 0; i < projectTitles.length; i++) {
     const projectInfo = projectTitles[i];
@@ -97,22 +99,35 @@ module.exports.seedDB = async (company, seedUser) => {
     const team = await makeTeam(company, projLeader);
 
     const project = newProject(projLeader, projectInfo, team);
-    await project.save();
+    projects.push(project);
+  }
 
+  const newProjects = await Project.insertMany(projects);
+
+  projects.forEach((project) => {
     // Add issues for project
     let projectDate = project.createdAt;
 
+    const issues = [];
     // Create at least one issue assigned to demo user for their project
-    if (projLeader.id === seedUser.id) {
-      await makeIssue(seedUser, project.id, projectDate);
+    if (project.owner.id === seedUser.id) {
+      issues.push(makeIssue(seedUser, project.id, projectDate));
     }
 
     // Add more issues assigned randomly
     for (let i = 0; i < 10; i++) {
-      const user = randomItem(team);
-      await makeIssue(user, project.id, projectDate);
+      const user = randomItem(project.team);
+      issues.push(makeIssue(user, project.id, projectDate));
     }
-  }
+
+    const newIssues = Issue.insertMany(issues);
+
+    const tasks = [];
+    issues.forEach(async (issue) => {
+      await generateRandomTasks(issue.author, issue, issue.createdAt);
+    });
+  });
+
   oldPoint = markPoint;
   markPoint = Date.now();
 
@@ -220,11 +235,11 @@ const generateRandomTicketTasks = async (user, ticketId, createDate) => {
   }
 };
 
-const makeIssue = async (user, projectId, projectDate) => {
+const makeIssue = (user, projectId, projectDate) => {
   const _issue = randomItem(issues);
   const issueDate = randomDate(projectDate, new Date());
-  const issue = await newIssue(user, projectId, issueDate, _issue);
-  await generateRandomTasks(user, issue, issue.createdAt);
+  const issue = newIssue(user, projectId, issueDate, _issue);
+  return issue;
 };
 
 const makeTeam = async (company, leader) => {
@@ -243,12 +258,14 @@ const makeTeam = async (company, leader) => {
 };
 
 const generateRandomTasks = async (user, issue, issueDate) => {
+  const tasks = [];
   const numOfTasks = Math.floor(Math.random() * 20) + 1;
+
   for (let j = 0; j < numOfTasks; j++) {
     const taskDate = randomDate(issueDate, new Date());
     const description = randomItem(tasks);
 
-    const task = await newTask(
+    const task = newTask(
       user,
       issue.id,
       description,
@@ -256,7 +273,10 @@ const generateRandomTasks = async (user, issue, issueDate) => {
       taskDate,
       randomTaskDuration()
     );
+    tasks.push(task);
   }
+  const newTasks = await Task.insertMany(tasks);
+  return newTasks;
 };
 
 const generateRandomTicketsAndTasks = async (user, issue, issueDate) => {

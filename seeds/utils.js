@@ -87,7 +87,7 @@ module.exports.newProject = (user, projectTitles, team) => {
   return project;
 };
 
-module.exports.newIssue = async (user, projectId, date, _issue) => {
+module.exports.newIssue = (user, projectId, date, _issue) => {
   const issue = new Issue({
     title: _issue.title,
     description: _issue.description,
@@ -99,11 +99,10 @@ module.exports.newIssue = async (user, projectId, date, _issue) => {
     createdAt: date,
     updatedAt: date,
   });
-  await issue.save();
   return issue;
 };
 
-module.exports.newTask = async (
+module.exports.newTask = (
   user,
   issueId,
   description,
@@ -119,8 +118,6 @@ module.exports.newTask = async (
     updatedAt: updatedAt,
     duration: duration,
   });
-
-  await task.save();
   return task;
 };
 
